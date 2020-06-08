@@ -6,12 +6,20 @@ const RestaurantCard = ({
   handleDownvote,
   onSwipe,
   onCardLeftScreen,
-  restaurant: { name, rating, price_level, location_string, image, cuisine },
+  restaurant: {
+    name,
+    rating,
+    price_level,
+    location_string,
+    image,
+    cuisine,
+    location_id,
+  },
 }) => {
   return (
     <TinderCard
       onSwipe={onSwipe}
-      onCardLeftScreen={() => onCardLeftScreen("fooBar")}
+      onCardLeftScreen={() => onCardLeftScreen(location_id)}
       preventSwipe={["up", "down"]}
       className="Tinder-card"
     >
@@ -25,12 +33,12 @@ const RestaurantCard = ({
         </section>
         <img src={image} alt={name} className="restaurant-image" />
         <br />
-        <button className="btn-red" onClick={handleDownvote}>
+        {/* <button className="btn-red" onClick={handleDownvote}>
           RED
         </button>
         <button className="btn-green" onClick={handleUpvote}>
           GREEN
-        </button>
+        </button> */}
       </article>
     </TinderCard>
   );

@@ -3,6 +3,7 @@ import RestaurantCard from "./RestaurantCard";
 
 class RestaurantList extends Component {
   state = {
+    direction: "",
     restaurants: [
       {
         name: "Pappa's Pizza",
@@ -39,22 +40,49 @@ class RestaurantList extends Component {
       },
     ],
   };
-  handleUpvote = () => {
-    this.setState({ count: this.state.count + 1 });
-    console.log(this.state.count);
-  };
-  handleDownvote = (event) => {
-    console.log(event.target);
-    this.setState({ count: this.state.count - 1 });
-    console.log(this.state.count);
-  };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.restaurants !== this.state.restaurants) {
+      console.log("not matching");
+    } else {
+      console.log("not updated");
+    }
+  }
+
+  handleUpvote = (id) => {
+    this.state.restaurants.map((restaurant) => {
+      if (id === restaurant.location_id) {
+        console.log(restaurant.location_id);
+        this.setState({
+          ...restaurant,
+          count: restaurant.count + 1,
+          newProperty: "test",
+        });
+        console.log(restaurant);
+      }
+    });
+    console.log(this.state.restaurants);
+  };
+  handleDownvote = (id) => {
+    console.log(this.state.restaurants);
+    return this.state.restaurants.map((restaurant) => {
+      if (id === restaurant.location_id) {
+        this.setState({ ...restaurant, count: restaurant.count - 1 });
+      }
+    });
+  };
   onSwipe = (direction) => {
     console.log("You swiped: " + direction);
+    this.setState({ direction: direction });
   };
 
   onCardLeftScreen = (myIdentifier) => {
     console.log(myIdentifier + " left the screen " + this.state.direction);
+    if (this.state.direction === "left") {
+      this.handleDownvote(myIdentifier);
+    } else if (this.state.direction === "right") {
+      this.handleUpvote(myIdentifier);
+    }
   };
 
   render() {
@@ -65,8 +93,6 @@ class RestaurantList extends Component {
             <RestaurantCard
               key={restaurant.location_id}
               restaurant={restaurant}
-              handleDownvote={this.handleDownvote}
-              handleUpvote={this.handleUpvote}
               onSwipe={this.onSwipe}
               onCardLeftScreen={this.onCardLeftScreen}
             />
