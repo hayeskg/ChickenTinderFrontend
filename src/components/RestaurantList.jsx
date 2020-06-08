@@ -48,9 +48,18 @@ class RestaurantList extends Component {
     this.setState({ count: this.state.count - 1 });
     console.log(this.state.count);
   };
+
+  onSwipe = (direction) => {
+    console.log("You swiped: " + direction);
+  };
+
+  onCardLeftScreen = (myIdentifier) => {
+    console.log(myIdentifier + " left the screen " + this.state.direction);
+  };
+
   render() {
     return (
-      <div>
+      <section className="restaurant-list">
         {this.state.restaurants.map((restaurant) => {
           return (
             <RestaurantCard
@@ -58,10 +67,12 @@ class RestaurantList extends Component {
               restaurant={restaurant}
               handleDownvote={this.handleDownvote}
               handleUpvote={this.handleUpvote}
+              onSwipe={this.onSwipe}
+              onCardLeftScreen={this.onCardLeftScreen}
             />
           );
         })}
-      </div>
+      </section>
     );
   }
 }
