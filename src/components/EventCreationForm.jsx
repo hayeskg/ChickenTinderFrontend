@@ -27,10 +27,7 @@ export default function EventCreator() {
     };
 
     return (
-        <form action="">
-            <label htmlFor="eventName">Event Name: 
-                <input type="text"/>
-            </label>
+        <>
             <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect} >
                 {({ getInputProps, suggestions, getSuggestionItemProps, loading }) =>
                     <div>
@@ -60,6 +57,6 @@ export default function EventCreator() {
             <p>Latitude: {myLocation.lat}</p>
             <p>Longitude: {myLocation.lng}</p>
             <button onClick={getMyLocation}>Use My Location</button>
-        </form>
+        </>
     );
 };
