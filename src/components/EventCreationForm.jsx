@@ -3,14 +3,25 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-au
 
 export default function EventCreator() {
     const [address, setAddress] = React.useState("");
+    const [coordinates, setCoordinates] = React.useState({
+        lat: null,
+        lng: null,
+    })
 
-    const handleSelect = async value => { };
+    const handleSelect = async value => {
+        const results = await geocodeByAddress(value);
+        const latlng = await getLatLng(results[0]);
+        setAddress(value)
+        setCoordinates(latlng)
+    };
 
     return (
 
         <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect} >
             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) =>
                 <div>
+                    <p>Latitude: {coordinates.lat}</p>
+                    <p>Longitude: {coordinates.lng}</p>
                     <input {...getInputProps({ placeholder: 'location' })} />
                     <div>
                         {loading &&
@@ -26,8 +37,6 @@ export default function EventCreator() {
                                         {suggestion.description}
                                     </div>
                                 )
-
-
                             })
                         }
                     </div>
