@@ -3,7 +3,6 @@ import RestaurantCard from "./RestaurantCard";
 
 class RestaurantList extends Component {
   state = {
-    direction: "",
     restaurants: [
       {
         name: "Pappa's Pizza",
@@ -41,66 +40,47 @@ class RestaurantList extends Component {
     ],
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.restaurants !== this.state.restaurants) {
-      console.log("not matching");
-    } else {
-      console.log("not updated");
-    }
-  }
-
   handleUpvote = (id) => {
-    this.state.restaurants.map((restaurant) => {
+    const newArray = this.state.restaurants.map((restaurant) => {
       if (id === restaurant.location_id) {
-        console.log(restaurant.location_id);
-        this.setState({
-          ...restaurant,
-          count: restaurant.count + 1,
-          newProperty: "test",
-        });
-        console.log(restaurant);
+        return { ...restaurant, count: restaurant.count += 1 };
+      } else {
+        return { ...restaurant }
       }
     });
-    console.log(this.state.restaurants);
-  };
-  handleDownvote = (id) => {
-    console.log(this.state.restaurants);
-    return this.state.restaurants.map((restaurant) => {
-      if (id === restaurant.location_id) {
-        this.setState({ ...restaurant, count: restaurant.count - 1 });
-      }
-    });
-  };
-  onSwipe = (direction) => {
-    console.log("You swiped: " + direction);
-    this.setState({ direction: direction });
+    this.setState({ restaurants: newArray })
   };
 
-  onCardLeftScreen = (myIdentifier) => {
-    console.log(myIdentifier + " left the screen " + this.state.direction);
-    if (this.state.direction === "left") {
-      this.handleDownvote(myIdentifier);
-    } else if (this.state.direction === "right") {
-      this.handleUpvote(myIdentifier);
-    }
+  handleDownvote = (id) => {
+    const newArray = this.state.restaurants.map((restaurant) => {
+      if (id === restaurant.location_id) {
+        return { ...restaurant, count: restaurant.count -= 1 };
+      } else {
+        return { ...restaurant }
+      }
+    });
+    this.setState({ restaurants: newArray })
   };
 
   render() {
+    console.log(this.state.restaurants)
     return (
       <section className="restaurant-list">
-        {this.state.restaurants.map((restaurant) => {
-          return (
-            <RestaurantCard
-              key={restaurant.location_id}
-              restaurant={restaurant}
-              onSwipe={this.onSwipe}
-              onCardLeftScreen={this.onCardLeftScreen}
-            />
-          );
-        })}
+        {
+          this.state.restaurants.map((restaurant) => {
+            return (
+              <RestaurantCard
+                key={restaurant.location_id}
+                restaurant={restaurant}
+                handleUpvote={this.handleUpvote}
+                handleDownvote={this.handleDownvote}
+              />
+            );
+          })
+        }
       </section>
     );
-  }
-}
+  };
+};
 
 export default RestaurantList;

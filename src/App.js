@@ -1,8 +1,4 @@
 import "./App.css";
-import RestaurantCard from "./components/RestaurantCard";
-import { Router } from "@reach/router";
-// import UserProfile from "./components/UserProfile";
-
 import React, { Component } from "react";
 import RestaurantList from "./components/RestaurantList";
 
