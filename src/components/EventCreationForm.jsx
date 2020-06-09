@@ -1,44 +1,39 @@
 import React from "react";
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
-class EventCreator extends React.Component {
-    state = {
-        eventName: "",
-        location: "",
-        radius: "",
-    };
+export default function EventCreator() {
+    const [address, setAddress] = React.useState("");
 
-    handleInputChange = (event) => {
-        
-        const { value, name } = event.target
-        this.setState({
-            [name]: value,
-        })
-        console.log(this.state)
-    }
+    const handleSelect = async value => { };
 
-    render() {
-        const { eventName, location, radius } = this.state
-        return (
-            <form onSubmit={this.handleSubmitForm} className='eventForm'>
-                <label>Event Name:
-            <input type="text" name='eventName' required='required' onChange={this.handleInputChange} placeholder='Event name here...' value={eventName} />
-                </label>
-                <label >Location:
-            <input type="text" name='location' required='required' onChange={this.handleInputChange} placeholder='Location here...' value={location} />
-                </label>
-                <label >Radius:
-            <select className='select' name='topicradius' onChange={this.handleInputChange} value={radius}>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">3</option>
-                        <option value="5">3</option>
-                    </select>
-                </label>
-                <button className='postButton'>Create Event</button>
-            </form>
-        );
-    };
+    return (
+
+        <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect} >
+            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) =>
+                <div>
+                    <input {...getInputProps({ placeholder: 'location' })} />
+                    <div>
+                        {loading &&
+                            <p>Loading!</p>
+                        }
+                        {
+                            suggestions.map((suggestion) => {
+                                const style = {
+                                    backgroundColor: suggestion.active ? "#d1e7ed" : "#fff"
+                                }
+                                return (
+                                    <div {...getSuggestionItemProps(suggestion, { style })}>
+                                        {suggestion.description}
+                                    </div>
+                                )
+
+
+                            })
+                        }
+                    </div>
+                </div>
+            }
+        </PlacesAutocomplete>
+
+    );
 };
-
-export default EventCreator;
