@@ -10,12 +10,12 @@ class RestaurantCard extends React.Component {
     this.setState({ direction });
   };
 
-  onCardLeftScreen = (myIdentifier) => {
+  onCardLeftScreen = (myIdentifier, index) => {
     const { direction } = this.state;
     const { handleDownvote, handleUpvote } = this.props;
 
     if (direction === "left") {
-      handleDownvote(myIdentifier);
+      handleDownvote(myIdentifier, index);
     } else if (direction === "right") {
       handleUpvote(myIdentifier);
     }

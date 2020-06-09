@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import RestaurantCard from "./RestaurantCard";
+import EndOfList from "./EndOfList"
+
 
 class RestaurantList extends Component {
   state = {
     restaurants: [
+
       {
         name: "Pappa's Pizza",
         location_id: "2131514",
@@ -14,6 +17,7 @@ class RestaurantList extends Component {
           "https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/alpine_pizza_32132_16x9.jpg",
         cuisine: "Italian",
         count: 0,
+
       },
       {
         name: "Momma's Pizza",
@@ -25,6 +29,7 @@ class RestaurantList extends Component {
           "https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/alpine_pizza_32132_16x9.jpg",
         cuisine: "Italian",
         count: 0,
+
       },
       {
         name: "Brother's Pizza",
@@ -36,34 +41,45 @@ class RestaurantList extends Component {
           "https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/alpine_pizza_32132_16x9.jpg",
         cuisine: "Italian",
         count: 0,
+
       },
+
     ],
+    endOfList: false
   };
 
   handleUpvote = (id) => {
-    const newArray = this.state.restaurants.map((restaurant) => {
+    let newArray = this.state.restaurants.map((restaurant) => {
       if (id === restaurant.location_id) {
-        return { ...restaurant, count: restaurant.count += 1 };
+        return { ...restaurant, count: restaurant.count += 1 }
       } else {
         return { ...restaurant }
       }
     });
-    this.setState({ restaurants: newArray })
+    if (newArray[0]) {
+      this.setState({ restaurants: newArray, endOfList: true })
+    } else {
+      this.setState({ restaurants: newArray, endOfList: false })
+    }
   };
 
   handleDownvote = (id) => {
-    const newArray = this.state.restaurants.map((restaurant) => {
+    let newArray = this.state.restaurants.map((restaurant) => {
       if (id === restaurant.location_id) {
         return { ...restaurant, count: restaurant.count -= 1 };
+
       } else {
         return { ...restaurant }
       }
     });
-    this.setState({ restaurants: newArray })
+    if (newArray[0]) {
+      this.setState({ restaurants: newArray, endOfList: true })
+    } else {
+      this.setState({ restaurants: newArray, endOfList: false })
+    }
   };
 
   render() {
-    console.log(this.state.restaurants)
     return (
       <section className="restaurant-list">
         {
@@ -77,6 +93,10 @@ class RestaurantList extends Component {
               />
             );
           })
+        }
+        {
+          this.state.endOfList &&
+          <EndOfList key />
         }
       </section>
     );
