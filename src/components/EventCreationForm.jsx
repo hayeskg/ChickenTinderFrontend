@@ -7,6 +7,17 @@ export default function EventCreator() {
         lat: null,
         lng: null,
     })
+    const [myLocation, setMyLocation] = React.useState({
+        lat: null,
+        lng: null,
+    });
+
+    const getMyLocation = async () => {
+        const position = await new Promise(function (resolve, reject) {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+        })
+        setMyLocation({ lat: position.coords.latitude, lng: position.coords.longitude })
+    }
 
     const handleSelect = async value => {
         const results = await geocodeByAddress(value);
@@ -16,33 +27,39 @@ export default function EventCreator() {
     };
 
     return (
-
-        <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect} >
-            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) =>
-                <div>
-                    <p>Latitude: {coordinates.lat}</p>
-                    <p>Longitude: {coordinates.lng}</p>
-                    <input {...getInputProps({ placeholder: 'location' })} />
+        <form action="">
+            <label htmlFor="eventName">Event Name: 
+                <input type="text"/>
+            </label>
+            <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect} >
+                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) =>
                     <div>
-                        {loading &&
-                            <p>Loading!</p>
-                        }
-                        {
-                            suggestions.map((suggestion) => {
-                                const style = {
-                                    backgroundColor: suggestion.active ? "#d1e7ed" : "#fff"
-                                }
-                                return (
-                                    <div {...getSuggestionItemProps(suggestion, { style })}>
-                                        {suggestion.description}
-                                    </div>
-                                )
-                            })
-                        }
+                        <p>Latitude: {coordinates.lat}</p>
+                        <p>Longitude: {coordinates.lng}</p>
+                        <input {...getInputProps({ placeholder: 'location' })} />
+                        <div>
+                            {loading &&
+                                <p>Loading!</p>
+                            }
+                            {
+                                suggestions.map((suggestion) => {
+                                    const style = {
+                                        backgroundColor: suggestion.active ? "#d1e7ed" : "#fff"
+                                    }
+                                    return (
+                                        <div {...getSuggestionItemProps(suggestion, { style })}>
+                                            {suggestion.description}
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
-                </div>
-            }
-        </PlacesAutocomplete>
-
+                }
+            </PlacesAutocomplete>
+            <p>Latitude: {myLocation.lat}</p>
+            <p>Longitude: {myLocation.lng}</p>
+            <button onClick={getMyLocation}>Use My Location</button>
+        </form>
     );
 };
