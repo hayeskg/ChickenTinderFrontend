@@ -4,37 +4,44 @@
 body {
   margin: 0;
 }
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.btn-green {
+  padding: 100px;
+  background-color: green;
+}
+.btn-red {
+  padding: 100px;
+  background-color: red;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  border-style: groove;
+  margin: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.user-avatar {
+  border-radius: 5px;
+}
+
+.Tinder-card {
+  border: black 5px;
+  position: absolute;
+  border-style: groove;
+  background-color: aliceblue;
+}
+
+.restaurant-list {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  margin: 50px;
+  padding: 20px;
+  position: sticky;
+  top: 0;
 }
