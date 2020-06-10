@@ -3,8 +3,8 @@ import TinderCard from "react-tinder-card";
 
 class RestaurantCard extends React.Component {
   state = {
-    direction: '',
-  }
+    direction: "",
+  };
 
   onSwipe = (direction) => {
     this.setState({ direction });
@@ -28,11 +28,11 @@ class RestaurantCard extends React.Component {
         rating,
         price_level,
         location_string,
-        image,
+        photo,
         cuisine,
         location_id,
       },
-    } = this.props
+    } = this.props;
 
     return (
       <TinderCard
@@ -45,15 +45,16 @@ class RestaurantCard extends React.Component {
           <section>
             <h2>{name}</h2>
             <p>
-              {cuisine} price: {price_level} rating: {rating} location: {location_string}
+              {cuisine} price: {price_level} rating: {rating} location:{" "}
+              {location_string}
             </p>
           </section>
-          <img src={image} alt={name} className="restaurant-image" />
+          <img src={photo} alt={name} className="restaurant-image" />
           <br />
         </article>
       </TinderCard>
     );
-  };
-};
+  }
+}
 
 export default RestaurantCard;
