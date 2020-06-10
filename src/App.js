@@ -1,12 +1,13 @@
 import "./App.css";
 import React, { Component } from "react";
-
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-
+import fire from "./fireAuth";
 import GetRestaurantsTripAdvisor from "./queries/GetRestaurantsTripAdvisor";
 import Header from "./components/re-usable/Header";
-// import EventCreator from "./components/EventCreationForm";
+import Login from "./components/re-usable/Login";
+import Home from "./components/re-usable/Home";
+
 const client = new ApolloClient({
   uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
 });
@@ -21,14 +22,26 @@ class App extends Component {
       friends_list: [1, 3, 4, 123], //user ids
     },
   };
+  componentDidMount() {
+    this.authListener();
+  }
 
+  authListener() {
+    fire.auth().onAuthStateChanged((user) => {
+      console.log(user.email);
+      if (user) {
+        this.setState({ user: { username: user.email } });
+      } else {
+        this.setState({ user: null });
+      }
+    });
+  }
   render() {
     return (
       <ApolloProvider client={client}>
         <div className="App">
           <Header />
-          <GetRestaurantsTripAdvisor />
-          {/* <EventCreator /> */}
+          {this.state.user ? <GetRestaurantsTripAdvisor /> : <Login />}
         </div>
       </ApolloProvider>
     );
