@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import RestaurantCard from "./RestaurantCard";
 import EndOfList from "./EndOfList";
+import Loader from "./re-usable/Loader";
 
 class RestaurantList extends Component {
   state = {
@@ -11,6 +12,7 @@ class RestaurantList extends Component {
   componentDidMount() {
     this.setState({
       restaurants: this.props.query.getRestaurantsTripAdvisor,
+      loading: false,
     });
     console.log(this.props.query.getRestaurantsTripAdvisor);
   }
@@ -24,9 +26,13 @@ class RestaurantList extends Component {
       }
     });
     if (newArray[0]) {
-      this.setState({ restaurants: newArray, endOfList: true });
+      this.setState({ restaurants: newArray, endOfList: true, loading: false });
     } else {
-      this.setState({ restaurants: newArray, endOfList: false });
+      this.setState({
+        restaurants: newArray,
+        endOfList: false,
+        loading: false,
+      });
     }
   };
 
@@ -39,13 +45,19 @@ class RestaurantList extends Component {
       }
     });
     if (newArray[0]) {
-      this.setState({ restaurants: newArray, endOfList: true });
+      this.setState({ restaurants: newArray, endOfList: true, loading: false });
     } else {
-      this.setState({ restaurants: newArray, endOfList: false });
+      this.setState({
+        restaurants: newArray,
+        endOfList: false,
+        loading: false,
+      });
     }
   };
 
   render() {
+    const { loading } = this.state;
+    if (loading) return <Loader />;
     return (
       <section className="restaurant-list">
         {this.state.restaurants.map((restaurant) => {

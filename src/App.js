@@ -1,15 +1,17 @@
 import "./App.css";
 import React, { Component } from "react";
-
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-
+import fire from "./fireAuth";
 import GetRestaurantsTripAdvisor from "./queries/GetRestaurantsTripAdvisor";
-import EventCreator from "./components/EventCreationForm";
+import Header from "./components/re-usable/Header";
+import Login from "./components/re-usable/Login";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+
 const client = new ApolloClient({
   uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
 });
-
 
 class App extends Component {
   state = {
@@ -21,20 +23,31 @@ class App extends Component {
       friends_list: [1, 3, 4, 123], //user ids
     },
   };
+  componentDidMount() {
+    this.authListener();
+  }
 
+  authListener() {
+    fire.auth().onAuthStateChanged((user) => {
+      console.log(user.email);
+      if (user) {
+        this.setState({ user: { username: user.email } });
+      } else {
+        this.setState({ user: null });
+      }
+    });
+  }
   render() {
     return (
       <ApolloProvider client={client}>
         <div className="App">
-          <header className="App-header">Chicken Tinder</header>
-          <GetRestaurantsTripAdvisor />
- <EventCreator />
-          
+          <Header />
+          {this.state.user ? <GetRestaurantsTripAdvisor /> : <Login />}
         </div>
       </ApolloProvider>
-
     );
   }
 }
+library.add(faSpinner);
 
 export default App;
