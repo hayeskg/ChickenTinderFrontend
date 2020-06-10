@@ -1,6 +1,7 @@
 import "./App.css";
 import React, { Component } from "react";
 import RestaurantList from "./components/RestaurantList";
+import EventCreator from "./components/EventCreationForm";
 
 class App extends Component {
   state = {
@@ -18,7 +19,8 @@ class App extends Component {
       <div className="App">
         <header className="App-header">Chicken Tinder</header>
         {/* <Router> */}
-        <RestaurantList />
+        {/*<RestaurantList />*/}
+        <EventCreator />
         {/* <UserProfile user={this.state.user} /> */}
         {/* </Router> */}
       </div>
