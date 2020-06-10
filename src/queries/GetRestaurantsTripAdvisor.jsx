@@ -5,10 +5,27 @@ import RestaurantList from "../components/RestaurantList";
 
 const getRestaurantsTripAdvisorQuery = gql`
   query {
-    getRestaurantsTripAdvisor {
-      name
+    getRestaurantsTripAdvisor(
+      tripAdvisorInput: {
+        distance: "2"
+        latitude: "53.4789028"
+        longitude: "-2.2378771"
+      }
+    ) {
       location_id
+      location_string
+      name
+      description
+      cuisine
       photo
+      price
+      ranking
+      rating
+      phone
+      website
+      address
+      dietary_restrictions
+      num_reviews
     }
   }
 `;
