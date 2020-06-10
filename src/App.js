@@ -1,7 +1,15 @@
 import "./App.css";
 import React, { Component } from "react";
-import RestaurantList from "./components/RestaurantList";
+
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
+
+import GetRestaurantsTripAdvisor from "./queries/GetRestaurantsTripAdvisor";
 import EventCreator from "./components/EventCreationForm";
+const client = new ApolloClient({
+  uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
+});
+
 
 class App extends Component {
   state = {
@@ -16,14 +24,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">Chicken Tinder</header>
-        {/* <Router> */}
-        {/*<RestaurantList />*/}
-        <EventCreator />
-        {/* <UserProfile user={this.state.user} /> */}
-        {/* </Router> */}
-      </div>
+      <ApolloProvider client={client}>
+        <div className="App">
+          <header className="App-header">Chicken Tinder</header>
+          <GetRestaurantsTripAdvisor />
+ <EventCreator />
+          
+        </div>
+      </ApolloProvider>
+
     );
   }
 }
