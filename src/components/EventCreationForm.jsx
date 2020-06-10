@@ -14,13 +14,6 @@ export default function EventCreator() {
     });
     const [radius, setRadius] = React.useState(1)
 
-    const getMyLocation = async () => {
-        const position = await new Promise(function (resolve, reject) {
-            navigator.geolocation.getCurrentPosition(resolve, reject);
-        })
-        setMyLocation({ lat: position.coords.latitude, lng: position.coords.longitude })
-    }
-
     const handleSelect = async value => {
         const results = await geocodeByAddress(value);
         const latlng = await getLatLng(results[0]);
@@ -35,50 +28,64 @@ export default function EventCreator() {
         const restaurantEvent = {
             eventName,
             lat,
-            lng, 
+            lng,
             radius,
         }
         console.log(restaurantEvent)
     }
 
+    const getMyLocation = async () => {
+        const position = await new Promise(function (resolve, reject) {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+        })
+        setMyLocation({ lat: position.coords.latitude, lng: position.coords.longitude })
+        setCoordinates({lat: null, lng: null})
+        console.log(coordinates)
+    }
+
     return (
         <form onSubmit={handleSubmit}>
-            <label htmlFor="eventName">
-                <input type="text" name="eventName" value={eventName} onChange={(e) => setEventName(e.target.value)} placeholder="Event name here..." />
+            <label htmlFor="eventName">Event:
+                <input type="text" name="eventName" value={eventName} onChange={(e) => setEventName(e.target.value)} placeholder="Event name here..." required="required" />
             </label>
-            <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect} >
-                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) =>
-                    <div>
-                        <p>Latitude: {coordinates.lat}</p>
-                        <p>Longitude: {coordinates.lng}</p>
-                        <input {...getInputProps({ placeholder: 'location' })} />
+            {!myLocation.lat &&
+                <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect} >
+                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) =>
                         <div>
-                            {loading &&
-                                <p>Loading!</p>
-                            }
-                            {
-                                suggestions.map((suggestion) => {
-                                    const style = {
-                                        backgroundColor: suggestion.active ? "#d1e7ed" : "#fff"
-                                    }
-                                    return (
-                                        <div {...getSuggestionItemProps(suggestion, { style })}>
-                                            {suggestion.description}
-                                        </div>
-                                    )
-                                })
-                            }
+                            <label htmlFor="location">Location:
+                        <input {...getInputProps({ placeholder: 'Start typing your location...' })} />
+                            </label>
+                            <div>
+                                {loading &&
+                                    <p>Loading!</p>
+                                }
+                                {
+                                    suggestions.map((suggestion) => {
+                                        const style = {
+                                            backgroundColor: suggestion.active ? "#d1e7ed" : "#fff"
+                                        }
+                                        return (
+                                            <div {...getSuggestionItemProps(suggestion, { style })}>
+                                                {suggestion.description}
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
                         </div>
-                    </div>
-                }
-            </PlacesAutocomplete>
-            <p>Latitude: {myLocation.lat}</p>
-            <p>Longitude: {myLocation.lng}</p>
-            <button onClick={getMyLocation}>Use My Location</button>
-            <label htmlFor="eventName">
-                <input type="text" name="radius" value={radius} onChange={(e) => setRadius(e.target.value)} placeholder="distance in miles..."/>
+                    }
+                </PlacesAutocomplete>
+            }
+            <button type="button" onClick={getMyLocation}>Use My Location</button>
+            {myLocation.lat &&
+                <p>Your location:
+                    <br />
+                Latitude: {myLocation.lat}, Longitude: {myLocation.lng}</p>
+            }
+            <label htmlFor="radius">Search Radius (miles):
+                <input type="text" name="radius" value={radius} onChange={(e) => setRadius(e.target.value)} placeholder="distance in miles..." />
             </label>
-            <button>Create Event</button>
+            <button type="submit" >Create Event</button>
         </form>
     );
 };
