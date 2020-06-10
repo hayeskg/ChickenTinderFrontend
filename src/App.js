@@ -5,6 +5,7 @@ import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 
 import GetRestaurantsTripAdvisor from "./queries/GetRestaurantsTripAdvisor";
+import Header from "./components/re-usable/Header";
 // import EventCreator from "./components/EventCreationForm";
 const client = new ApolloClient({
   uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
@@ -25,7 +26,7 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <div className="App">
-          <header className="App-header">Chicken Tinder</header>
+          <Header />
           <GetRestaurantsTripAdvisor />
           {/* <EventCreator /> */}
         </div>
