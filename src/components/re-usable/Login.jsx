@@ -1,5 +1,27 @@
 import React, { Component } from "react";
 import fire from "../../fireAuth.js";
+import styled from "styled-components";
+
+const StyledLogin = styled.form`
+  background-color: white;
+  border-style: groove;
+  border-color: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 10px;
+  margin: 10px;
+`;
+const StyledInput = styled.input`
+  padding: 10px;
+  margin: 10px;
+`;
+const StyledButton = styled.button`
+  padding: 10px;
+  margin: 10px;
+`;
 
 class Login extends Component {
   state = {
@@ -40,25 +62,24 @@ class Login extends Component {
   };
   render() {
     return (
-      <div>
-        <label htmlFor="email">email</label>
-        <input
+      <StyledLogin>
+        <label htmlFor="email">Email: </label>
+        <StyledInput
           type="email"
           name="email"
           placeholder="email"
           onChange={this.handleChange}
         />
-        <label htmlFor="password">password</label>
-        <input
+        <label htmlFor="password">Password: </label>
+        <StyledInput
           type="password"
           name="password"
           placeholder="password"
           onChange={this.handleChange}
         />
-
-        <button onClick={this.login}>Login</button>
-        <button onClick={this.signup}>Signup</button>
-      </div>
+        <StyledButton onClick={this.login}>Login</StyledButton>
+        <StyledButton onClick={this.signup}>Signup</StyledButton>
+      </StyledLogin>
     );
   }
 }
