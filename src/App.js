@@ -8,6 +8,9 @@ import Header from "./components/re-usable/Header";
 import Login from "./components/re-usable/Login";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import Home from "./components/re-usable/Home";
+import { Router } from "@reach/router";
+import EventCreationForm from "./components/EventCreationForm";
 
 const client = new ApolloClient({
   uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
@@ -42,7 +45,11 @@ class App extends Component {
       <ApolloProvider client={client}>
         <div className="App">
           <Header />
-          {this.state.user ? <GetRestaurantsTripAdvisor /> : <Login />}
+          <Router>
+            {this.state.user ? <Home path="/" /> : <Login path="/" />}
+            <GetRestaurantsTripAdvisor path="/swipe"/> 
+            <EventCreationForm path="/event-creation" />
+          </Router>
         </div>
       </ApolloProvider>
     );
