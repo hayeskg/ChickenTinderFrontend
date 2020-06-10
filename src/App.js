@@ -6,7 +6,8 @@ import fire from "./fireAuth";
 import GetRestaurantsTripAdvisor from "./queries/GetRestaurantsTripAdvisor";
 import Header from "./components/re-usable/Header";
 import Login from "./components/re-usable/Login";
-import Home from "./components/re-usable/Home";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const client = new ApolloClient({
   uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
@@ -47,5 +48,6 @@ class App extends Component {
     );
   }
 }
+library.add(faSpinner);
 
 export default App;
