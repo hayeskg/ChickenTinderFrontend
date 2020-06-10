@@ -2,6 +2,7 @@ import React from "react";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 export default function EventCreator() {
+    const [eventName, setEventName] = React.useState("");
     const [address, setAddress] = React.useState("");
     const [coordinates, setCoordinates] = React.useState({
         lat: null,
@@ -11,6 +12,7 @@ export default function EventCreator() {
         lat: null,
         lng: null,
     });
+    const [radius, setRadius] = React.useState(1)
 
     const getMyLocation = async () => {
         const position = await new Promise(function (resolve, reject) {
@@ -26,8 +28,24 @@ export default function EventCreator() {
         setCoordinates(latlng)
     };
 
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        const lat = myLocation.lat
+        const lng = myLocation.lng
+        const restaurantEvent = {
+            eventName,
+            lat,
+            lng, 
+            radius,
+        }
+        console.log(restaurantEvent)
+    }
+
     return (
-        <>
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="eventName">
+                <input type="text" name="eventName" value={eventName} onChange={(e) => setEventName(e.target.value)} placeholder="Event name here..." />
+            </label>
             <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect} >
                 {({ getInputProps, suggestions, getSuggestionItemProps, loading }) =>
                     <div>
@@ -57,6 +75,10 @@ export default function EventCreator() {
             <p>Latitude: {myLocation.lat}</p>
             <p>Longitude: {myLocation.lng}</p>
             <button onClick={getMyLocation}>Use My Location</button>
-        </>
+            <label htmlFor="eventName">
+                <input type="text" name="radius" value={radius} onChange={(e) => setRadius(e.target.value)} placeholder="distance in miles..."/>
+            </label>
+            <button>Create Event</button>
+        </form>
     );
 };
