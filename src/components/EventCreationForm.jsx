@@ -37,7 +37,7 @@ const EventCreationForm = () => {
     const eventDistance = `${radius}`;
     const eventDate = `${eDate}`;
     const eventClosingDate = `${eClosingDate}`;
-    const restaurantEvent = {
+    const eventInput = {
       eventName,
       eventLat,
       eventLong,
@@ -47,8 +47,16 @@ const EventCreationForm = () => {
       eventOrganiser: "Fred",
       attendees: ["Freddy", "Freddo", "Freda"],
     };
-    console.log(restaurantEvent);
-    setEvent({ variables: restaurantEvent });
+    console.log(eventInput);
+    setEvent({ variables: { 
+      eventName,
+      eventLat,
+      eventLong,
+      eventDistance,
+      eventDate,
+      eventClosingDate,
+      eventOrganiser: "Fred",
+      attendees: ["Freddy", "Freddo", "Freda"] }});
   };
 
   const getMyLocation = async () => {
@@ -62,20 +70,6 @@ const EventCreationForm = () => {
     setCoordinates({ lat: null, lng: null });
     console.log(coordinates);
   };
-
- 
-
- /* {
-    eventName: $eventName
-    eventDate: $eventDate
-    eventClosingDate: $eventClosingDate
-    eventLat: $eventLat
-    eventLong: $eventLong
-    eventDistance: $eventDistance
-    eventOrganiser: $eventOrganiser
-    attendees: $attendees
-  }*/
-
 
   return (
     <form onSubmit={handleSubmit} className="eventForm">
@@ -165,8 +159,12 @@ const EventCreationForm = () => {
         />
       </label>
       <button type="submit">Create Event</button>
-      { eventLoading && <span>Loading...</span>}
-      { eventError && <span>Error</span>}
+      { eventLoading && 
+      <p>Loading...</p>
+      }
+      { eventError && 
+      <p>ERROR</p>
+      }
     </form>
   );
 };
