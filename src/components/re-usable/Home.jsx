@@ -6,12 +6,15 @@ const Home = () => {
   return (
     <section>
       <Link to="/event-creation">
-        {" "}
         <button>
           <span>Create Event</span>
         </button>
       </Link>
-      <button>Join Event</button>
+      <Link to="/swipe">
+        <button>
+          <span> Join Event</span>
+        </button>
+      </Link>
     </section>
   );
 };

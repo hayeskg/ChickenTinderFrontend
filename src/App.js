@@ -7,7 +7,7 @@ import GetRestaurantsTripAdvisor from "./queries/GetRestaurantsTripAdvisor";
 import Header from "./components/re-usable/Header";
 import Login from "./components/re-usable/Login";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Home from "./components/re-usable/Home";
 import { Router } from "@reach/router";
 import EventCreationForm from "./components/EventCreationForm";
@@ -47,7 +47,7 @@ class App extends Component {
           <Header />
           <Router>
             {this.state.user ? <Home path="/" /> : <Login path="/" />}
-            {/* <GetRestaurantsTripAdvisor path="/event-creation"/> */}
+            <GetRestaurantsTripAdvisor path="/swipe" />
             <EventCreationForm path="/event-creation" />
           </Router>
         </div>
@@ -55,6 +55,6 @@ class App extends Component {
     );
   }
 }
-library.add(faSpinner);
+library.add(faSpinner, faCheck, faTimes);
 
 export default App;

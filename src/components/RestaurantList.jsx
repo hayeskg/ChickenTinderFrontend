@@ -20,7 +20,11 @@ class RestaurantList extends Component {
   handleUpvote = (id) => {
     let newArray = this.state.restaurants.map((restaurant) => {
       if (id === restaurant.location_id) {
-        return { ...restaurant, count: (restaurant.count += 1) };
+        return {
+          ...restaurant,
+          count: (restaurant.count += 1),
+        };
+        //{voteObj: {upvote: (restaurant.voteObj.upvote += 1), downvote: 0, id: restaurant.location_id}}
       } else {
         return { ...restaurant };
       }
@@ -39,7 +43,11 @@ class RestaurantList extends Component {
   handleDownvote = (id) => {
     let newArray = this.state.restaurants.map((restaurant) => {
       if (id === restaurant.location_id) {
-        return { ...restaurant, count: (restaurant.count -= 1) };
+        return {
+          ...restaurant,
+          count: (restaurant.count -= 1),
+        };
+        //{voteObj: {downvote: (restaurant.voteObj.downvote += 1), upvote: 0, id: restaurant.location_id}}
       } else {
         return { ...restaurant };
       }
