@@ -3,9 +3,13 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
+import { eventCreationMutation } from "../queries/EventCreation";
+import { useMutation } from "@apollo/react-hooks";
 
 const EventCreationForm = () => {
   const [eventName, setEventName] = React.useState("");
+  const [eDate, setEventDate] = React.useState("");
+  const [eClosingDate, setEventClosingDate] = React.useState("");
   const [address, setAddress] = React.useState("");
   const [coordinates, setCoordinates] = React.useState({
     lat: null,
@@ -16,6 +20,8 @@ const EventCreationForm = () => {
     lng: null,
   });
   const [radius, setRadius] = React.useState(1);
+  const [setEvent, { loading: eventLoading, error: eventError },
+  ] = useMutation(eventCreationMutation);
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
@@ -26,15 +32,23 @@ const EventCreationForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const lat = myLocation.lat;
-    const lng = myLocation.lng;
+    const eventLat = `${myLocation.lat}`;
+    const eventLong = `${myLocation.lng}`;
+    const eventDistance = `${radius}`;
+    const eventDate = `${eDate}`;
+    const eventClosingDate = `${eClosingDate}`;
     const restaurantEvent = {
       eventName,
-      lat,
-      lng,
-      radius,
+      eventLat,
+      eventLong,
+      eventDistance,
+      eventDate,
+      eventClosingDate,
+      eventOrganiser: "Fred",
+      attendees: ["Freddy", "Freddo", "Freda"],
     };
     console.log(restaurantEvent);
+    setEvent({ variables: restaurantEvent });
   };
 
   const getMyLocation = async () => {
@@ -49,8 +63,22 @@ const EventCreationForm = () => {
     console.log(coordinates);
   };
 
+ 
+
+ /* {
+    eventName: $eventName
+    eventDate: $eventDate
+    eventClosingDate: $eventClosingDate
+    eventLat: $eventLat
+    eventLong: $eventLong
+    eventDistance: $eventDistance
+    eventOrganiser: $eventOrganiser
+    attendees: $attendees
+  }*/
+
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="eventForm">
       <label htmlFor="eventName">
         Event:
         <input
@@ -120,7 +148,25 @@ const EventCreationForm = () => {
           placeholder="distance in miles..."
         />
       </label>
+      <label htmlFor="eventDate">Event Date:
+        <input type="date"
+        name="eventDate"
+        value={eDate}
+        onChange={(e) => setEventDate(e.target.value)}
+        required="required"
+        />
+      </label>
+      <label htmlFor="eventClosingDate">Voting Deadline:
+        <input type="date"
+        name="eventClosingDate"
+        value={eClosingDate}
+        onChange={(e) => setEventClosingDate(e.target.value)}
+        required="required"
+        />
+      </label>
       <button type="submit">Create Event</button>
+      { eventLoading && <span>Loading...</span>}
+      { eventError && <span>Error</span>}
     </form>
   );
 };
