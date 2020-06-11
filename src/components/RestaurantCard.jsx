@@ -27,7 +27,7 @@ class RestaurantCard extends React.Component {
       restaurant: {
         name,
         rating,
-        price_level,
+        price,
         location_string,
         photo,
         cuisine,
@@ -43,6 +43,23 @@ class RestaurantCard extends React.Component {
         className="Tinder-card"
       >
         <article className="restaurant-card">
+          <section>
+            <h2>{name}</h2>
+            {/* <p>{cuisine} </p> */}
+            <p>
+              <FontAwesomeIcon icon="dollar-sign" className="icon" /> {price}
+            </p>
+
+            <p>
+              <FontAwesomeIcon icon="star" className="icon" />
+              {rating}
+            </p>
+            <p>
+              <FontAwesomeIcon icon="map-marker-alt" className="icon" />
+              {location_string}
+            </p>
+          </section>
+          <img src={photo} alt={name} className="restaurant-image" />
           <section className="swipe-buttons">
             <button className="button-red">
               <span>
@@ -55,15 +72,6 @@ class RestaurantCard extends React.Component {
               </span>
             </button>
           </section>
-
-          <section>
-            <h2>{name}</h2>
-            <p>
-              {cuisine} price: {price_level} rating: {rating} location:{" "}
-              {location_string}
-            </p>
-          </section>
-          <img src={photo} alt={name} className="restaurant-image" />
         </article>
       </TinderCard>
     );

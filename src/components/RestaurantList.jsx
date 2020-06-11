@@ -24,7 +24,8 @@ class RestaurantList extends Component {
           ...restaurant,
           count: (restaurant.count += 1),
         };
-        //{voteObj: {upvote: (restaurant.voteObj.upvote += 1), downvote: 0, id: restaurant.location_id}}
+        //{voteObj: {positiveVote: (restaurant.voteObj.upvote += 1), negativeVote: 0, _id: restaurant.location_id, eventRef: ""}}
+        //backend gets restaurant.voteObj back
       } else {
         return { ...restaurant };
       }

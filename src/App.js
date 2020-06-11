@@ -7,7 +7,15 @@ import GetRestaurantsTripAdvisor from "./queries/GetRestaurantsTripAdvisor";
 import Header from "./components/re-usable/Header";
 import Login from "./components/re-usable/Login";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSpinner, faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSpinner,
+  faCheck,
+  faTimes,
+  faStar,
+  faMapMarkerAlt,
+  faMoneyBillAlt,
+  faDollarSign,
+} from "@fortawesome/free-solid-svg-icons";
 import Home from "./components/re-usable/Home";
 import { Router } from "@reach/router";
 import EventCreationForm from "./components/EventCreationForm";
@@ -55,6 +63,14 @@ class App extends Component {
     );
   }
 }
-library.add(faSpinner, faCheck, faTimes);
+library.add(
+  faSpinner,
+  faCheck,
+  faTimes,
+  faStar,
+  faMapMarkerAlt,
+  faMoneyBillAlt,
+  faDollarSign
+);
 
 export default App;
