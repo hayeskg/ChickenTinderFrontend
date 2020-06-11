@@ -94,3 +94,10 @@ body {
   max-height: 200px;
   max-width: 200px;
 }
+
+.eventForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: auto;
+}
