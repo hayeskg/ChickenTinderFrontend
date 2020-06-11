@@ -5,7 +5,7 @@ const StyledHeader = styled.header`
   background-color: #752a07;
   background-image: radial-gradient(#bd6140, #752a07);
   color: #fef2e4;
-  padding: 10px;
+  padding: 5px;
   display: flex;
   justify-content: center;
   flex-direction: row;

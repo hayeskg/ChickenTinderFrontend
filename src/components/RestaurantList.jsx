@@ -22,10 +22,13 @@ class RestaurantList extends Component {
       if (id === restaurant.location_id) {
         return {
           ...restaurant,
-          count: (restaurant.count += 1),
+          voteObj: {
+            positiveVote: 1,
+            negativeVote: 0,
+            _id: restaurant.location_id,
+            eventRef: "",
+          },
         };
-        //{voteObj: {positiveVote: (restaurant.voteObj.upvote += 1), negativeVote: 0, _id: restaurant.location_id, eventRef: ""}}
-        //backend gets restaurant.voteObj back
       } else {
         return { ...restaurant };
       }
@@ -46,9 +49,13 @@ class RestaurantList extends Component {
       if (id === restaurant.location_id) {
         return {
           ...restaurant,
-          count: (restaurant.count -= 1),
+          voteObj: {
+            positiveVote: 0,
+            negativeVote: 1,
+            _id: restaurant.location_id,
+            eventRef: "",
+          },
         };
-        //{voteObj: {downvote: (restaurant.voteObj.downvote += 1), upvote: 0, id: restaurant.location_id}}
       } else {
         return { ...restaurant };
       }
