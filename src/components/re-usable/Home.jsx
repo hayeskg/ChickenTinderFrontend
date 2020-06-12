@@ -15,6 +15,7 @@ const Home = () => {
           <span className="event-button-span"> Join Event</span>
         </button>
       </Link>
+
     </section>
   );
 };

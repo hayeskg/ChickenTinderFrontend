@@ -55,7 +55,9 @@ class App extends Component {
           <Header />
           <Router>
             {this.state.user ? <Home path="/" /> : <Login path="/" />}
-            <GetRestaurantsTripAdvisor path="/swipe" />
+
+            <GetRestaurantsTripAdvisor path="/swipe"/> 
+
             <EventCreationForm path="/event-creation" />
           </Router>
         </div>
