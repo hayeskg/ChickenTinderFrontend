@@ -6,6 +6,7 @@ import PlacesAutocomplete, {
 import { eventCreationMutation } from "../queries/EventCreation";
 import { useMutation } from "@apollo/react-hooks";
 import { Link } from '@reach/router';
+import Axios from 'axios';
 
 const EventCreationForm = () => {
   const [eventName, setEventName] = React.useState("");
@@ -26,10 +27,12 @@ const EventCreationForm = () => {
     error: eventError
   }] = useMutation(eventCreationMutation);
   const [eData, setReturnedEventData] = React.useState(null)
+  const [myLocationReadable, setMyLocationReadable] = React.useState("")
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
     const latlng = await getLatLng(results[0]);
+    console.log(latlng)
     setAddress(value);
     setCoordinates(latlng);
   };
@@ -42,9 +45,21 @@ const EventCreationForm = () => {
       lat: position.coords.latitude,
       lng: position.coords.longitude,
     });
-    setCoordinates({ lat: null, lng: null });
+    //{lat: 9.657496199999999, lng: -82.75507449999999}
+    setCoordinates({ lat: null, lng: null })
+    getMyLocationReadable(position.coords.latitude, position.coords.longitude)
   };
 
+  const getMyLocationReadable = (lat, lng) => {
+    Axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBfKa69QF4Y6ghdqsTzsWcLoBTmPvYnBF8`)
+    .then((response) => {
+      setMyLocationReadable(response.data.results[0].formatted_address)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const eventLat = !coordinates.lat ? `${myLocation.lat}` : `${coordinates.lat}`;
@@ -138,6 +153,7 @@ const EventCreationForm = () => {
         <p>
           Your location:
           <br />
+          {myLocationReadable}
           Latitude: {myLocation.lat}, Longitude: {myLocation.lng}
         </p>
       )}
@@ -175,10 +191,8 @@ const EventCreationForm = () => {
       {eventError &&
         <p>ERROR</p>
       }
-      {eData &&
         <button><Link to={`/swipe/5ee23fa0976ee6001793e49f`}>Take me to event</Link></button>
-      }
-    </form>
+      </form>
   );
 };
 
