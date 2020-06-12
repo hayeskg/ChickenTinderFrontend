@@ -5,6 +5,7 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import { eventCreationMutation } from "../queries/EventCreation";
 import { useMutation } from "@apollo/react-hooks";
+import { Link } from '@reach/router';
 
 const EventCreationForm = () => {
   const [eventName, setEventName] = React.useState("");
@@ -19,44 +20,18 @@ const EventCreationForm = () => {
     lat: null,
     lng: null,
   });
-  const [radius, setRadius] = React.useState(1);
-  const [setEvent, { loading: eventLoading, error: eventError },
-  ] = useMutation(eventCreationMutation);
+  const [radius, setRadius] = React.useState("1");
+  const [setEvent, {
+    loading: eventLoading,
+    error: eventError
+  }] = useMutation(eventCreationMutation);
+  const [eData, setReturnedEventData] = React.useState(null)
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
     const latlng = await getLatLng(results[0]);
     setAddress(value);
     setCoordinates(latlng);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const eventLat = `${myLocation.lat}`;
-    const eventLong = `${myLocation.lng}`;
-    const eventDistance = `${radius}`;
-    const eventDate = `${eDate}`;
-    const eventClosingDate = `${eClosingDate}`;
-    const eventInput = {
-      eventName,
-      eventLat,
-      eventLong,
-      eventDistance,
-      eventDate,
-      eventClosingDate,
-      eventOrganiser: "Fred",
-      attendees: ["Freddy", "Freddo", "Freda"],
-    };
-    console.log(eventInput);
-    setEvent({ variables: { 
-      eventName,
-      eventLat,
-      eventLong,
-      eventDistance,
-      eventDate,
-      eventClosingDate,
-      eventOrganiser: "Fred",
-      attendees: ["Freddy", "Freddo", "Freda"] }});
   };
 
   const getMyLocation = async () => {
@@ -68,8 +43,42 @@ const EventCreationForm = () => {
       lng: position.coords.longitude,
     });
     setCoordinates({ lat: null, lng: null });
-    console.log(coordinates);
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const eventLat = !coordinates.lat ? `${myLocation.lat}` : `${coordinates.lat}`;
+    const eventLong = !coordinates.lng ? `${myLocation.lng}` : `${coordinates.lng}`;
+    const eventDistance = radius;
+    const eventDate = `${eDate}`;
+    const eventClosingDate = `${eClosingDate}`;
+    setEvent({
+      variables: {
+        eventName,
+        eventLat,
+        eventLong,
+        eventDistance,
+        eventDate,
+        eventClosingDate,
+        eventOrganiser: "Fred",
+        attendees: ["Freddy", "Freddo", "Freda"]
+      }
+    })
+      .then(({ data }) => {
+        setReturnedEventData(data)
+      })
+    clearForm()
+  };
+
+  const clearForm = () => {
+    setEventName("");
+    setEventDate("");
+    setEventClosingDate("");
+    setAddress("");
+    setCoordinates({ lat: null, lng: null });
+    setMyLocation({ lat: null, lng: null });
+    setRadius("1");
+  }
 
   return (
     <form onSubmit={handleSubmit} className="eventForm">
@@ -96,30 +105,30 @@ const EventCreationForm = () => {
             getSuggestionItemProps,
             loading,
           }) => (
-            <div>
-              <label htmlFor="location">
-                Location:
-                <input
-                  {...getInputProps({
-                    placeholder: "Start typing your location...",
-                  })}
-                />
-              </label>
               <div>
-                {loading && <p>Loading!</p>}
-                {suggestions.map((suggestion) => {
-                  const style = {
-                    backgroundColor: suggestion.active ? "#d1e7ed" : "#fff",
-                  };
-                  return (
-                    <div {...getSuggestionItemProps(suggestion, { style })}>
-                      {suggestion.description}
-                    </div>
-                  );
-                })}
+                <label htmlFor="location">
+                  Location:
+                <input
+                    {...getInputProps({
+                      placeholder: "Start typing your location...",
+                    })}
+                  />
+                </label>
+                <div>
+                  {loading && <p>Loading!</p>}
+                  {suggestions.map((suggestion) => {
+                    const style = {
+                      backgroundColor: suggestion.active ? "#d1e7ed" : "#fff",
+                    };
+                    return (
+                      <div {...getSuggestionItemProps(suggestion, { style })}>
+                        {suggestion.description}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          )}
+            )}
         </PlacesAutocomplete>
       )}
       <button type="button" onClick={getMyLocation}>
@@ -134,36 +143,40 @@ const EventCreationForm = () => {
       )}
       <label htmlFor="radius">
         Search Radius (miles):
-        <input
-          type="text"
-          name="radius"
-          value={radius}
-          onChange={(e) => setRadius(e.target.value)}
-          placeholder="distance in miles..."
-        />
+        <select name='topic' onChange={(e) => setRadius(e.target.value)} value={radius}>
+          <option value='1'>1</option>
+          <option value='2'>2</option>
+          <option value='3'>3</option>
+          <option value='4'>4</option>
+          <option value='5'>5</option>
+        </select>
       </label>
       <label htmlFor="eventDate">Event Date:
         <input type="date"
-        name="eventDate"
-        value={eDate}
-        onChange={(e) => setEventDate(e.target.value)}
-        required="required"
+          name="eventDate"
+          value={eDate}
+          onChange={(e) => setEventDate(e.target.value)}
+          required="required"
         />
       </label>
       <label htmlFor="eventClosingDate">Voting Deadline:
         <input type="date"
-        name="eventClosingDate"
-        value={eClosingDate}
-        onChange={(e) => setEventClosingDate(e.target.value)}
-        required="required"
+          name="eventClosingDate"
+          value={eClosingDate}
+          onChange={(e) => setEventClosingDate(e.target.value)}
+          required="required"
         />
       </label>
       <button type="submit">Create Event</button>
-      { eventLoading && 
-      <p>Loading...</p>
+      <button type="reset" onClick={clearForm}>Reset Form</button>
+      {eventLoading &&
+        <p>Loading...</p>
       }
-      { eventError && 
-      <p>ERROR</p>
+      {eventError &&
+        <p>ERROR</p>
+      }
+      {eData &&
+        <button><Link to={`/swipe/5ee23fa0976ee6001793e49f`}>Take me to event</Link></button>
       }
     </form>
   );
