@@ -1,5 +1,6 @@
 import React from "react";
 import TinderCard from "react-tinder-card";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class RestaurantCard extends React.Component {
   state = {
@@ -26,7 +27,7 @@ class RestaurantCard extends React.Component {
       restaurant: {
         name,
         rating,
-        price_level,
+        price,
         location_string,
         photo,
         cuisine,
@@ -44,13 +45,33 @@ class RestaurantCard extends React.Component {
         <article className="restaurant-card">
           <section>
             <h2>{name}</h2>
+            {/* <p>{cuisine} </p> */}
             <p>
-              {cuisine} price: {price_level} rating: {rating} location:{" "}
+              <FontAwesomeIcon icon="dollar-sign" className="icon" /> {price}
+            </p>
+
+            <p>
+              <FontAwesomeIcon icon="star" className="icon" />
+              {rating}
+            </p>
+            <p>
+              <FontAwesomeIcon icon="map-marker-alt" className="icon" />
               {location_string}
             </p>
           </section>
           <img src={photo} alt={name} className="restaurant-image" />
-          <br />
+          <section className="swipe-buttons">
+            <button className="button-red">
+              <span>
+                <FontAwesomeIcon icon="times" className="icon" />
+              </span>
+            </button>
+            <button className="button-green">
+              <span>
+                <FontAwesomeIcon icon="check" className="icon" />
+              </span>
+            </button>
+          </section>
         </article>
       </TinderCard>
     );
