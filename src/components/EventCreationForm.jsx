@@ -52,14 +52,14 @@ const EventCreationForm = () => {
 
   const getMyLocationReadable = (lat, lng) => {
     Axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBfKa69QF4Y6ghdqsTzsWcLoBTmPvYnBF8`)
-    .then((response) => {
-      setMyLocationReadable(response.data.results[0].formatted_address)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+      .then((response) => {
+        setMyLocationReadable(response.data.results[0].formatted_address)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const eventLat = !coordinates.lat ? `${myLocation.lat}` : `${coordinates.lat}`;
@@ -186,13 +186,15 @@ const EventCreationForm = () => {
       <button type="submit">Create Event</button>
       <button type="reset" onClick={clearForm}>Reset Form</button>
       {eventLoading &&
-        <p>Loading...</p>
+        <p>Creating Event</p>
       }
       {eventError &&
-        <p>ERROR</p>
+        <p>Error in creating event.</p>
       }
-        <button><Link to={`/swipe/5ee23fa0976ee6001793e49f`}>Take me to event</Link></button>
-      </form>
+      {eData &&
+        <button><Link to={`/swipe/${eData.createEvent._id}`}>Take me to event</Link></button>
+      }
+    </form>
   );
 };
 

@@ -11,6 +11,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Home from "./components/re-usable/Home";
 import { Router } from "@reach/router";
 import EventCreationForm from "./components/EventCreationForm";
+import GetRestaurantsByEventId from "./queries/GetRestaurantsById";
 
 const client = new ApolloClient({
   uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
@@ -48,6 +49,7 @@ class App extends Component {
           <Router>
             {this.state.user ? <Home path="/" /> : <Login path="/" />}
             <GetRestaurantsTripAdvisor path="/swipe"/> 
+            <GetRestaurantsByEventId path="/swipe/:eventID" />
             <EventCreationForm path="/event-creation" />
           </Router>
         </div>

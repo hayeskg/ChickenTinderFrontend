@@ -11,10 +11,10 @@ class RestaurantList extends Component {
   };
   componentDidMount() {
     this.setState({
-      restaurants: this.props.query.getRestaurantsTripAdvisor,
+      restaurants: this.props.query.getEventByID.restaurants,
       loading: false,
     });
-    console.log(this.props.query.getRestaurantsTripAdvisor);
+    console.log(this.props.query);
   }
 
   handleUpvote = (id) => {
