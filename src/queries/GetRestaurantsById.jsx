@@ -3,7 +3,6 @@ import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import RestaurantList from "../components/RestaurantList";
 import Loader from "../components/re-usable/Loader";
-import { useQuery } from '@apollo/react-hooks';
 
 const getEventByID = gql`
 query($eventID: ID!) {
