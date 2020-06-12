@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "@reach/router";
 
 const StyledSection = styled.section`
-  background-colour: white;
+  background-color: #EB5E30;
   border-style: groove;
-  border-colour: black;
+  border-color: black;
   padding: 20px;
   margin 20px;
   display: flex;
@@ -12,17 +13,30 @@ const StyledSection = styled.section`
   justify-content: space-around;
  align-items: center;
   flex-direction: column;
+  border-radius: 5px;
 `;
 
 const StyledReturnButton = styled.button`
-  background-color: white;
+  background-color: #5c8f22;
   padding: 20px;
   border-radius: 5px;
   font-size: 20px;
+  margin: 20px;
+  &:hover {
+    background-color: #fd974f;
+    transition: all 500ms ease;
+  }
 `;
 
 const EndOfList = () => {
-  return <StyledSection>THE END</StyledSection>;
+  return (
+    <StyledSection>
+      THE END
+      <Link to="/">
+        <StyledReturnButton>Back home</StyledReturnButton>
+      </Link>
+    </StyledSection>
+  );
 };
 
 export default EndOfList;
