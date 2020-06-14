@@ -83,6 +83,7 @@ class RestaurantList extends Component {
               restaurant={restaurant}
               handleUpvote={this.handleUpvote}
               handleDownvote={this.handleDownvote}
+              eventRef={this.props.query.getEventByID._id}
             />
           );
         })}

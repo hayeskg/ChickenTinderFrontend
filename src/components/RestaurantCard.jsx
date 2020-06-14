@@ -1,44 +1,71 @@
 import React from "react";
 import TinderCard from "react-tinder-card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { voteMutation } from "../queries/voteMutation";
+import { useMutation } from "@apollo/react-hooks";
+import { useEffect } from "react";
+import { useRef } from "react";
 
-class RestaurantCard extends React.Component {
-  state = {
-    direction: "",
-  };
+const RestaurantCard = (
+  {
+    eventRef,
+    restaurant: {
+      _id,
+      name,
+      rating,
+      price,
+      location_string,
+      photo,
+      cuisine,
+      location_id,
+    },
+  }
+) => {
+  const [d, setDirection] = React.useState("");
+  const [votes, setPosNegVotes] = React.useState({
+    positiveVote: 0,
+    negativeVote: 0
+  });
+  const initialRender = useRef(true)
+  const [setVotes, {
+    loading: eventLoading,
+    error: eventError
+  }] = useMutation(voteMutation);
 
-  onSwipe = (direction) => {
-    this.setState({ direction });
-  };
-
-  onCardLeftScreen = (myIdentifier, index) => {
-    const { direction } = this.state;
-    const { handleDownvote, handleUpvote } = this.props;
-
-    if (direction === "left") {
-      handleDownvote(myIdentifier, index);
-    } else if (direction === "right") {
-      handleUpvote(myIdentifier);
+  useEffect(() => {
+    if(initialRender.current) {
+      initialRender.current = false;
+    } else {
+      setVotes({variables: {
+        eventRef: eventRef,
+        restaurantRef: _id,
+        positiveVote: votes.positiveVote,
+        negativeVote: votes.negativeVote
+      }})
+      .then((response) => {
+        console.log(response)
+      })
     }
+    
+  }, [votes, _id, eventRef, setVotes]);
+
+  
+
+  const onSwipe = (direction) => {
+    direction === "left" ? setPosNegVotes({positiveVote: 0, negativeVote: 1}) : setPosNegVotes({positiveVote: 1, negativeVote: 0})
+
   };
 
-  render() {
-    const {
-      restaurant: {
-        name,
-        rating,
-        price,
-        location_string,
-        photo,
-        cuisine,
-        location_id,
-      },
-    } = this.props;
+const onCardLeftScreen = () => {
+  console.log()
+  };
+
 
     return (
+      
       <TinderCard
-        onSwipe={this.onSwipe}
-        onCardLeftScreen={() => this.onCardLeftScreen(location_id)}
+        onSwipe={onSwipe}
+        onCardLeftScreen={onCardLeftScreen}
         preventSwipe={["up", "down"]}
         className="Tinder-card"
       >
@@ -76,6 +103,6 @@ class RestaurantCard extends React.Component {
       </TinderCard>
     );
   }
-}
+
 
 export default RestaurantCard;
