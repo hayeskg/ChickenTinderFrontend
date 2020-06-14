@@ -61,8 +61,6 @@ class App extends Component {
 
             <GetRestaurantsByEventId path="/swipe/:eventID" />
 
-
-
             <EventCreationForm path="/event-creation" />
           </Router>
         </div>
