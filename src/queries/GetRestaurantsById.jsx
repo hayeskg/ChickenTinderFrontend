@@ -46,18 +46,18 @@ query($id: ID!) {
 
 const GetRestaurantsByEventId = ({ id }) => {
 
-    return (
-        <div>
-            <Query query={getEventByID} variables={{ id }}>
-                {({ loading, error, data }) => {
-                    if (loading) return <Loader />;
-                    if (error) console.log(error);
+  return (
+    <div>
+      <Query query={getEventByID} variables={{ id }}>
+        {({ loading, error, data }) => {
+          if (loading) return <Loader />;
+          if (error) console.log(error);
 
-                    return <RestaurantList query={data} />;
-                }}
-            </Query>
-        </div>
-    );
+          return <RestaurantList query={data} />;
+        }}
+      </Query>
+    </div>
+  );
 };
 
 export default GetRestaurantsByEventId;
