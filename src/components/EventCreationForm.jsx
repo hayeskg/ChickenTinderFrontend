@@ -60,21 +60,22 @@ const EventCreationForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const eventLat = !coordinates.lat ? `${myLocation.lat}` : `${coordinates.lat}`;
-    const eventLong = !coordinates.lng ? `${myLocation.lng}` : `${coordinates.lng}`;
-    const eventDistance = radius;
-    const eventDate = `${eDate}`;
-    const eventClosingDate = `${eClosingDate}`;
+    const name = eventName
+    const lat = !coordinates.lat ? `${myLocation.lat}` : `${coordinates.lat}`;
+    const long = !coordinates.lng ? `${myLocation.lng}` : `${coordinates.lng}`;
+    const distance = radius;
+    const date = new Date(eDate).toISOString();
+    //const eventClosingDate = `${eClosingDate}`;
     setEvent({
       variables: {
-        eventName,
-        eventLat,
-        eventLong,
-        eventDistance,
-        eventDate,
-        eventClosingDate,
-        eventOrganiser: "Fred",
-        attendees: ["Freddy", "Freddo", "Freda"]
+        name,
+        lat,
+        long,
+        distance,
+        date,
+        //eventClosingDate,
+        //eventOrganiser: "Fred",
+        //attendees: ["Freddy", "Freddo", "Freda"]
       }
     })
       .then(({ data }) => {
@@ -136,9 +137,11 @@ const EventCreationForm = () => {
                     return (
                       <div {...getSuggestionItemProps(suggestion, { style })}>
                         {suggestion.description}
+                        
                       </div>
                     );
                   })}
+                  <img src="powered_by_google_on_white.png" alt="powered by Google"/>
                 </div>
               </div>
             )}
@@ -147,13 +150,16 @@ const EventCreationForm = () => {
       <button type="button" onClick={getMyLocation}>
         Use My Location
       </button>
+      <img src="powered_by_google_on_white.png" alt="powered by Google"/>
       {myLocation.lat && (
+        <>
         <p>
           Your location:
           <br />
           {myLocationReadable}
-          Latitude: {myLocation.lat}, Longitude: {myLocation.lng}
         </p>
+        <img src="powered_by_google_on_white.png" alt="powered by Google"/>
+        </>
       )}
       <label htmlFor="radius">
         Search Radius (miles):
@@ -178,7 +184,6 @@ const EventCreationForm = () => {
           name="eventClosingDate"
           value={eClosingDate}
           onChange={(e) => setEventClosingDate(e.target.value)}
-          required="required"
         />
       </label>
       <button type="submit">Create Event</button>
@@ -190,10 +195,12 @@ const EventCreationForm = () => {
         <p>Error in creating event.</p>
       }
       {eData &&
-        <button><Link to={`/swipe/${eData.createEvent._id}`}>Take me to event</Link></button>
+        <button><Link to={`/swipe/${eData.addEvent.id}`}>Take me to event</Link></button>
       }
     </form>
   );
 };
 
 export default EventCreationForm;
+
+

@@ -1,22 +1,22 @@
 import gql from "graphql-tag";
 
 export const voteMutation = gql`
-mutation($eventRef: ID!, 
-    $restaurantRef: ID!, 
-    $positiveVote: Int!, 
-    $negativeVote: Int!) {
-      createVote(
-        voteInput: {
-          eventRef: $eventRef,
-          restaurantRef: $restaurantRef,
-          positiveVote: $positiveVote,
-          negativeVote: $negativeVote
-        }) {
-          _id
-        eventRef
-        restaurantRef
-        positiveVote
-        negativeVote
+mutation($eventId: ID!,
+  $restaurantId: ID!,
+  $userId: ID!,
+  $positiveVote: Int!,
+  $negativeVote: Int!) {
+    addVote (
+      eventId: $eventId,
+      restaurantId: $restaurantId,
+      userId: $userId,
+      positiveVote: $positiveVote,
+      negativeVote: $negativeVote
+    ) {
+      id
+      eventId
+      positiveVote
+      negativeVote
     }
-}
+  }
 `;

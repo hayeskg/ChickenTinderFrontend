@@ -11,14 +11,15 @@ class RestaurantList extends Component {
     vote: "",
   };
   componentDidMount() {
+    console.log(this.props.query)
     this.setState({
-      restaurants: this.props.query.getEventByID.restaurants,
+      restaurants: this.props.query.event.restaurants,
       loading: false,
     });
   }
 
-  checkForEndOfList = (_id) => {
-    if (this.state.restaurants.findIndex(restaurant => restaurant._id === _id) === 0) {
+  checkForEndOfList = (id) => {
+    if (this.state.restaurants.findIndex(restaurant => restaurant.id === id) === 0) {
       this.setState({ endOfList: true })
     }
   }
@@ -31,11 +32,11 @@ class RestaurantList extends Component {
         {this.state.restaurants.map((restaurant) => {
           return (
             <RestaurantCard
-              key={restaurant.location_id}
+              key={restaurant.id}
               restaurant={restaurant}
               handleUpvote={this.handleUpvote}
               handleDownvote={this.handleDownvote}
-              eventRef={this.props.query.getEventByID._id}
+              eventRef={this.props.query.event.id}
               checkForEndOfList={this.checkForEndOfList}
             />
           );
