@@ -26,13 +26,13 @@ const client = new ApolloClient({
 
 class App extends Component {
   state = {
-    user: {
-      email: "Zizi@chickenTinder.com",
-      username: "Zizi",
-      avatar_url:
-        "https://i.pinimg.com/originals/8a/83/a6/8a83a6179c330eee3fb352ffdfa20bd5.jpg",
-      friends_list: [1, 3, 4, 123], //user ids
-    },
+    // user: {
+    //   email: "Zizi@chickenTinder.com",
+    //   username: "Zizi",
+    //   avatar_url:
+    //     "https://i.pinimg.com/originals/8a/83/a6/8a83a6179c330eee3fb352ffdfa20bd5.jpg",
+    //   friends_list: [1, 3, 4, 123], //user ids
+    // },
   };
   componentDidMount() {
     this.authListener();
@@ -40,7 +40,6 @@ class App extends Component {
 
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
-      console.log(user.email);
       if (user) {
         this.setState({ user: { username: user.email } });
       } else {
