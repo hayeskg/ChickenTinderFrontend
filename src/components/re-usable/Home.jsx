@@ -11,7 +11,7 @@ const Home = () => {
         </button>
       </Link>
 
-      <Link to="/swipe/5ee753b5483ee00017bc26e3">
+      <Link to="/swipe/5ee78d3917a61c0017e5ecc1">
         <button className="event-button">
           <span className="event-button-span">Join Event</span>
         </button>
