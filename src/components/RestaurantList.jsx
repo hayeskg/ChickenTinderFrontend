@@ -8,68 +8,20 @@ class RestaurantList extends Component {
     restaurants: [],
     endOfList: false,
     loading: true,
+    vote: "",
   };
   componentDidMount() {
     this.setState({
       restaurants: this.props.query.getEventByID.restaurants,
       loading: false,
     });
-    console.log(this.props.query);
   }
 
-  handleUpvote = (id) => {
-    let newArray = this.state.restaurants.map((restaurant) => {
-      if (id === restaurant.location_id) {
-        return {
-          ...restaurant,
-          voteObj: {
-            positiveVote: 1,
-            negativeVote: 0,
-            _id: restaurant.location_id,
-            eventRef: "",
-          },
-        };
-      } else {
-        return { ...restaurant };
-      }
-    });
-    if (newArray[0]) {
-      this.setState({ restaurants: newArray, endOfList: true, loading: false });
-    } else {
-      this.setState({
-        restaurants: newArray,
-        endOfList: false,
-        loading: false,
-      });
+  checkForEndOfList = (_id) => {
+    if (this.state.restaurants.findIndex(restaurant => restaurant._id === _id) === 0) {
+      this.setState({ endOfList: true })
     }
-  };
-
-  handleDownvote = (id) => {
-    let newArray = this.state.restaurants.map((restaurant) => {
-      if (id === restaurant.location_id) {
-        return {
-          ...restaurant,
-          voteObj: {
-            positiveVote: 0,
-            negativeVote: 1,
-            _id: restaurant.location_id,
-            eventRef: "",
-          },
-        };
-      } else {
-        return { ...restaurant };
-      }
-    });
-    if (newArray[0]) {
-      this.setState({ restaurants: newArray, endOfList: true, loading: false });
-    } else {
-      this.setState({
-        restaurants: newArray,
-        endOfList: false,
-        loading: false,
-      });
-    }
-  };
+  }
 
   render() {
     const { loading } = this.state;
@@ -83,6 +35,8 @@ class RestaurantList extends Component {
               restaurant={restaurant}
               handleUpvote={this.handleUpvote}
               handleDownvote={this.handleDownvote}
+              eventRef={this.props.query.getEventByID._id}
+              checkForEndOfList={this.checkForEndOfList}
             />
           );
         })}

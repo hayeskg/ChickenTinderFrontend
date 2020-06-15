@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import fire from "./fireAuth";
-import GetRestaurantsTripAdvisor from "./queries/GetRestaurantsTripAdvisor";
 import Header from "./components/re-usable/Header";
 import Login from "./components/re-usable/Login";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -57,11 +56,7 @@ class App extends Component {
           <Router>
             {this.state.user ? <Home path="/" /> : <Login path="/" />}
 
-            <GetRestaurantsTripAdvisor path="/swipe"/> 
-
             <GetRestaurantsByEventId path="/swipe/:eventID" />
-
-
 
             <EventCreationForm path="/event-creation" />
           </Router>
