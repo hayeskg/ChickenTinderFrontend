@@ -17,60 +17,6 @@ class RestaurantList extends Component {
     });
   }
 
-  /*  handleUpvote = (id) => {
-      let newArray = this.state.restaurants.map((restaurant) => {
-        if (id === restaurant.location_id) {
-          return {
-            ...restaurant,
-            voteObj: {
-              positiveVote: 1,
-              negativeVote: 0,
-              _id: restaurant.location_id,
-              eventRef: "",
-            },
-          };
-        } else {
-          return { ...restaurant };
-        }
-      });
-      if (newArray[0]) {
-        this.setState({ restaurants: newArray, endOfList: true, loading: false });
-      } else {
-        this.setState({
-          restaurants: newArray,
-          endOfList: false,
-          loading: false,
-        });
-      }
-    };
-  
-    handleDownvote = (id) => {
-      let newArray = this.state.restaurants.map((restaurant) => {
-        if (id === restaurant.location_id) {
-          return {
-            ...restaurant,
-            voteObj: {
-              positiveVote: 0,
-              negativeVote: 1,
-              _id: restaurant.location_id,
-              eventRef: "",
-            },
-          };
-        } else {
-          return { ...restaurant };
-        }
-      });
-      if (newArray[0]) {
-        this.setState({ restaurants: newArray, endOfList: true, loading: false });
-      } else {
-        this.setState({
-          restaurants: newArray,
-          endOfList: false,
-          loading: false,
-        });
-      }
-    };*/
-
   checkForEndOfList = (_id) => {
     if (this.state.restaurants.findIndex(restaurant => restaurant._id === _id) === 0) {
       this.setState({ endOfList: true })

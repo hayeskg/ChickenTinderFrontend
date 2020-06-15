@@ -32,7 +32,6 @@ const EventCreationForm = () => {
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
     const latlng = await getLatLng(results[0]);
-    console.log(latlng)
     setAddress(value);
     setCoordinates(latlng);
   };
@@ -45,7 +44,6 @@ const EventCreationForm = () => {
       lat: position.coords.latitude,
       lng: position.coords.longitude,
     });
-    //{lat: 9.657496199999999, lng: -82.75507449999999}
     setCoordinates({ lat: null, lng: null })
     getMyLocationReadable(position.coords.latitude, position.coords.longitude)
   };
