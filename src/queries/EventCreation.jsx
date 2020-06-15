@@ -19,32 +19,7 @@ mutation($eventName: String!,
     eventOrganiser: $eventOrganiser,
     attendees: $attendees
   }){
-    _id
-    eventName
-    eventDate
-    eventClosingDate
-    eventLat
-    eventLong
-    eventDistance
-    eventOrganiser
-    attendees
-    restaurantList
-    restaurants {
-    location_id
-    location_string
-    name
-    description
-    cuisine
-    photo
-    price
-    ranking
-    rating
-    phone
-    website
-    address
-    dietary_restrictions
-    num_reviews
-    } 
+    _id 
   }
 }
 `;
