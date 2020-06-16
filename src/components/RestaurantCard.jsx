@@ -6,14 +6,14 @@ import { useMutation } from "@apollo/react-hooks";
 import { useEffect, useRef } from "react";
 
 const RestaurantCard = ({
-  eventRef,
   checkForEndOfList,
   restaurant: {
-    _id,
+    id,
+    eventId,
     name,
     rating,
     price,
-    location_string,
+    //location_string,
     photo,
     cuisine,
     location_id,
@@ -37,8 +37,9 @@ const RestaurantCard = ({
     } else {
       setVotes({
         variables: {
-          eventRef: eventRef,
-          restaurantRef: _id,
+          eventId,
+          restaurantId: id,
+          userId: "47",
           positiveVote: votes.positiveVote,
           negativeVote: votes.negativeVote
         }
@@ -50,7 +51,7 @@ const RestaurantCard = ({
           console.log(err)
         })
     }
-  }, [votes, _id, eventRef, setVotes]);
+  }, [votes, id, eventId, setVotes]);
 
   const onSwipe = (direction) => {
     setDirection(direction)
@@ -60,7 +61,7 @@ const RestaurantCard = ({
   };
 
   const onCardLeftScreen = () => {
-    checkForEndOfList(_id)
+    checkForEndOfList(id)
   };
 
   return (
@@ -81,10 +82,10 @@ const RestaurantCard = ({
             <FontAwesomeIcon icon="star" className="icon" />
             {rating}
           </p>
-          <p>
+          {/*<p>
             <FontAwesomeIcon icon="map-marker-alt" className="icon" />
             {location_string}
-          </p>
+          </p>*/}
         </section>
         <img src={photo} alt={name} className="restaurant-image" />
         <section className="swipe-buttons">
@@ -103,6 +104,5 @@ const RestaurantCard = ({
     </TinderCard>
   );
 }
-
 
 export default RestaurantCard;

@@ -270,3 +270,9 @@ h2 {
   margin-bottom: 0.5rem;
   max-width: 150px;
 }
+
+.eventForm img {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
