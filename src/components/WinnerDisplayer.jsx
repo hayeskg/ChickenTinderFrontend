@@ -1,5 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "@reach/router";
 
 const WinnerDisplayer = ({ data }) => {
 
@@ -46,6 +47,9 @@ const WinnerDisplayer = ({ data }) => {
                 </a>
                 <p>Phone Number: {phone}</p>
             </div>
+            <Link to="/">
+                <button>Home</button>
+            </Link>
         </article>
     )
 }

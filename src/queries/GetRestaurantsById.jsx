@@ -53,7 +53,7 @@ const GetRestaurantsByEventId = ({ id }) => {
           if (loading) return <Loader />;
           if (error) console.log(error);
 
-          return <RestaurantList query={data} />;
+          return <RestaurantList query={data} eventId={id}/>;
         }}
       </Query>
     </div>

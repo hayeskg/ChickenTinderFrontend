@@ -39,7 +39,7 @@ const RestaurantCard = ({
         variables: {
           eventId,
           restaurantId: id,
-          userId: "47",
+          userId: "52",
           positiveVote: votes.positiveVote,
           negativeVote: votes.negativeVote
         }
