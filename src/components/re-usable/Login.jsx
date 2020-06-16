@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import fire from "../../fireAuth.js";
 import styled from "styled-components";
+import { useMutation } from "react-apollo";
+import { addUser } from "../../queries/AddUser.jsx";
 
 const StyledLogin = styled.form`
   background-color: white;
@@ -23,65 +25,73 @@ const StyledButton = styled.button`
   margin: 10px;
 `;
 
-class Login extends Component {
-  state = {
-    username: "",
-    password: "",
-  };
+const Login = () => {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
+  const [setSignedUpUser, { loading: loading, error: error }] = useMutation(
+    addUser
+  );
 
-    this.setState({ [name]: value });
-  };
+  // const handleChange = (event) => {
+  //   const { email, password } = event.target;
+  //   setEmail(email);
+  //   setPassword(password);
+  // };
 
-  login = (event) => {
+  const login = (event) => {
     event.preventDefault();
     fire
       .auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .signInWithEmailAndPassword(email, password)
       .then((cred) => {
-        console.log(cred);
+        console.log(cred.user.uid, "THIS HERE");
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  signup = (event) => {
+  const signup = (event) => {
     event.preventDefault();
     fire
       .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then((cred) => {
-        console.log(cred);
+      .createUserWithEmailAndPassword(email, password)
+      .then(({ user: { uid, email, displayName, photoURL } }) => {
+        setSignedUpUser({
+          variables: {
+            uid: uid,
+            username: displayName,
+            email: email,
+            photo: photoURL,
+          },
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  render() {
-    return (
-      <StyledLogin>
-        <label htmlFor="email">Email: </label>
-        <StyledInput
-          type="email"
-          name="email"
-          placeholder="email"
-          onChange={this.handleChange}
-        />
-        <label htmlFor="password">Password: </label>
-        <StyledInput
-          type="password"
-          name="password"
-          placeholder="password"
-          onChange={this.handleChange}
-        />
-        <StyledButton onClick={this.login}>Login</StyledButton>
-        <StyledButton onClick={this.signup}>Signup</StyledButton>
-      </StyledLogin>
-    );
-  }
-}
+
+  return (
+    <StyledLogin>
+      <label htmlFor="email">Email: </label>
+      <StyledInput
+        type="email"
+        name="email"
+        placeholder="email"
+        onChange={(event) => setEmail(event.target.value)}
+      />
+      <label htmlFor="password">Password: </label>
+      <StyledInput
+        type="password"
+        name="password"
+        placeholder="password"
+        onChange={(event) => setPassword(event.target.value)}
+      />
+      <StyledButton onClick={login}>Login</StyledButton>
+      <StyledButton onClick={signup}>Signup</StyledButton>
+    </StyledLogin>
+  );
+};
 
 export default Login;
