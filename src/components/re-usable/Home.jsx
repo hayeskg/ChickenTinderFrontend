@@ -17,6 +17,13 @@ const Home = () => {
         </button>
       </Link>
 
+      <Link to="/winner/5ee7804f8d9b7f0017637b48">
+        <button className="event-button">
+          <span className="event-button-span">See winner</span>
+        </button>
+      </Link>
+      
+
     </section>
   );
 };

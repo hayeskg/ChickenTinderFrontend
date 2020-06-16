@@ -19,6 +19,7 @@ import Home from "./components/re-usable/Home";
 import { Router } from "@reach/router";
 import EventCreationForm from "./components/EventCreationForm";
 import GetRestaurantsByEventId from "./queries/GetRestaurantsById";
+import FetchWinner from "./queries/GetWinner";
 
 const client = new ApolloClient({
   uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
@@ -55,10 +56,9 @@ class App extends Component {
           <Header />
           <Router>
             {this.state.user ? <Home path="/" /> : <Login path="/" />}
-
             <GetRestaurantsByEventId path="/swipe/:id" />
-
             <EventCreationForm path="/event-creation" />
+            <FetchWinner path="/winner/:id" />
           </Router>
         </div>
       </ApolloProvider>
