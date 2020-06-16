@@ -5,54 +5,59 @@ import RestaurantList from "../components/RestaurantList";
 import Loader from "../components/re-usable/Loader";
 
 const getEventByID = gql`
-query($eventID: ID!) {
-    getEventByID (
-       eventID: $eventID
-    ) {
-        _id
-      	eventName
-      	eventDate
-      eventClosingDate
-      eventLat
-      eventLong
-      eventDistance
-      eventOrganiser
-      attendees
-      restaurantList
-      restaurants {
-        _id
-        location_id
-        location_string
-        name
-        description
-        photo
-        price
-        ranking
-        rating
-        phone
-        website
-        address
-        num_reviews
-      }
+query($id: ID!) { 
+  event(id: $id)
+      { id
+      	name
+      	date
+      	lat
+      	long
+      	distance
+      	organiser {
+      	  id
+      	}
+      	members {
+      	  id
+      	}
+      	restaurants {
+          id
+          eventId
+          name
+          description
+          photo
+          price
+          ranking
+          rating
+          phone
+          website
+          address
+          cuisine
+          dietRestrictions
+        }
+    votes {
+      id
     }
-  }
+    winner {
+      id
+    }
+    }
+} 
 `;
 
-const GetRestaurantsByEventId = ({ eventID }) => {
+const GetRestaurantsByEventId = ({ id }) => {
 
-    console.log(typeof (eventID))
-    return (
-        <div>
-            <Query query={getEventByID} variables={{ eventID }}>
-                {({ loading, error, data }) => {
-                    if (loading) return <Loader />;
-                    if (error) console.log(error);
+  return (
+    <div>
+      <Query query={getEventByID} variables={{ id }}>
+        {({ loading, error, data }) => {
+          if (loading) return <Loader />;
+          if (error) console.log(error);
 
-                    return <RestaurantList query={data} />;
-                }}
-            </Query>
-        </div>
-    );
+          return <RestaurantList query={data} />;
+        }}
+      </Query>
+    </div>
+  );
 };
 
 export default GetRestaurantsByEventId;
