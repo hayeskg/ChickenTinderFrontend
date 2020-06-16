@@ -26,6 +26,7 @@ class RestaurantList extends Component {
 
   render() {
     const { loading } = this.state;
+    const { eventId } = this.props;
     if (loading) return <Loader />;
     return (
       <section className="restaurant-list">
@@ -41,7 +42,7 @@ class RestaurantList extends Component {
             />
           );
         })}
-        {this.state.endOfList && <EndOfList key />}
+        {this.state.endOfList && <EndOfList id={eventId} />}
       </section>
     );
   }
