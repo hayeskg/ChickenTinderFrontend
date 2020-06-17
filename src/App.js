@@ -27,13 +27,10 @@ const client = new ApolloClient({
 
 class App extends Component {
   state = {
-    // user: {
-    //   email: "Zizi@chickenTinder.com",
-    //   username: "Zizi",
-    //   avatar_url:
-    //     "https://i.pinimg.com/originals/8a/83/a6/8a83a6179c330eee3fb352ffdfa20bd5.jpg",
-    //   friends_list: [1, 3, 4, 123], //user ids
-    // },
+     user: {
+     email: "",
+     uid: "",
+    },
   };
   componentDidMount() {
     this.authListener();
@@ -42,22 +39,24 @@ class App extends Component {
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.setState({ user: { username: user.email } });
+        this.setState({user:{username: user.email, email: user.email, uid: user.uid}});
       } else {
         this.setState({ user: null });
       }
     });
-  }
+  } 
+
   render() {
+    const { uid } = this.state.user
     return (
       <ApolloProvider client={client}>
         <div className="App">
           <Header />
           <Router>
-            {this.state.user ? <Home path="/" /> : <Login path="/" />}
-            <GetRestaurantsByEventId path="/swipe/:id" />
-            <EventCreationForm path="/event-creation" />
-            <FetchWinner path="/winner/:id" />
+            {this.state.user ? <Home path="/" user={uid}/> : <Login path="/" />}
+            <GetRestaurantsByEventId path="/swipe/:id" user={uid}/>
+            <EventCreationForm path="/event-creation" user={uid}/>
+            <FetchWinner path="/winner/:id" user={uid}/>
           </Router>
         </div>
       </ApolloProvider>

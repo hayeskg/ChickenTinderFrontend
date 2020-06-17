@@ -8,7 +8,8 @@ import { useMutation } from "@apollo/react-hooks";
 import { Link } from '@reach/router';
 import Axios from 'axios';
 
-const EventCreationForm = () => {
+const EventCreationForm = ({user}) => {
+  console.log(user)
   const [eventName, setEventName] = React.useState("");
   const [eDate, setEventDate] = React.useState("");
   const [eClosingDate, setEventClosingDate] = React.useState("");

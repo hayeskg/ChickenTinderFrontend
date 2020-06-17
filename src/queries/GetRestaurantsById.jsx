@@ -9,14 +9,15 @@ query($id: ID!) {
   event(id: $id)
       { id
       	name
-      	date
+        endDate
+        voteDate
       	lat
       	long
       	distance
       	organiser {
       	  id
       	}
-      	members {
+      	guests {
       	  id
       	}
       	restaurants {

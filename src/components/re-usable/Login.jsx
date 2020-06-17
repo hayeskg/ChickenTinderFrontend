@@ -33,19 +33,13 @@ const Login = () => {
     addUser
   );
 
-  // const handleChange = (event) => {
-  //   const { email, password } = event.target;
-  //   setEmail(email);
-  //   setPassword(password);
-  // };
-
   const login = (event) => {
     event.preventDefault();
     fire
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((cred) => {
-        console.log(cred.user.uid, "THIS HERE");
+        console.log(cred)
       })
       .catch((err) => {
         console.log(err);
@@ -57,13 +51,11 @@ const Login = () => {
     fire
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(({ user: { uid, email, displayName, photoURL } }) => {
+      .then(({ user: { uid, email} }) => {
         setSignedUpUser({
           variables: {
             uid: uid,
-            username: displayName,
-            email: email,
-            photo: photoURL,
+            email: email, 
           },
         });
       })
