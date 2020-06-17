@@ -1,5 +1,6 @@
 import React from 'react';
 import fire from '../../fireAuth.js';
+import Grid from '@material-ui/core/Grid';
 import { Button, Typography } from '@material-ui/core';
 import { Link } from '@reach/router';
 
@@ -8,25 +9,32 @@ const Home = () => {
     fire.auth().signOut();
   };
   return (
-    <section className="home-wrapper">
-      <Button color="primary" variant="contained">
-        <Link to="/event-creation">Create Event</Link>
-      </Button>
-
-      <Button color="primary" variant="contained">
-        <Link to="/swipe/5ee8c10bc226cb0017638939">
-          <span>Join Event</span>
-        </Link>
-      </Button>
-      <Button color="secondary" variant="contained" onClick={logout}>
-        Logout
-      </Button>
-      <Button color="primary" variant="contained">
-        <Link to="/winner/5ee8c10bc226cb0017638939">
-          <span>See winner</span>
-        </Link>
-      </Button>
-    </section>
+    <Grid container justify="center" spacing={3}>
+      <Grid item xs={8}>
+        <Button color="primary" variant="contained">
+          <Link to="/event-creation">Create Event</Link>
+        </Button>
+      </Grid>
+      <Grid item xs={8}>
+        <Button color="primary" variant="contained">
+          <Link to="/swipe/5ee8c10bc226cb0017638939">
+            <span>Join Event</span>
+          </Link>
+        </Button>
+      </Grid>
+      <Grid item xs={8}>
+        <Button color="secondary" variant="contained" onClick={logout}>
+          Logout
+        </Button>
+      </Grid>
+      <Grid item xs={8}>
+        <Button color="primary" variant="contained">
+          <Link to="/winner/5ee8c10bc226cb0017638939">
+            <span>See winner</span>
+          </Link>
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 
