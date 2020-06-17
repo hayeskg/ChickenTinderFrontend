@@ -7,7 +7,8 @@ export const addUser = gql`
       email: $email
     ) {
       uid
-      email  
+      email 
+      
     }
   }
 `;

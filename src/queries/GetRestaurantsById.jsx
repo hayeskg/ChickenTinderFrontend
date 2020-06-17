@@ -13,13 +13,7 @@ query($id: ID!) {
         voteDate
       	lat
       	long
-      	distance
-      	organiser {
-      	  id
-      	}
-      	guests {
-      	  id
-      	}
+        distance	
       	restaurants {
           id
           eventId
@@ -35,12 +29,6 @@ query($id: ID!) {
           cuisine
           dietRestrictions
         }
-    votes {
-      id
-    }
-    winner {
-      id
-    }
     }
 } 
 `;
