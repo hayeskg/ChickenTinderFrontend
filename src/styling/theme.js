@@ -10,7 +10,7 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: ['MuseoModerno', 'Quicksand'].join(','),
+    fontFamily: ['Quicksand'].join(','),
   },
 });
 
