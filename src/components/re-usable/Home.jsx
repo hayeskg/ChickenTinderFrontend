@@ -3,10 +3,11 @@ import fire from "../../fireAuth.js";
 
 import { Link } from "@reach/router";
 
-const Home = () => {
+const Home = ({user}) => {
   const logout = () => {
     fire.auth().signOut();
   };
+  
   return (
     <section className="home-wrapper">
       <Link to="/event-creation">
@@ -14,7 +15,7 @@ const Home = () => {
           <span className="event-button-span">Create Event</span>
         </button>
       </Link>
-      <Link to="/swipe/5ee8c10bc226cb0017638939">
+      <Link to="/swipe/5eea01585f92b200176ed2da">
         <button className="event-button">
           <span className="event-button-span">Join Event</span>
         </button>
