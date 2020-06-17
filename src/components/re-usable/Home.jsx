@@ -4,10 +4,11 @@ import Grid from '@material-ui/core/Grid';
 import { Button, Typography } from '@material-ui/core';
 import { Link } from '@reach/router';
 
-const Home = () => {
+const Home = ({ user }) => {
   const logout = () => {
     fire.auth().signOut();
   };
+
   return (
     <Grid container justify="center" spacing={3}>
       <Grid item xs={8}>
@@ -17,7 +18,7 @@ const Home = () => {
       </Grid>
       <Grid item xs={8}>
         <Button color="primary" variant="contained">
-          <Link to="/swipe/5ee8c10bc226cb0017638939">
+          <Link to="/swipe/5eea01585f92b200176ed2da">
             <span>Join Event</span>
           </Link>
         </Button>

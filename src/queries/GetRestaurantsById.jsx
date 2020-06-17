@@ -9,16 +9,11 @@ query($id: ID!) {
   event(id: $id)
       { id
       	name
-      	date
+        endDate
+        voteDate
       	lat
       	long
-      	distance
-      	organiser {
-      	  id
-      	}
-      	members {
-      	  id
-      	}
+        distance	
       	restaurants {
           id
           eventId
@@ -34,12 +29,6 @@ query($id: ID!) {
           cuisine
           dietRestrictions
         }
-    votes {
-      id
-    }
-    winner {
-      id
-    }
     }
 } 
 `;
