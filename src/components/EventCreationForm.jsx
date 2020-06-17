@@ -1,15 +1,16 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
 import { eventCreationMutation } from "../queries/EventCreation";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery, useLazyQuery } from "@apollo/react-hooks";
 import { Link } from '@reach/router';
 import Axios from 'axios';
+//import { getUsers } from "../queries/GetUsers"
 
-const EventCreationForm = ({user}) => {
-  console.log(user)
+const EventCreationForm = ({query: {users}}) => {
+  console.log(users, "QUERY")
   const [eventName, setEventName] = React.useState("");
   const [eDate, setEventDate] = React.useState("");
   const [eClosingDate, setEventClosingDate] = React.useState("");
@@ -29,6 +30,9 @@ const EventCreationForm = ({user}) => {
   }] = useMutation(eventCreationMutation);
   const [eData, setReturnedEventData] = React.useState(null)
   const [myLocationReadable, setMyLocationReadable] = React.useState("")
+  let guestList = []
+
+//  const { loading, error, data } = useQuery(getUsers);
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
@@ -36,7 +40,7 @@ const EventCreationForm = ({user}) => {
     setAddress(value);
     setCoordinates(latlng);
   };
-
+  
   const getMyLocation = async () => {
     const position = await new Promise(function (resolve, reject) {
       navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -59,24 +63,34 @@ const EventCreationForm = ({user}) => {
       })
   }
 
+  const handleCheckbox = (event) => {
+    const { checked, value} = event.target
+    checked ? guestList.push(value)
+    : guestList.splice(guestList.indexOf(value), 1)
+    console.log(guestList)
+    return guestList
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const name = eventName
     const lat = !coordinates.lat ? `${myLocation.lat}` : `${coordinates.lat}`;
     const long = !coordinates.lng ? `${myLocation.lng}` : `${coordinates.lng}`;
     const distance = radius;
-    const date = new Date(eDate).toISOString();
-    //const eventClosingDate = `${eClosingDate}`;
+    const endDate = new Date(eDate).toISOString();
+    const voteDate = new Date(eClosingDate).toISOString();
+   // const organiser = user
+    const guests = guestList
     setEvent({
       variables: {
-        name,
+        name,    
         lat,
         long,
         distance,
-        date,
-        //eventClosingDate,
-        //eventOrganiser: "Fred",
-        //attendees: ["Freddy", "Freddo", "Freda"]
+        endDate,
+        voteDate,
+        //organiser,
+        guests
       }
     })
       .then(({ data }) => {
@@ -103,7 +117,7 @@ const EventCreationForm = ({user}) => {
           type="text"
           name="eventName"
           value={eventName}
-          onChange={(e) => setEventName(e.target.value)}
+          onChange={(event) => setEventName(event.target.value)}
           placeholder="Event name here..."
           required="required"
         />
@@ -164,7 +178,7 @@ const EventCreationForm = ({user}) => {
       )}
       <label htmlFor="radius">
         Search Radius (miles):
-        <select name='topic' onChange={(e) => setRadius(e.target.value)} value={radius}>
+        <select name='topic' onChange={(event) => setRadius(event.target.value)} value={radius}>
           <option value='1'>1</option>
           <option value='2'>2</option>
           <option value='3'>3</option>
@@ -176,7 +190,7 @@ const EventCreationForm = ({user}) => {
         <input type="date"
           name="eventDate"
           value={eDate}
-          onChange={(e) => setEventDate(e.target.value)}
+          onChange={(event) => setEventDate(event.target.value)}
           required="required"
         />
       </label>
@@ -184,9 +198,23 @@ const EventCreationForm = ({user}) => {
         <input type="date"
           name="eventClosingDate"
           value={eClosingDate}
-          onChange={(e) => setEventClosingDate(e.target.value)}
+          onChange={(event) => setEventClosingDate(event.target.value)}
+          required="required"
         />
       </label>
+      <p>Invite friends</p>
+        <ul>
+      {
+      users.map((friend)=>{
+        return(
+          <li key={friend.id} className="noBull">
+            <label htmlFor="guestList">{friend.email}
+            <input type="checkbox" value={friend.id} onChange={handleCheckbox}/>
+        </label>
+          </li>           
+        )
+      })   
+    }</ul>
       <button type="submit">Create Event</button>
       <button type="reset" onClick={clearForm}>Reset Form</button>
       {eventLoading &&
