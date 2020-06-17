@@ -1,7 +1,7 @@
-import React from "react";
-import fire from "../../fireAuth.js";
-
-import { Link } from "@reach/router";
+import React from 'react';
+import fire from '../../fireAuth.js';
+import { Button, Typography } from '@material-ui/core';
+import { Link } from '@reach/router';
 
 const Home = () => {
   const logout = () => {
@@ -9,22 +9,23 @@ const Home = () => {
   };
   return (
     <section className="home-wrapper">
-      <Link to="/event-creation">
-        <button className="event-button">
-          <span className="event-button-span">Create Event</span>
-        </button>
-      </Link>
-      <Link to="/swipe/5ee8c10bc226cb0017638939">
-        <button className="event-button">
-          <span className="event-button-span">Join Event</span>
-        </button>
-      </Link>
-      <button onClick={logout}>Logout</button>
-      <Link to="/winner/5ee8c10bc226cb0017638939">
-        <button className="event-button">
-          <span className="event-button-span">See winner</span>
-        </button>
-      </Link>
+      <Button color="primary" variant="contained">
+        <Link to="/event-creation">Create Event</Link>
+      </Button>
+
+      <Button color="primary" variant="contained">
+        <Link to="/swipe/5ee8c10bc226cb0017638939">
+          <span>Join Event</span>
+        </Link>
+      </Button>
+      <Button color="secondary" variant="contained" onClick={logout}>
+        Logout
+      </Button>
+      <Button color="primary" variant="contained">
+        <Link to="/winner/5ee8c10bc226cb0017638939">
+          <span>See winner</span>
+        </Link>
+      </Button>
     </section>
   );
 };

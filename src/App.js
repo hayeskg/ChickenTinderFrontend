@@ -1,11 +1,11 @@
-import "./App.css";
-import React, { Component } from "react";
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo";
-import fire from "./fireAuth";
-import Header from "./components/re-usable/Header";
-import Login from "./components/re-usable/Login";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import './styling/App.css';
+import React, { Component } from 'react';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+import fire from './fireAuth';
+import Header from './components/re-usable/Header';
+import Login from './components/re-usable/Login';
+import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faSpinner,
   faCheck,
@@ -14,15 +14,15 @@ import {
   faMapMarkerAlt,
   faMoneyBillAlt,
   faDollarSign,
-} from "@fortawesome/free-solid-svg-icons";
-import Home from "./components/re-usable/Home";
-import { Router } from "@reach/router";
-import EventCreationForm from "./components/EventCreationForm";
-import GetRestaurantsByEventId from "./queries/GetRestaurantsById";
-import FetchWinner from "./queries/GetWinner";
+} from '@fortawesome/free-solid-svg-icons';
+import Home from './components/re-usable/Home';
+import { Router } from '@reach/router';
+import EventCreationForm from './components/EventCreationForm';
+import GetRestaurantsByEventId from './queries/GetRestaurantsById';
+import FetchWinner from './queries/GetWinner';
 
 const client = new ApolloClient({
-  uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
+  uri: 'https://chicken-tinder-backend.herokuapp.com/graphql',
 });
 
 class App extends Component {
