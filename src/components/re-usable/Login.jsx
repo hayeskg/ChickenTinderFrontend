@@ -1,7 +1,7 @@
 import React from 'react';
 import fire from '../../fireAuth.js';
 import Grid from '@material-ui/core/Grid';
-import { Button, Typography, TextField } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import { useMutation } from 'react-apollo';
 import { addUser } from '../../queries/AddUser.jsx';
 
@@ -44,7 +44,9 @@ const Login = () => {
 
   return (
     <Grid container justify="center">
-      <h1>Swipe. Match. Eat</h1>
+      <Grid item xs={8}>
+        <h1>Swipe. Match. Eat</h1>
+      </Grid>
       <form id="login">
         <TextField
           fullWidth
