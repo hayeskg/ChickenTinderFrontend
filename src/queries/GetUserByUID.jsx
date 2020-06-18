@@ -10,11 +10,12 @@ query ($uid: String!){
       uid: $uid
     ){
       id
-        email
+      email
       uid
+      eventIds
     }
-    }
-    `;
+}
+`;
 
   const GetUserByUID = (uid) => {
     

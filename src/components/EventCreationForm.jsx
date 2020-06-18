@@ -9,8 +9,7 @@ import { Link } from '@reach/router';
 import Axios from 'axios';
 //import { getUsers } from "../queries/GetUsers"
 
-const EventCreationForm = ({query: {users}}) => {
-  console.log(users, "QUERY")
+const EventCreationForm = ({query: {users}, organiser}) => {
   const [eventName, setEventName] = React.useState("");
   const [eDate, setEventDate] = React.useState("");
   const [eClosingDate, setEventClosingDate] = React.useState("");
@@ -79,7 +78,6 @@ const EventCreationForm = ({query: {users}}) => {
     const distance = radius;
     const endDate = new Date(eDate).toISOString();
     const voteDate = new Date(eClosingDate).toISOString();
-   // const organiser = user
     const guests = guestList
     setEvent({
       variables: {
@@ -89,7 +87,7 @@ const EventCreationForm = ({query: {users}}) => {
         distance,
         endDate,
         voteDate,
-        //organiser,
+        organiser,
         guests
       }
     })

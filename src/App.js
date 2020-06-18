@@ -58,7 +58,7 @@ class App extends Component {
             {this.state.user ? <GetUserByUID path="/" uid={this.state.user.uid}/> : <Login path="/" />}
             <Home path="/"/>
             <GetRestaurantsByEventId path="/swipe/:id" />
-            <GetUsers path="/event-creation" />
+            <GetUsers path="/event-creation/:userid" />
             <FetchWinner path="/winner/:id" />
           </Router>
         </div>

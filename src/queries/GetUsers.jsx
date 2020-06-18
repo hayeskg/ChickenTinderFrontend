@@ -15,7 +15,7 @@ query  {
   }
   `;
 
-  const GetUsers = ({ id }) => {
+  const GetUsers = ({ userid }) => {
 
     return (
       <div>
@@ -24,7 +24,7 @@ query  {
             if (loading) return <Loader />;
             if (error) console.log(error);
             console.log(data)
-            return <EventCreationForm query={data} eventId={id}/>;
+            return <EventCreationForm query={data} organiser={userid}/>;
           }}
         </Query>
       </div>

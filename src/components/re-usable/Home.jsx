@@ -8,11 +8,11 @@ const Home = ({query}) => {
     fire.auth().signOut();
   };
 
-  console.log(query)
+  console.log(query.userByUID.id)
   
   return (
     <section className="home-wrapper">
-      <Link to="/event-creation">
+      <Link to={`/event-creation/${query.userByUID.id}`}>
         <button className="event-button">
           <span className="event-button-span">Create Event</span>
         </button>
