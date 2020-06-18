@@ -17,7 +17,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Home from "./components/re-usable/Home";
 import { Router } from "@reach/router";
-import EventCreationForm from "./components/EventCreationForm";
+
 import GetRestaurantsByEventId from "./queries/GetRestaurantsById";
 import FetchWinner from "./queries/GetWinner";
 import GetUsers from "./queries/GetUsers";

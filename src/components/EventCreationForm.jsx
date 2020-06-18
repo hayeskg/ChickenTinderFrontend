@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
 import { eventCreationMutation } from "../queries/EventCreation";
-import { useMutation, useQuery, useLazyQuery } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import { Link } from "@reach/router";
 import Axios from "axios";
 import ErrorDisplayer from "./re-usable/ErrorDisplayer";
+import Loader from "./re-usable/Loader";
 
 const EventCreationForm = ({ query: { users } }) => {
   const [error, setError] = React.useState("");
@@ -67,7 +68,7 @@ const EventCreationForm = ({ query: { users } }) => {
     checked
       ? guestList.push(value)
       : guestList.splice(guestList.indexOf(value), 1);
-    console.log(guestList);
+
     return guestList;
   };
 
@@ -147,7 +148,7 @@ const EventCreationForm = ({ query: { users } }) => {
                 />
               </label>
               <div>
-                {loading && <p>Loading!</p>}
+                {loading && <Loader />}
                 {suggestions.map((suggestion) => {
                   const style = {
                     backgroundColor: suggestion.active ? "#d1e7ed" : "#fff",
@@ -236,7 +237,8 @@ const EventCreationForm = ({ query: { users } }) => {
       <button type="reset" onClick={clearForm}>
         Reset Form
       </button>
-      {eventLoading && <p>Creating Event</p>}
+      {eventLoading && <Loader />}
+      {eventError && <ErrorDisplayer msg={eventError} />}
       {error && <ErrorDisplayer msg={error} />}
       {eData && (
         <button>

@@ -13,7 +13,6 @@ class RestaurantList extends Component {
     error: { message: "" },
   };
   componentDidMount() {
-    console.log(this.props.query);
     this.setState({
       restaurants: this.props.query.event.restaurants,
       loading: false,

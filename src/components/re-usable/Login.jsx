@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import fire from "../../fireAuth.js";
 import styled from "styled-components";
 import { useMutation } from "react-apollo";
 import { addUser } from "../../queries/AddUser.jsx";
 import ErrorDisplayer from "./ErrorDisplayer.jsx";
+import Loader from "./Loader.jsx";
 
 const StyledLogin = styled.form`
   background-color: white;
@@ -31,9 +32,10 @@ const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const [setSignedUpUser, { loading: loading, signUpError }] = useMutation(
-    addUser
-  );
+  const [
+    setSignedUpUser,
+    { loading: signUpLoad, error: signUpError },
+  ] = useMutation(addUser);
 
   const login = (event) => {
     event.preventDefault();
@@ -84,6 +86,7 @@ const Login = () => {
       />
       <StyledButton onClick={login}>Login</StyledButton>
       <StyledButton onClick={signup}>Signup</StyledButton>
+      {signUpLoad && <Loader />}
       {error && <ErrorDisplayer msg={error} />}
       {signUpError && <ErrorDisplayer msg={signUpError} />}
     </StyledLogin>
