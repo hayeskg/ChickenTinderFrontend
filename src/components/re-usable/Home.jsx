@@ -15,7 +15,8 @@ const Home = ({ query }) => {
           <span className="event-button-span">Create Event</span>
         </button>
       </Link>
-      <GetUserEvents events={query.userByUID.eventIds}/>
+      <br />
+      <GetUserEvents events={query.userByUID.eventIds} />
       <button onClick={logout} className="event-button">
         <span className="event-button-span">Logout</span>
       </button>

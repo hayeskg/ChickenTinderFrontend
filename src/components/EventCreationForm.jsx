@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
@@ -7,9 +7,8 @@ import { eventCreationMutation } from "../queries/EventCreation";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/react-hooks";
 import { Link } from '@reach/router';
 import Axios from 'axios';
-//import { getUsers } from "../queries/GetUsers"
 
-const EventCreationForm = ({query: {users}, organiser}) => {
+const EventCreationForm = ({ query: { users }, organiser }) => {
   const [eventName, setEventName] = React.useState("");
   const [eDate, setEventDate] = React.useState("");
   const [eClosingDate, setEventClosingDate] = React.useState("");
@@ -31,15 +30,13 @@ const EventCreationForm = ({query: {users}, organiser}) => {
   const [myLocationReadable, setMyLocationReadable] = React.useState("")
   let guestList = []
 
-//  const { loading, error, data } = useQuery(getUsers);
-
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
     const latlng = await getLatLng(results[0]);
     setAddress(value);
     setCoordinates(latlng);
   };
-  
+
   const getMyLocation = async () => {
     const position = await new Promise(function (resolve, reject) {
       navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -63,9 +60,9 @@ const EventCreationForm = ({query: {users}, organiser}) => {
   }
 
   const handleCheckbox = (event) => {
-    const { checked, value} = event.target
+    const { checked, value } = event.target
     checked ? guestList.push(value)
-    : guestList.splice(guestList.indexOf(value), 1)
+      : guestList.splice(guestList.indexOf(value), 1)
     console.log(guestList)
     return guestList
   }
@@ -81,7 +78,7 @@ const EventCreationForm = ({query: {users}, organiser}) => {
     const guests = guestList
     setEvent({
       variables: {
-        name,    
+        name,
         lat,
         long,
         distance,
@@ -150,11 +147,11 @@ const EventCreationForm = ({query: {users}, organiser}) => {
                     return (
                       <div {...getSuggestionItemProps(suggestion, { style })}>
                         {suggestion.description}
-                        
+
                       </div>
                     );
                   })}
-                  <img src="powered_by_google_on_white.png" alt="powered by Google"/>
+                  <img src="powered_by_google_on_white.png" alt="powered by Google" />
                 </div>
               </div>
             )}
@@ -163,15 +160,15 @@ const EventCreationForm = ({query: {users}, organiser}) => {
       <button type="button" onClick={getMyLocation}>
         Use My Location
       </button>
-      <img src="powered_by_google_on_white.png" alt="powered by Google"/>
+      <img src="powered_by_google_on_white.png" alt="powered by Google" />
       {myLocation.lat && (
         <>
-        <p>
-          Your location:
+          <p>
+            Your location:
           <br />
-          {myLocationReadable}
-        </p>
-        <img src="powered_by_google_on_white.png" alt="powered by Google"/>
+            {myLocationReadable}
+          </p>
+          <img src="powered_by_google_on_white.png" alt="powered by Google" />
         </>
       )}
       <label htmlFor="radius">
@@ -201,18 +198,18 @@ const EventCreationForm = ({query: {users}, organiser}) => {
         />
       </label>
       <p>Invite friends</p>
-        <ul>
-      {
-      users.map((friend)=>{
-        return(
-          <li key={friend.id} className="noBull">
-            <label htmlFor="guestList">{friend.email}
-            <input type="checkbox" value={friend.id} onChange={handleCheckbox}/>
-        </label>
-          </li>           
-        )
-      })   
-    }</ul>
+      <ul>
+        {
+          users.map((friend) => {
+            return (
+              <li key={friend.id} className="noBull">
+                <label htmlFor="guestList">{friend.email}
+                  <input type="checkbox" value={friend.id} onChange={handleCheckbox} />
+                </label>
+              </li>
+            )
+          })
+        }</ul>
       <button type="submit">Create Event</button>
       <button type="reset" onClick={clearForm}>Reset Form</button>
       {eventLoading &&
@@ -224,6 +221,9 @@ const EventCreationForm = ({query: {users}, organiser}) => {
       {eData &&
         <button><Link to={`/event/${eData.addEvent.id}`}>Take me to event</Link></button>
       }
+      <Link to="/">
+        <button type="button">Home</button>
+      </Link>
     </form>
   );
 };

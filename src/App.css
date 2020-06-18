@@ -121,15 +121,14 @@ h2 {
 }
 
 .event-button {
-  padding: 50px;
-  margin: 20px;
+  padding: 1rem;
+  margin: 2px;
   border-style: outset;
   border-radius: 5px;
-  font-size: 28px;
+  font-size: 15px;
   background-color: #fef2e4;
   border-color: #254607;
   min-height: 100%;
-  min-width: 100%;
 }
 .event-button:hover {
   background-image: radial-gradient(#5c8f22, #426a0f);
@@ -244,7 +243,7 @@ h2 {
 
 .home-wrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-evenly;
   min-width: 100%;
   min-height: 100%;
@@ -305,6 +304,10 @@ h2 {
 }
 
 .noBull {
+  list-style: none;
+}
+
+ul {
   list-style: none;
 }
   

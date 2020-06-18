@@ -28,29 +28,24 @@ mutation ($eventId: ID!) {
   }
   `;
 
-  const FetchWinner = ({ id }) => {
-    console.log(id);
-    const [data, setData] = useState(null);
+const FetchWinner = ({ id }) => {
 
-    const [setWinner, { loading, error }] = useMutation(getWinner, {
-      onCompleted(response) {
-        console.log(response);
-        setData(response.getWinner);
-      }
-    });
+  const [data, setData] = useState(null);
 
-    useEffect(() => {
-      // code to run on component mount
-      console.log('here');
-      setWinner({ variables: { eventId: id } });
-    }, [])
+  const [setWinner, { loading, error }] = useMutation(getWinner, {
+    onCompleted(response) {
+      setData(response.getWinner);
+    }
+  });
 
-    console.log(data);
-    console.log(loading, error);
-    if (loading || !data) return <Loader />;
-    if (error) return <p>An error occurred</p>;
+  useEffect(() => {
+    setWinner({ variables: { eventId: id } });
+  }, [])
 
-    return <WinnerDisplayer data={data} />;
-  };
-  
-  export default FetchWinner;
+  if (loading || !data) return <Loader />;
+  if (error) return <p>An error occurred</p>;
+
+  return <WinnerDisplayer data={data} />;
+};
+
+export default FetchWinner;

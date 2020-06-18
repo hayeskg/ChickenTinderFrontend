@@ -17,21 +17,21 @@ query ($uid: String!){
 }
 `;
 
-  const GetUserByUID = (props) => {
-    
-    return (
-      <div>
-        <Query query={getUserByUID} variables={props}>
-          {({ loading, error, data }) => {
-            if (loading) return <Loader />;
-            
-            if (error) console.log(error);
-            
-            return <Home query={data}/>;
-          }}
-        </Query>
-      </div>
-    );
-  };
+const GetUserByUID = (uid) => {
+  
+  return (
+    <div>
+      <Query query={getUserByUID} variables={uid}>
+        {({ loading, error, data }) => {
+          if (loading) return <Loader />;
 
-  export default GetUserByUID;
+          if (error) console.log(error);
+
+          return <Home query={data} />;
+        }}
+      </Query>
+    </div>
+  );
+};
+
+export default GetUserByUID;

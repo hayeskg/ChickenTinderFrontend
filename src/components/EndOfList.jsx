@@ -40,7 +40,7 @@ const StyledWinnerButton = styled.button`
   }
 `;
 
-const EndOfList = ({id}) => {
+const EndOfList = ({ id }) => {
   return (
     <StyledSection>
       THE END

@@ -10,6 +10,7 @@ class RestaurantList extends Component {
     loading: true,
     vote: "",
   };
+  
   componentDidMount() {
     console.log(this.props.query)
     this.setState({

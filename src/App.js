@@ -15,14 +15,12 @@ import {
   faMoneyBillAlt,
   faDollarSign,
 } from "@fortawesome/free-solid-svg-icons";
-import Home from "./components/re-usable/Home";
 import { Router } from "@reach/router";
 import GetRestaurantsByEventId from "./queries/GetRestaurantsById";
 import FetchWinner from "./queries/GetWinner";
 import GetUsers from "./queries/GetUsers"
 import GetUserByUID from "./queries/GetUserByUID";
 import GetUserEvents from "./queries/GetUserEvents"
-import WinnerDisplayer from "./components/WinnerDisplayer";
 
 const client = new ApolloClient({
   uri: "https://chicken-tinder-backend.herokuapp.com/graphql",

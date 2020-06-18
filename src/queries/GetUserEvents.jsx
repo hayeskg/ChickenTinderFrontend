@@ -16,26 +16,27 @@ query ($id: ID!){
     }
     }
     `;
- 
-  const GetUserEvents = ({events}) => {
-    return (
-      <div>
-          <ul>
-        {events.map((id) => {
-           return <li key={id}>
-           <Query query={getUserEventsById} variables={{id}}>
-            {({ loading, error, data }) => {
-              if (loading) return <Loader />;
-              if (error) console.log(error);
-  
-            return <CheckForVoteEnd id={id} name={data.event.name}/>
-            }}
-          </Query>
-            </li>
-      })}
-        </ul>
-      </div>
-    );
-  };
 
-  export default GetUserEvents;
+const GetUserEvents = ({ events }) => {
+  console.log("in user events")
+  return (
+    <div>
+      <ul>
+        {events.map((id) => {
+          return <li key={id}>
+            <Query query={getUserEventsById} variables={{ id }}>
+              {({ loading, error, data }) => {
+                if (loading) return <Loader />;
+                if (error) console.log(error);
+
+                return <CheckForVoteEnd id={id} name={data.event.name} eventDate={data.event.endDate} />
+              }}
+            </Query>
+          </li>
+        })}
+      </ul>
+    </div>
+  );
+};
+
+export default GetUserEvents;
