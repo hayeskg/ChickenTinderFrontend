@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { voteMutation } from "../queries/voteMutation";
 import { useMutation } from "@apollo/react-hooks";
 import { useEffect, useRef } from "react";
+import ErrorDisplayer from "./re-usable/ErrorDisplayer";
 
 const RestaurantCard = ({
   checkForEndOfList,
@@ -18,18 +19,15 @@ const RestaurantCard = ({
     cuisine,
     location_id,
   },
-}
-) => {
+}) => {
+  const [error, setError] = React.useState("");
   const [direction, setDirection] = React.useState("");
   const [votes, setPosNegVotes] = React.useState({
     positiveVote: 0,
-    negativeVote: 0
+    negativeVote: 0,
   });
-  const initialRender = useRef(true)
-  const [setVotes, {
-    loading: voteLoading,
-    error: voteError
-  }] = useMutation(voteMutation);
+  const initialRender = useRef(true);
+  const [setVotes, { voteLoading, voteError }] = useMutation(voteMutation);
 
   useEffect(() => {
     if (initialRender.current) {
@@ -41,27 +39,27 @@ const RestaurantCard = ({
           restaurantId: id,
           userId: "52",
           positiveVote: votes.positiveVote,
-          negativeVote: votes.negativeVote
-        }
+          negativeVote: votes.negativeVote,
+        },
       })
         .then((response) => {
-          console.log(response)
+          console.log(response);
         })
         .catch((err) => {
-          console.log(err)
-        })
+          setError(err);
+        });
     }
   }, [votes, id, eventId, setVotes]);
 
   const onSwipe = (direction) => {
-    setDirection(direction)
+    setDirection(direction);
     direction === "left"
       ? setPosNegVotes({ positiveVote: 0, negativeVote: 1 })
-      : setPosNegVotes({ positiveVote: 1, negativeVote: 0 })
+      : setPosNegVotes({ positiveVote: 1, negativeVote: 0 });
   };
 
   const onCardLeftScreen = () => {
-    checkForEndOfList(id)
+    checkForEndOfList(id);
   };
 
   return (
@@ -100,9 +98,11 @@ const RestaurantCard = ({
             </span>
           </button>
         </section>
+        {error && <ErrorDisplayer msg={error} />}
+        {voteError && <ErrorDisplayer msg={voteError} />}
       </article>
     </TinderCard>
   );
-}
+};
 
 export default RestaurantCard;
