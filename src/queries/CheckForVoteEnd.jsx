@@ -12,10 +12,11 @@ query ($eventId: ID!){
     }
     `;
  
-  const CheckForVoteEnd = ({id, name}) => {
+  const CheckForVoteEnd = ({id, name, eventDate}) => {
     const eventId = id
     return (
       <div>
+        <label htmlFor="event-name">{new Date(eventDate).toDateString()}: {name}
            <Query query={isVotingDone} variables={{eventId}}>
             {({ loading, error, data }) => {
               if (loading) return <Loader />;
@@ -23,16 +24,17 @@ query ($eventId: ID!){
             return data.isVotingDone ? 
             <Link to={`/winner/${id}`}>
             <button className="event-button">
-              <span className="event-button-span">{name} SEE WINNER</span>
+              <span className="event-button-span">SEE WINNER</span>
             </button>
           </Link>
             : <Link to={`/event/${id}`}>
             <button className="event-button">
-              <span className="event-button-span">{name} VOTE</span>
+              <span className="event-button-span">VOTE</span>
             </button>
           </Link>;
             }}
           </Query>
+          </label>
       </div>
     );
   };
