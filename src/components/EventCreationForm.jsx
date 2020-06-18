@@ -3,15 +3,18 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
-import Grid from '@material-ui/core/Grid';
 import {
+  Grid,
   Button,
   TextField,
+  Input,
   InputLabel,
   FormHelperText,
   FormControl,
   Select,
   Checkbox,
+  MenuItem,
+  ListItemText,
 } from '@material-ui/core';
 import { eventCreationMutation } from '../queries/EventCreation';
 import { useMutation, useQuery, useLazyQuery } from '@apollo/react-hooks';
@@ -119,6 +122,25 @@ const EventCreationForm = ({ query: { users } }) => {
     setMyLocation({ lat: null, lng: null });
     setRadius('1');
   };
+
+  // Friends list
+  const [personEmail, setPersonEmail] = React.useState([]);
+
+  const handleChange = (event) => {
+    setPersonEmail(event.target.value);
+  };
+
+  // const handleChangeMultiple = (event) => {
+  //   const { options } = event.target;
+  //   const value = [];
+  //   for (let i = 0, l = options.length; i < l; i += 1) {
+  //     if (options[i].selected) {
+  //       value.push(options[i].value);
+  //     }
+  //   }
+  //   setPersonName(value);
+  // };
+
   return (
     <Grid container justify="center">
       <Grid item xs={8}>
@@ -308,6 +330,33 @@ const EventCreationForm = ({ query: { users } }) => {
               <h3>Invite friends</h3>
             </Grid>
             <Grid item xs={12}>
+              <FormControl>
+                <InputLabel id="friends-checkbox">Friends</InputLabel>
+                <Select
+                  labelId="friend-list"
+                  id="friend-list"
+                  multiple
+                  value={personEmail}
+                  onChange={handleChange}
+                  variant="outlined"
+                  label="Friends list"
+                  //input={<input />}
+                  renderValue={(selected) => selected.join(', ')}
+                >
+                  {users.map((friend) => {
+                    return (
+                      <MenuItem key={friend.id} value={friend.email}>
+                        <Checkbox
+                          checked={personEmail.indexOf(friend) > -1}
+                          value={friend.id}
+                          onChange={handleCheckbox}
+                        />
+                        <ListItemText primary={friend.email} />
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
               <ul>
                 {users.map((friend) => {
                   return (
@@ -353,9 +402,9 @@ const EventCreationForm = ({ query: { users } }) => {
           {eventLoading && <p>Creating Event</p>}
           {eventError && <p>Error in creating event.</p>}
           {eData && (
-            <button>
+            <Button variant="contained" size="large" color="primary">
               <Link to={`/swipe/${eData.addEvent.id}`}>Take me to event</Link>
-            </button>
+            </Button>
           )}
         </form>
       </Grid>
