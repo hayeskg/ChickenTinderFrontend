@@ -4,7 +4,15 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 import Grid from '@material-ui/core/Grid';
-import { Button, TextField } from '@material-ui/core';
+import {
+  Button,
+  TextField,
+  InputLabel,
+  FormHelperText,
+  FormControl,
+  Select,
+  Checkbox,
+} from '@material-ui/core';
 import { eventCreationMutation } from '../queries/EventCreation';
 import { useMutation, useQuery, useLazyQuery } from '@apollo/react-hooks';
 import { Link } from '@reach/router';
@@ -111,23 +119,23 @@ const EventCreationForm = ({ query: { users } }) => {
     setMyLocation({ lat: null, lng: null });
     setRadius('1');
   };
-
   return (
     <Grid container justify="center">
-      <form onSubmit={handleSubmit} className="eventForm">
-        <TextField
-          fullWidth
-          required
-          variant="outlined"
-          margin="normal"
-          type="text"
-          name="eventName"
-          label="Event"
-          value={eventName}
-          onChange={(event) => setEventName(event.target.value)}
-          placeholder="e.g. Meal with friends..."
-        />
-        {/* <label htmlFor="eventName">
+      <Grid item xs={8}>
+        <form onSubmit={handleSubmit} className="eventForm">
+          <TextField
+            fullWidth
+            required
+            variant="outlined"
+            margin="normal"
+            type="text"
+            name="eventName"
+            label="Event"
+            value={eventName}
+            onChange={(event) => setEventName(event.target.value)}
+            placeholder="e.g. Meal with friends..."
+          />
+          {/* <label htmlFor="eventName">
           Event:
           <input
             type="text"
@@ -138,20 +146,20 @@ const EventCreationForm = ({ query: { users } }) => {
             required="required"
           />
         </label> */}
-        {!myLocation.lat && (
-          <PlacesAutocomplete
-            value={address}
-            onChange={setAddress}
-            onSelect={handleSelect}
-          >
-            {({
-              getInputProps,
-              suggestions,
-              getSuggestionItemProps,
-              loading,
-            }) => (
-              <div>
-                {/* <label htmlFor="location">
+          {!myLocation.lat && (
+            <PlacesAutocomplete
+              value={address}
+              onChange={setAddress}
+              onSelect={handleSelect}
+            >
+              {({
+                getInputProps,
+                suggestions,
+                getSuggestionItemProps,
+                loading,
+              }) => (
+                <div>
+                  {/* <label htmlFor="location">
                   Location:
                   <input
                     {...getInputProps({
@@ -159,51 +167,58 @@ const EventCreationForm = ({ query: { users } }) => {
                     })}
                   />
                 </label> */}
-                <TextField
-                  {...getInputProps({
-                    placeholder: 'Start typing your location...',
-                  })}
-                  fullWidth
-                  variant="outlined"
-                  label="location"
-                />
-
-                <div>
-                  {loading && <p>Loading!</p>}
-                  {suggestions.map((suggestion) => {
-                    const style = {
-                      backgroundColor: suggestion.active ? '#d1e7ed' : '#fff',
-                    };
-                    return (
-                      <div {...getSuggestionItemProps(suggestion, { style })}>
-                        {suggestion.description}
-                      </div>
-                    );
-                  })}
-                  <img
-                    src="powered_by_google_on_white.png"
-                    alt="powered by Google"
+                  <TextField
+                    {...getInputProps({
+                      placeholder: 'Start typing your location...',
+                    })}
+                    fullWidth
+                    variant="outlined"
+                    label="location"
                   />
+
+                  <div>
+                    {loading && <p>Loading!</p>}
+                    {suggestions.map((suggestion) => {
+                      const style = {
+                        backgroundColor: suggestion.active ? '#d1e7ed' : '#fff',
+                      };
+                      return (
+                        <div {...getSuggestionItemProps(suggestion, { style })}>
+                          {suggestion.description}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <Grid container justify="flex-end">
+                    <img
+                      src="powered_by_google_on_white.png"
+                      alt="powered by Google"
+                    />
+                  </Grid>
                 </div>
-              </div>
-            )}
-          </PlacesAutocomplete>
-        )}
-        <button type="button" onClick={getMyLocation}>
-          Use My Location
-        </button>
-        <img src="powered_by_google_on_white.png" alt="powered by Google" />
-        {myLocation.lat && (
-          <>
-            <p>
-              Your location:
-              <br />
-              {myLocationReadable}
-            </p>
-            <img src="powered_by_google_on_white.png" alt="powered by Google" />
-          </>
-        )}
-        <label htmlFor="radius">
+              )}
+            </PlacesAutocomplete>
+          )}
+          <Button
+            className="use-location"
+            size="large"
+            color="primary"
+            variant="contained"
+            onClick={getMyLocation}
+          >
+            Use My Location
+          </Button>
+          {myLocation.lat && (
+            <div className="location-text">
+              <h3>Your location</h3>
+              <p>{myLocationReadable}</p>
+              <img
+                src="powered_by_google_on_white.png"
+                alt="powered by Google"
+              />
+            </div>
+          )}
+          {/* <label htmlFor="radius">
           Search Radius (miles):
           <select
             name="topic"
@@ -216,56 +231,134 @@ const EventCreationForm = ({ query: { users } }) => {
             <option value="4">4</option>
             <option value="5">5</option>
           </select>
-        </label>
-        <label htmlFor="eventDate">
-          Event Date:
-          <input
-            type="date"
-            name="eventDate"
-            value={eDate}
-            onChange={(event) => setEventDate(event.target.value)}
-            required="required"
-          />
-        </label>
-        <label htmlFor="eventClosingDate">
-          Voting Deadline:
-          <input
-            type="date"
-            name="eventClosingDate"
-            value={eClosingDate}
-            onChange={(event) => setEventClosingDate(event.target.value)}
-            required="required"
-          />
-        </label>
-        <p>Invite friends</p>
-        <ul>
-          {users.map((friend) => {
-            return (
-              <li key={friend.id} className="noBull">
-                <label htmlFor="guestList">
-                  {friend.email}
-                  <input
-                    type="checkbox"
-                    value={friend.id}
-                    onChange={handleCheckbox}
-                  />
-                </label>
-              </li>
-            );
-          })}
-        </ul>
-        <button type="submit">Create Event</button>
-        <button type="reset" onClick={clearForm}>
-          Reset Form
-        </button>
-        {eventLoading && <p>Creating Event</p>}
-        {eventError && <p>Error in creating event.</p>}
-        {eData && (
-          <button>
-            <Link to={`/swipe/${eData.addEvent.id}`}>Take me to event</Link>
-          </button>
-        )}
-      </form>
+        </label> */}
+          <Grid container justify="flex-start">
+            <Grid item xs={12}>
+              <FormControl variant="outlined">
+                <InputLabel htmlFor="radius">Radius</InputLabel>
+                <Select
+                  native
+                  value={radius}
+                  label="Radius"
+                  onChange={(event) => setRadius(event.target.value)}
+                  inputProps={{
+                    name: 'radius',
+                    id: 'radius',
+                  }}
+                >
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                </Select>
+                <FormHelperText>Miles</FormHelperText>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container direction="column" spacing={3}>
+            {/* <label htmlFor="eventDate">
+            Event Date:
+            <input
+              type="date"
+              name="eventDate"
+              value={eDate}
+              onChange={(event) => setEventDate(event.target.value)}
+              required="required"
+            />
+          </label> */}
+            <Grid item xs={12}>
+              <TextField
+                id="eventDate"
+                label="Event date"
+                type="datetime-local"
+                variant="outlined"
+                defaultValue="2020-06-24T17:30"
+                required
+                // value={eDate}
+                onChange={(event) => setEventDate(event.target.value)}
+              ></TextField>
+            </Grid>
+            <Grid item xs={12}>
+              {/* <label htmlFor="eventClosingDate">
+                Voting Deadline:
+                <input
+                  type="date"
+                  name="eventClosingDate"
+                  value={eClosingDate}
+                  onChange={(event) => setEventClosingDate(event.target.value)}
+                  required="required"
+                />
+              </label> */}
+              <TextField
+                id="eventClosingDate"
+                label="Closing date"
+                value={eClosingDate}
+                type="datetime-local"
+                variant="outlined"
+                defaultValue="2020-06-23T17:30"
+                required
+                onChange={(event) => setEventClosingDate(event.target.value)}
+              ></TextField>
+            </Grid>
+          </Grid>
+
+          <Grid container>
+            <Grid item xs={12}>
+              <h3>Invite friends</h3>
+            </Grid>
+            <Grid item xs={12}>
+              <ul>
+                {users.map((friend) => {
+                  return (
+                    <li key={friend.id} className="noBull">
+                      {/* <label htmlFor="guestList">
+                    {friend.email}
+                    <input
+                      type="checkbox"
+                      value={friend.id}
+                      onChange={handleCheckbox}
+                    />
+                  </label> */}
+                      {friend.email}
+                      <Checkbox
+                        color="primary"
+                        inputProps={{ 'aria-label': 'guestList' }}
+                        value={friend.id}
+                        onChange={handleCheckbox}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </Grid>
+          </Grid>
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            type="submit"
+          >
+            Create Event
+          </Button>
+          <Button
+            variant="contained"
+            size="large"
+            color="secondary"
+            type="reset"
+            onClick={clearForm}
+          >
+            Reset Form
+          </Button>
+          {eventLoading && <p>Creating Event</p>}
+          {eventError && <p>Error in creating event.</p>}
+          {eData && (
+            <button>
+              <Link to={`/swipe/${eData.addEvent.id}`}>Take me to event</Link>
+            </button>
+          )}
+        </form>
+      </Grid>
     </Grid>
   );
 };
