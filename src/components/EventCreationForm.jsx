@@ -222,7 +222,7 @@ const EventCreationForm = ({query: {users}, organiser}) => {
         <p>Error in creating event.</p>
       }
       {eData &&
-        <button><Link to={`/swipe/${eData.addEvent.id}`}>Take me to event</Link></button>
+        <button><Link to={`/event/${eData.addEvent.id}`}>Take me to event</Link></button>
       }
     </form>
   );
