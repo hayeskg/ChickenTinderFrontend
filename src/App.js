@@ -21,6 +21,7 @@ import EventCreationForm from "./components/EventCreationForm";
 import GetRestaurantsByEventId from "./queries/GetRestaurantsById";
 import FetchWinner from "./queries/GetWinner";
 import GetUsers from "./queries/GetUsers"
+import GetUserByUID from "./queries/GetUserByUID";
 
 const client = new ApolloClient({
   uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
@@ -40,8 +41,7 @@ class App extends Component {
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
-    
-        this.setState({user:{username: user.email, email: user.email, uid: user.uid}});
+          this.setState({user:{username: user.email, email: user.email, uid: user.uid}});
       } else {
         this.setState({ user: null });
       }
@@ -55,7 +55,8 @@ class App extends Component {
         <div className="App">
           <Header />
           <Router>
-            {this.state.user ? <Home path="/" /> : <Login path="/" />}
+            {this.state.user ? <GetUserByUID path="/" uid={this.state.user.uid}/> : <Login path="/" />}
+            <Home path="/"/>
             <GetRestaurantsByEventId path="/swipe/:id" />
             <GetUsers path="/event-creation" />
             <FetchWinner path="/winner/:id" />

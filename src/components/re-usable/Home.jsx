@@ -3,10 +3,12 @@ import fire from "../../fireAuth.js";
 
 import { Link } from "@reach/router";
 
-const Home = ({user}) => {
+const Home = ({query}) => {
   const logout = () => {
     fire.auth().signOut();
   };
+
+  console.log(query)
   
   return (
     <section className="home-wrapper">
