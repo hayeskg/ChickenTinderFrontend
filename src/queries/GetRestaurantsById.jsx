@@ -4,7 +4,7 @@ import { Query } from "react-apollo";
 import RestaurantList from "../components/RestaurantList";
 import Loader from "../components/re-usable/Loader";
 
-const getEventByID = gql`
+export const getEventByID = gql`
 query($id: ID!) { 
   event(id: $id)
       { id
