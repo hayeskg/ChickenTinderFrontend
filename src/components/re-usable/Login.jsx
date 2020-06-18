@@ -3,6 +3,7 @@ import fire from "../../fireAuth.js";
 import styled from "styled-components";
 import { useMutation } from "react-apollo";
 import { addUser } from "../../queries/AddUser.jsx";
+import ErrorDisplayer from "./ErrorDisplayer.jsx";
 
 const StyledLogin = styled.form`
   background-color: white;
@@ -26,10 +27,11 @@ const StyledButton = styled.button`
 `;
 
 const Login = () => {
+  const [error, setError] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const [setSignedUpUser, { loading: loading, error: error }] = useMutation(
+  const [setSignedUpUser, { loading: loading, signUpError }] = useMutation(
     addUser
   );
 
@@ -39,10 +41,10 @@ const Login = () => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((cred) => {
-        console.log(cred)
+        console.log(cred);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        setError(error);
       });
   };
 
@@ -51,16 +53,16 @@ const Login = () => {
     fire
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(({ user: { uid, email} }) => {
+      .then(({ user: { uid, email } }) => {
         setSignedUpUser({
           variables: {
             uid: uid,
-            email: email, 
+            email: email,
           },
         });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        setError(error);
       });
   };
 
@@ -82,6 +84,8 @@ const Login = () => {
       />
       <StyledButton onClick={login}>Login</StyledButton>
       <StyledButton onClick={signup}>Signup</StyledButton>
+      {error && <ErrorDisplayer msg={error} />}
+      {signUpError && <ErrorDisplayer msg={signUpError} />}
     </StyledLogin>
   );
 };
