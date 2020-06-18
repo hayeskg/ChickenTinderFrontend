@@ -17,11 +17,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Home from "./components/re-usable/Home";
 import { Router } from "@reach/router";
-import EventCreationForm from "./components/EventCreationForm";
 import GetRestaurantsByEventId from "./queries/GetRestaurantsById";
 import FetchWinner from "./queries/GetWinner";
 import GetUsers from "./queries/GetUsers"
 import GetUserByUID from "./queries/GetUserByUID";
+import GetUserEvents from "./queries/GetUserEvents"
+import WinnerDisplayer from "./components/WinnerDisplayer";
 
 const client = new ApolloClient({
   uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
@@ -29,10 +30,7 @@ const client = new ApolloClient({
 
 class App extends Component {
   state = {
-     user: {
-     email: "",
-     uid: "",
-    },
+     user: null,
   };
   componentDidMount() {
     this.authListener();
@@ -56,8 +54,8 @@ class App extends Component {
           <Header />
           <Router>
             {this.state.user ? <GetUserByUID path="/" uid={this.state.user.uid}/> : <Login path="/" />}
-            <Home path="/"/>
-            <GetRestaurantsByEventId path="/swipe/:id" />
+            <GetUserEvents path="/events/:userid"/>
+            <GetRestaurantsByEventId path="/event/:id" />
             <GetUsers path="/event-creation/:userid" />
             <FetchWinner path="/winner/:id" />
           </Router>
