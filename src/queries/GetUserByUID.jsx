@@ -17,16 +17,17 @@ query ($uid: String!){
 }
 `;
 
-  const GetUserByUID = (uid) => {
+  const GetUserByUID = (props) => {
     
     return (
       <div>
-        <Query query={getUserByUID} variables={uid}>
+        <Query query={getUserByUID} variables={props}>
           {({ loading, error, data }) => {
             if (loading) return <Loader />;
+            
             if (error) console.log(error);
-
-            return <Home query={data} />;
+            
+            return <Home query={data}/>;
           }}
         </Query>
       </div>
