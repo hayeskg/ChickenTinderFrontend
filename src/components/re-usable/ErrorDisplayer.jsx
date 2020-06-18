@@ -4,7 +4,7 @@ const ErrorDisplayer = ({ msg }) => {
   return (
     <div>
       <h2>Error!</h2>
-      <p>{msg}</p>
+      <p>{msg.message}</p>
     </div>
   );
 };
