@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import Home from "../components/re-usable/Home";
-import ErrorDIsplayer from "../components/re-usable/ErrorDisplayer"
+import ErrorDisplayer from "../components/re-usable/ErrorDisplayer";
 
 const getUserByUID = gql`
   query($uid: String!) {
@@ -16,13 +16,8 @@ const getUserByUID = gql`
   }
 `;
 
-
 const GetUserByUID = (user) => {
-
-  
-  console.log('in get user by uid', uid);
   const initialRender = useRef(true);
-
 
   useEffect(() => {
     if (initialRender.current) {
@@ -34,15 +29,13 @@ const GetUserByUID = (user) => {
     <div>
       <Query query={getUserByUID} variables={user}>
         {({ loading, error, data, refetch }) => {
-       
-
           if (loading) return <Loader />;
 
-          if (error) <ErrorDisplayer msg={error}/>
+          if (error) return <ErrorDisplayer msg={error} />;
 
           if (data && initialRender.current) {
-            console.log('refetching');
-            refetch();           
+            console.log("refetching");
+            refetch();
           }
           return <Home query={data} />;
         }}
