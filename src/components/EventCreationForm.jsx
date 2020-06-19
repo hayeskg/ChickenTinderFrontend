@@ -345,7 +345,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
           {error && <ErrorDisplayer msg={error} />}
           {eData && (
             <Button variant="contained" size="large" color="primary">
-              <Link to={`/swipe/${eData.addEvent.id}`}>Take me to event</Link>
+              <Link to={`/event/${eData.addEvent.id}`}>Take me to event</Link>
             </Button>
           )}
           <Button variant="contained" size="large" color="primary">
