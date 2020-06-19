@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import RestaurantList from "../components/RestaurantList";
 import Loader from "../components/re-usable/Loader";
+import ErrorDisplayer from "../../re-usable/ErrorDisplayer"
 
 export const getEventByID = gql`
 query($id: ID!) { 
@@ -29,18 +30,18 @@ query($id: ID!) {
           cuisine
           dietRestrictions
         }
+
     }
-} 
+  }
 `;
 
 const GetRestaurantsByEventId = ({ id }) => {
-
   return (
     <div>
       <Query query={getEventByID} variables={{ id }}>
         {({ loading, error, data }) => {
           if (loading) return <Loader />;
-          if (error) console.log(error);
+          if (error) return <ErrorDisplayer msg={error} />;
 
           return <RestaurantList query={data} eventId={id} />;
         }}

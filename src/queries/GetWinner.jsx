@@ -1,10 +1,12 @@
 import gql from "graphql-tag";
+
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import Loader from '../components/re-usable/Loader';
 import WinnerDisplayer from '../components/WinnerDisplayer';
 import { useState, useEffect } from "react";
-
+import ErrorDisplayer from "../components/re-usable/ErrorDisplayer";
+        
 export const getWinner = gql`
 mutation ($eventId: ID!) {
   getWinner (
@@ -24,9 +26,10 @@ mutation ($eventId: ID!) {
     address
     cuisine
     dietRestrictions
+
   }
-  }
-  `;
+`;
+
 
 const FetchWinner = ({ id }) => {
 
@@ -43,9 +46,10 @@ const FetchWinner = ({ id }) => {
   }, [])
 
   if (loading || !data) return <Loader />;
-  if (error) return <p>An error occurred</p>;
+   if (error) return <ErrorDisplayer msg={error} />;
 
   return <WinnerDisplayer data={data} />;
 };
 
 export default FetchWinner;
+

@@ -1,8 +1,9 @@
-import React from 'react';
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "@reach/router";
 
 const WinnerDisplayer = ({ data }) => {
+
     
     const {
         eventId,
@@ -24,7 +25,9 @@ const WinnerDisplayer = ({ data }) => {
         <article>
             <h2>YOUR MATCH</h2>
             <div className="winner-card">
-                <section className="restaurant-card">
+                <section className="restaurant-card"   event={eventId}
+        mongoId={id}
+        ranking={ranking}>
                     <h2>{name}</h2>
                     <p>{firstCuisine}</p>
                     <p>{dietRestrictions.join(", ")}</p>
