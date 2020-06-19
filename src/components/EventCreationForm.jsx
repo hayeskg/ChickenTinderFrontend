@@ -279,14 +279,14 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
               <h3>Invite friends</h3>
             </Grid>
             <Grid item xs={12}>
-              <FormControl>
+              {/* <FormControl>
                 <InputLabel id="friends-checkbox">Friends</InputLabel>
                 <Select
                   labelId="friend-list"
                   id="friend-list"
                   multiple
-                  value={personEmail}
-                  onChange={handleChange}
+                  // value={personEmail}
+                  // onChange={handleChange}
                   variant="outlined"
                   label="Friends list"
                   //input={<input />}
@@ -296,7 +296,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
                     return (
                       <MenuItem key={friend.id} value={friend.email}>
                         <Checkbox
-                          checked={personEmail.indexOf(friend) > -1}
+                          // checked={personEmail.indexOf(friend) > -1}
                           value={friend.id}
                           onChange={handleCheckbox}
                         />
@@ -305,7 +305,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
                     );
                   })}
                 </Select>
-              </FormControl>
+              </FormControl> */}
               <ul>
                 {users.map((friend) => {
                   return (
@@ -341,7 +341,8 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
             Reset Form
           </Button>
           {eventLoading && <p>Creating Event</p>}
-          {eventError && <p>Error in creating event.</p>}
+          {eventError && <ErrorDisplayer msg={eventError} />}
+          {error && <ErrorDisplayer msg={error} />}
           {eData && (
             <Button variant="contained" size="large" color="primary">
               <Link to={`/swipe/${eData.addEvent.id}`}>Take me to event</Link>
