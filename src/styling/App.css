@@ -77,8 +77,8 @@ h2 {
 
 /*re-usable components*/
 
-/*Buttons
- .btn-green {
+/*Buttons*/
+.btn-green {
   padding: 100px;
   background-color: green;
 }
@@ -128,7 +128,7 @@ h2 {
 }
 
 .button-red span:after {
-  content: "\00ab";
+  content: '\00ab';
   position: absolute;
   opacity: 0;
   top: 0;
@@ -136,7 +136,7 @@ h2 {
   transition: 0.5s;
 }
 .button-green span:after {
-  content: "\00bb";
+  content: '\00bb';
   position: absolute;
   opacity: 0;
   top: 0;
@@ -159,7 +159,7 @@ h2 {
   opacity: 1;
   right: 0;
 }
-wraps indication buttons
+/*wraps indication buttons*/
 .swipe-buttons {
   padding: 10px;
   margin: 10px;
@@ -278,7 +278,7 @@ wraps indication buttons
   background: rgba(84, 196, 32, 0.5);
 }
 
-/*responsiveness
+/*responsiveness*/
 @media only screen and (max-width: 500px) {
   .restaurant-image {
     max-width: 200px;
@@ -305,8 +305,7 @@ wraps indication buttons
   padding: 5px;
   margin: 5px;
 }
-loader
-.chicken-loader {
+loader .chicken-loader {
   margin: 50px;
   border-style: outset;
   border-radius: 10px;
@@ -323,7 +322,7 @@ loader
 .loader {
   padding: 50px;
 }
-
+/*
 .eventForm {
   display: flex;
   flex-direction: column;
