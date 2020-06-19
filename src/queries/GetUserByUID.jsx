@@ -5,23 +5,20 @@ import { Query } from "react-apollo";
 import Home from "../components/re-usable/Home";
 
 const getUserByUID = gql`
-query ($uid: String!){
-    userByUID (
-      uid: $uid
-    ){
+  query($uid: String!) {
+    userByUID(uid: $uid) {
       id
       email
       uid
       eventIds
     }
-}
+  }
 `;
 
-const GetUserByUID = (uid) => {
-  
+const GetUserByUID = (user) => {
   return (
     <div>
-      <Query query={getUserByUID} variables={uid}>
+      <Query query={getUserByUID} variables={user}>
         {({ loading, error, data }) => {
           if (loading) return <Loader />;
 
