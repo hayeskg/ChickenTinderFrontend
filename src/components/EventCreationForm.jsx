@@ -1,4 +1,6 @@
-import React from 'react';
+
+import React from "react";
+
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
@@ -37,13 +39,17 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
     lat: null,
     lng: null,
   });
-  const [radius, setRadius] = React.useState('1');
+
+  const [radius, setRadius] = React.useState("1");
+
 
   const [setEvent, { loading: eventLoading, error: eventError }] = useMutation(
     eventCreationMutation
   );
   const [eData, setReturnedEventData] = React.useState(null);
-  const [myLocationReadable, setMyLocationReadable] = React.useState('');
+
+  const [myLocationReadable, setMyLocationReadable] = React.useState("");
+
   let guestList = [];
 
   const handleSelect = async (value) => {
@@ -127,25 +133,9 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
     setRadius('1');
   };
 
-  // Friends list
-  // const [personEmail, setPersonEmail] = React.useState([]);
-
-  // const handleChange = (event) => {
-  //   setPersonEmail(event.target.value);
-  // };
-
-  // // const handleChangeMultiple = (event) => {
-  // //   const { options } = event.target;
-  // //   const value = [];
-  // //   for (let i = 0, l = options.length; i < l; i += 1) {
-  // //     if (options[i].selected) {
-  // //       value.push(options[i].value);
-  // //     }
-  // //   }
-  // //   setPersonName(value);
-  // // };
 
   return (
+
     <Grid container justify="center">
       <Grid item xs={8}>
         <form onSubmit={handleSubmit} className="eventForm">
@@ -279,33 +269,6 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
               <h3>Invite friends</h3>
             </Grid>
             <Grid item xs={12}>
-              {/* <FormControl>
-                <InputLabel id="friends-checkbox">Friends</InputLabel>
-                <Select
-                  labelId="friend-list"
-                  id="friend-list"
-                  multiple
-                  // value={personEmail}
-                  // onChange={handleChange}
-                  variant="outlined"
-                  label="Friends list"
-                  //input={<input />}
-                  renderValue={(selected) => selected.join(', ')}
-                >
-                  {users.map((friend) => {
-                    return (
-                      <MenuItem key={friend.id} value={friend.email}>
-                        <Checkbox
-                          // checked={personEmail.indexOf(friend) > -1}
-                          value={friend.id}
-                          onChange={handleCheckbox}
-                        />
-                        <ListItemText primary={friend.email} />
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl> */}
               <ul>
                 {users.map((friend) => {
                   return (
@@ -348,12 +311,15 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
               <Link to={`/swipe/${eData.addEvent.id}`}>Take me to event</Link>
             </Button>
           )}
+
           <Button variant="contained" size="large" color="primary">
             <Link to="/">Home</Link>
           </Button>
         </form>
       </Grid>
     </Grid>
+
+        
   );
 };
 
