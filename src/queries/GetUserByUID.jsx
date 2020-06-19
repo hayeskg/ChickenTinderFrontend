@@ -3,22 +3,23 @@ import React, { useEffect, useRef } from "react";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import Home from "../components/re-usable/Home";
-
+import ErrorDIsplayer from "../components/re-usable/ErrorDisplayer"
 
 const getUserByUID = gql`
-query ($uid: String!){
-    userByUID (
-      uid: $uid
-    ){
+  query($uid: String!) {
+    userByUID(uid: $uid) {
       id
       email
       uid
       eventIds
     }
-}
+  }
 `;
 
-const GetUserByUID = ({uid}) => {
+
+const GetUserByUID = (user) => {
+
+  
   console.log('in get user by uid', uid);
   const initialRender = useRef(true);
 
@@ -31,12 +32,13 @@ const GetUserByUID = ({uid}) => {
 
   return (
     <div>
-      <Query query={getUserByUID} variables={{uid}}>
+      <Query query={getUserByUID} variables={user}>
         {({ loading, error, data, refetch }) => {
        
+
           if (loading) return <Loader />;
 
-          if (error) console.log(error);
+          if (error) <ErrorDisplayer msg={error}/>
 
           if (data && initialRender.current) {
             console.log('refetching');

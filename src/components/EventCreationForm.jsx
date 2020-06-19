@@ -1,4 +1,3 @@
-
 import React from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
@@ -27,14 +26,12 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
   });
   const [radius, setRadius] = React.useState("1");
 
-  const [setEvent, {
-    loading: eventLoading,
-    error: eventError
-  }] = useMutation(eventCreationMutation);
-  const [eData, setReturnedEventData] = React.useState(null)
-  const [myLocationReadable, setMyLocationReadable] = React.useState("")
-  let guestList = []
-
+  const [setEvent, { loading: eventLoading, error: eventError }] = useMutation(
+    eventCreationMutation
+  );
+  const [eData, setReturnedEventData] = React.useState(null);
+  const [myLocationReadable, setMyLocationReadable] = React.useState("");
+  let guestList = [];
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
@@ -68,14 +65,12 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
   };
 
   const handleCheckbox = (event) => {
-
     const { checked, value } = event.target;
     checked
       ? guestList.push(value)
       : guestList.splice(guestList.indexOf(value), 1);
     return guestList;
   };
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -86,7 +81,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
     const endDate = new Date(eDate).toISOString();
     const voteDate = new Date(eClosingDate).toISOString();
 
-    const guests = guestList
+    const guests = guestList;
 
     setEvent({
       variables: {
@@ -97,9 +92,8 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
         endDate,
         voteDate,
         organiser,
-        guests
-      }
-
+        guests,
+      },
     })
       .then(({ data }) => {
         setReturnedEventData(data);
@@ -149,7 +143,6 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
               <label htmlFor="location">
                 Location:
                 <input
-
                   {...getInputProps({
                     placeholder: "Start typing your location...",
                   })}
@@ -184,9 +177,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
         <>
           <p>
             Your location:
-
-          <br />
-
+            <br />
             {myLocationReadable}
           </p>
           <img src="powered_by_google_on_white.png" alt="powered by Google" />
@@ -228,32 +219,36 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
       </label>
       <p>Invite friends</p>
       <ul>
-        {
-          users.map((friend) => {
-            return (
-              <li key={friend.id} className="noBull">
-                <label htmlFor="guestList">{friend.email}
-                  <input type="checkbox" value={friend.id} onChange={handleCheckbox} />
-                </label>
-              </li>
-            )
-          })
-        }</ul>
+        {users.map((friend) => {
+          return (
+            <li key={friend.id} className="noBull">
+              <label htmlFor="guestList">
+                {friend.email}
+                <input
+                  type="checkbox"
+                  value={friend.id}
+                  onChange={handleCheckbox}
+                />
+              </label>
+            </li>
+          );
+        })}
+      </ul>
       <button type="submit">Create Event</button>
-      <button type="reset" onClick={clearForm}>Reset Form</button>
-      {eventLoading &&
-        <p>Creating Event</p>
-      }
-      {eventError &&
-        <p>Error in creating event.</p>
-      }
-      {eData &&
-        <button><Link to={`/event/${eData.addEvent.id}`}>Take me to event</Link></button>
-      }
+      <button type="reset" onClick={clearForm}>
+        Reset Form
+      </button>
+      {eventLoading && <Loader />}
+      {eventError && <ErrorDisplayer msg={eventError} />}
+      {error && <ErrorDisplayer msg={error} />}
+      {eData && (
+        <button>
+          <Link to={`/event/${eData.addEvent.id}`}>Take me to event</Link>
+        </button>
+      )}
       <Link to="/">
         <button type="button">Home</button>
       </Link>
-
     </form>
   );
 };
