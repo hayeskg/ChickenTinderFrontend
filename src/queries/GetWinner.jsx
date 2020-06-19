@@ -37,7 +37,7 @@ const FetchWinner = ({ id }) => {
 
   useEffect(() => {
     setWinner({ variables: { eventId: id } });
-  }, []);
+  }, [id, setWinner]);
 
   if (loading || !data) return <Loader />;
   if (error) return <ErrorDisplayer msg={error} />;

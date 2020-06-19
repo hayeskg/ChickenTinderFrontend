@@ -1,5 +1,5 @@
 import Loader from "../components/re-usable/Loader";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import { Link } from "@reach/router";
@@ -12,15 +12,30 @@ query ($eventId: ID!){
     }
     `;
 
+   
+
 const CheckForVoteEnd = ({ id, name, eventDate }) => {
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+    }
+  }, []);
+
+  const initialRender = useRef(true);
   const eventId = id
   return (
     <div>
       <label htmlFor="event-name">{new Date(eventDate).toDateString()}: {name}
         <Query query={isVotingDone} variables={{ eventId }}>
-          {({ loading, error, data }) => {
+          {({ loading, error, data, refetch }) => {
             if (loading) return <Loader />;
             if (error) console.log(error);
+            if (data && initialRender.current) {
+              console.log('refetching');
+              refetch();           
+            }
+
             return data.isVotingDone ?
               <Link to={`/winner/${id}`}>
                 <button className="event-button">
