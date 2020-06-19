@@ -18,7 +18,7 @@ query ($id: ID!){
     `;
 
 const GetUserEvents = ({ events }) => {
-  console.log("in user events")
+  console.log("in user events", events)
   return (
     <div>
       <ul>
