@@ -1,27 +1,18 @@
-import React from "react";
-import TinderCard from "react-tinder-card";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { voteMutation } from "../queries/voteMutation";
-import { useMutation } from "@apollo/react-hooks";
-import { useEffect, useRef } from "react";
-import ErrorDisplayer from "./re-usable/ErrorDisplayer";
-import Loader from "./re-usable/Loader";
+import React from 'react';
+import TinderCard from 'react-tinder-card';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { voteMutation } from '../queries/voteMutation';
+import { useMutation } from '@apollo/react-hooks';
+import { useEffect, useRef } from 'react';
+import ErrorDisplayer from './re-usable/ErrorDisplayer';
+import Loader from './re-usable/Loader';
 
 const RestaurantCard = ({
   checkForEndOfList,
-  restaurant: {
-    id,
-    eventId,
-    name,
-    rating,
-    price,
-    photo,
-    cuisine,
-    location_id,
-  },
+  restaurant: { id, eventId, name, rating, price, photo, cuisine, location_id },
 }) => {
-  const [error, setError] = React.useState("");
-  const [direction, setDirection] = React.useState("");
+  const [error, setError] = React.useState('');
+  const [direction, setDirection] = React.useState('');
   const [votes, setPosNegVotes] = React.useState({
     positiveVote: 0,
     negativeVote: 0,
@@ -39,7 +30,7 @@ const RestaurantCard = ({
         variables: {
           eventId,
           restaurantId: id,
-          userId: "52",
+          userId: '52',
           positiveVote: votes.positiveVote,
           negativeVote: votes.negativeVote,
         },
@@ -55,7 +46,7 @@ const RestaurantCard = ({
 
   const onSwipe = (direction) => {
     setDirection(direction);
-    direction === "left"
+    direction === 'left'
       ? setPosNegVotes({ positiveVote: 0, negativeVote: 1 })
       : setPosNegVotes({ positiveVote: 1, negativeVote: 0 });
   };
@@ -68,7 +59,7 @@ const RestaurantCard = ({
     <TinderCard
       onSwipe={onSwipe}
       onCardLeftScreen={() => onCardLeftScreen()}
-      preventSwipe={["up", "down"]}
+      preventSwipe={['up', 'down']}
       className="Tinder-card"
     >
       <article className="restaurant-card">

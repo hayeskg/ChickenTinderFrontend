@@ -1,21 +1,36 @@
+
 import React from "react";
+
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
-} from "react-places-autocomplete";
-import { eventCreationMutation } from "../queries/EventCreation";
-import { useMutation } from "@apollo/react-hooks";
-import { Link } from "@reach/router";
-import Axios from "axios";
-import ErrorDisplayer from "./re-usable/ErrorDisplayer";
-import Loader from "./re-usable/Loader";
+} from 'react-places-autocomplete';
+import { eventCreationMutation } from '../queries/EventCreation';
+import { useMutation } from '@apollo/react-hooks';
+import { Link } from '@reach/router';
+import Axios from 'axios';
+import ErrorDisplayer from './re-usable/ErrorDisplayer';
+import Loader from './re-usable/Loader';
+import {
+  Grid,
+  Button,
+  TextField,
+  Input,
+  InputLabel,
+  FormHelperText,
+  FormControl,
+  Select,
+  Checkbox,
+  MenuItem,
+  ListItemText,
+} from '@material-ui/core';
 
 const EventCreationForm = ({ query: { users }, organiser }) => {
-  const [error, setError] = React.useState("");
-  const [eventName, setEventName] = React.useState("");
-  const [eDate, setEventDate] = React.useState("");
-  const [eClosingDate, setEventClosingDate] = React.useState("");
-  const [address, setAddress] = React.useState("");
+  const [error, setError] = React.useState('');
+  const [eventName, setEventName] = React.useState('');
+  const [eDate, setEventDate] = React.useState('');
+  const [eClosingDate, setEventClosingDate] = React.useState('');
+  const [address, setAddress] = React.useState('');
   const [coordinates, setCoordinates] = React.useState({
     lat: null,
     lng: null,
@@ -24,13 +39,17 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
     lat: null,
     lng: null,
   });
+
   const [radius, setRadius] = React.useState("1");
+
 
   const [setEvent, { loading: eventLoading, error: eventError }] = useMutation(
     eventCreationMutation
   );
   const [eData, setReturnedEventData] = React.useState(null);
+
   const [myLocationReadable, setMyLocationReadable] = React.useState("");
+
   let guestList = [];
 
   const handleSelect = async (value) => {
@@ -105,151 +124,202 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
   };
 
   const clearForm = () => {
-    setEventName("");
-    setEventDate("");
-    setEventClosingDate("");
-    setAddress("");
+    setEventName('');
+    setEventDate('');
+    setEventClosingDate('');
+    setAddress('');
     setCoordinates({ lat: null, lng: null });
     setMyLocation({ lat: null, lng: null });
-    setRadius("1");
+    setRadius('1');
   };
 
+
   return (
-    <form onSubmit={handleSubmit} className="eventForm">
-      <label htmlFor="eventName">
-        Event:
-        <input
-          type="text"
-          name="eventName"
-          value={eventName}
-          onChange={(event) => setEventName(event.target.value)}
-          placeholder="Event name here..."
-          required="required"
-        />
-      </label>
-      {!myLocation.lat && (
-        <PlacesAutocomplete
-          value={address}
-          onChange={setAddress}
-          onSelect={handleSelect}
-        >
-          {({
-            getInputProps,
-            suggestions,
-            getSuggestionItemProps,
-            loading,
-          }) => (
-            <div>
-              <label htmlFor="location">
-                Location:
-                <input
-                  {...getInputProps({
-                    placeholder: "Start typing your location...",
-                  })}
-                />
-              </label>
-              <div>
-                {loading && <Loader />}
-                {suggestions.map((suggestion) => {
-                  const style = {
-                    backgroundColor: suggestion.active ? "#d1e7ed" : "#fff",
-                  };
-                  return (
-                    <div {...getSuggestionItemProps(suggestion, { style })}>
-                      {suggestion.description}
-                    </div>
-                  );
-                })}
-                <img
-                  src="powered_by_google_on_white.png"
-                  alt="powered by Google"
-                />
-              </div>
+
+    <Grid container justify="center">
+      <Grid item xs={8}>
+        <form onSubmit={handleSubmit} className="eventForm">
+          <TextField
+            fullWidth
+            required
+            variant="outlined"
+            margin="normal"
+            type="text"
+            name="eventName"
+            label="Event"
+            value={eventName}
+            onChange={(event) => setEventName(event.target.value)}
+            placeholder="e.g. Meal with friends..."
+          />
+          {!myLocation.lat && (
+            <PlacesAutocomplete
+              value={address}
+              onChange={setAddress}
+              onSelect={handleSelect}
+            >
+              {({
+                getInputProps,
+                suggestions,
+                getSuggestionItemProps,
+                loading,
+              }) => (
+                <div>
+                  <TextField
+                    {...getInputProps({
+                      placeholder: 'Start typing your location...',
+                    })}
+                    fullWidth
+                    variant="outlined"
+                    label="location"
+                  />
+
+                  <div>
+                    {loading && <Loader />}
+                    {suggestions.map((suggestion) => {
+                      const style = {
+                        backgroundColor: suggestion.active ? '#d1e7ed' : '#fff',
+                      };
+                      return (
+                        <div {...getSuggestionItemProps(suggestion, { style })}>
+                          {suggestion.description}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <Grid container justify="flex-end">
+                    <img
+                      src="powered_by_google_on_white.png"
+                      alt="powered by Google"
+                    />
+                  </Grid>
+                </div>
+              )}
+            </PlacesAutocomplete>
+          )}
+          <Button
+            className="use-location"
+            size="large"
+            color="primary"
+            variant="contained"
+            onClick={getMyLocation}
+          >
+            Use My Location
+          </Button>
+          {myLocation.lat && (
+            <div className="location-text">
+              <h3>Your location</h3>
+              <p>{myLocationReadable}</p>
+              <img
+                src="powered_by_google_on_white.png"
+                alt="powered by Google"
+              />
             </div>
           )}
-        </PlacesAutocomplete>
-      )}
-      <button type="button" onClick={getMyLocation}>
-        Use My Location
-      </button>
-      <img src="powered_by_google_on_white.png" alt="powered by Google" />
-      {myLocation.lat && (
-        <>
-          <p>
-            Your location:
-            <br />
-            {myLocationReadable}
-          </p>
-          <img src="powered_by_google_on_white.png" alt="powered by Google" />
-        </>
-      )}
-      <label htmlFor="radius">
-        Search Radius (miles):
-        <select
-          name="topic"
-          onChange={(event) => setRadius(event.target.value)}
-          value={radius}
-        >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </label>
-      <label htmlFor="eventDate">
-        Event Date:
-        <input
-          type="date"
-          name="eventDate"
-          value={eDate}
-          onChange={(event) => setEventDate(event.target.value)}
-          required="required"
-        />
-      </label>
-      <label htmlFor="eventClosingDate">
-        Voting Deadline:
-        <input
-          type="date"
-          name="eventClosingDate"
-          value={eClosingDate}
-          onChange={(event) => setEventClosingDate(event.target.value)}
-          required="required"
-        />
-      </label>
-      <p>Invite friends</p>
-      <ul>
-        {users.map((friend) => {
-          return (
-            <li key={friend.id} className="noBull">
-              <label htmlFor="guestList">
-                {friend.email}
-                <input
-                  type="checkbox"
-                  value={friend.id}
-                  onChange={handleCheckbox}
-                />
-              </label>
-            </li>
-          );
-        })}
-      </ul>
-      <button type="submit">Create Event</button>
-      <button type="reset" onClick={clearForm}>
-        Reset Form
-      </button>
-      {eventLoading && <Loader />}
-      {eventError && <ErrorDisplayer msg={eventError} />}
-      {error && <ErrorDisplayer msg={error} />}
-      {eData && (
-        <button>
-          <Link to={`/event/${eData.addEvent.id}`}>Take me to event</Link>
-        </button>
-      )}
-      <Link to="/">
-        <button type="button">Home</button>
-      </Link>
-    </form>
+          <Grid container justify="flex-start">
+            <Grid item xs={12}>
+              <FormControl variant="outlined">
+                <InputLabel htmlFor="radius">Radius</InputLabel>
+                <Select
+                  native
+                  value={radius}
+                  label="Radius"
+                  onChange={(event) => setRadius(event.target.value)}
+                  inputProps={{
+                    name: 'radius',
+                    id: 'radius',
+                  }}
+                >
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                </Select>
+                <FormHelperText>Miles</FormHelperText>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container direction="column" spacing={3}>
+            <Grid item xs={12}>
+              <TextField
+                id="eventDate"
+                label="Event date"
+                type="datetime-local"
+                variant="outlined"
+                defaultValue="2020-07-20T17:30"
+                required
+                onChange={(event) => setEventDate(event.target.value)}
+              ></TextField>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="eventClosingDate"
+                label="Closing date"
+                type="datetime-local"
+                variant="outlined"
+                defaultValue="2020-07-19T17:30"
+                required
+                onChange={(event) => setEventClosingDate(event.target.value)}
+              ></TextField>
+            </Grid>
+          </Grid>
+
+          <Grid container>
+            <Grid item xs={12}>
+              <h3>Invite friends</h3>
+            </Grid>
+            <Grid item xs={12}>
+              <ul>
+                {users.map((friend) => {
+                  return (
+                    <li key={friend.id}>
+                      {friend.email}
+                      <Checkbox
+                        color="primary"
+                        inputProps={{ 'aria-label': 'guestList' }}
+                        value={friend.id}
+                        onChange={handleCheckbox}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </Grid>
+          </Grid>
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            type="submit"
+          >
+            Create Event
+          </Button>
+          <Button
+            variant="contained"
+            size="large"
+            color="secondary"
+            type="reset"
+            onClick={clearForm}
+          >
+            Reset Form
+          </Button>
+          {eventLoading && <p>Creating Event</p>}
+          {eventError && <ErrorDisplayer msg={eventError} />}
+          {error && <ErrorDisplayer msg={error} />}
+          {eData && (
+            <Button variant="contained" size="large" color="primary">
+              <Link to={`/swipe/${eData.addEvent.id}`}>Take me to event</Link>
+            </Button>
+          )}
+
+          <Button variant="contained" size="large" color="primary">
+            <Link to="/">Home</Link>
+          </Button>
+        </form>
+      </Grid>
+    </Grid>
+
+        
   );
 };
 
