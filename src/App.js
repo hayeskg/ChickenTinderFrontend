@@ -19,12 +19,12 @@ import { Router } from "@reach/router";
 
 import GetRestaurantsByEventId from "./queries/GetRestaurantsById";
 import FetchWinner from "./queries/GetWinner";
-import GetUsers from "./queries/GetUsers"
+import GetUsers from "./queries/GetUsers";
 import GetUserByUID from "./queries/GetUserByUID";
-import GetUserEvents from "./queries/GetUserEvents"
+import GetUserEvents from "./queries/GetUserEvents";
 
 import ErrorDisplayer from "./components/re-usable/ErrorDisplayer";
-
+import UserProfile from "./components/re-usable/UserProfile";
 
 const client = new ApolloClient({
   uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
@@ -32,9 +32,7 @@ const client = new ApolloClient({
 
 class App extends Component {
   state = {
-
-     user: null,
-
+    user: null,
   };
   componentDidMount() {
     this.authListener();
@@ -43,11 +41,14 @@ class App extends Component {
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
-
         this.setState({
-          user: { username: user.email, email: user.email, uid: user.uid },
+          user: {
+            username: user.displayName,
+            email: user.email,
+            uid: user.uid,
+            photo: user.photoURL,
+          },
         });
-
       } else {
         this.setState({ user: null });
       }
@@ -60,11 +61,16 @@ class App extends Component {
         <div className="App">
           <Header />
           <Router>
-            {this.state.user ? <GetUserByUID path="/" uid={this.state.user.uid}/> : <Login path="/" />}
-            <GetUserEvents path="/events/:userid"/>
+            {this.state.user ? (
+              <GetUserByUID path="/" uid={this.state.user.uid} />
+            ) : (
+              <Login path="/" />
+            )}
+            <GetUserEvents path="/events/:userid" />
             <GetRestaurantsByEventId path="/event/:id" />
             <GetUsers path="/event-creation/:userid" />
             <FetchWinner path="/winner/:id" />
+            <UserProfile path="/user-profile" user={this.state.user} />
             <ErrorDisplayer default />
           </Router>
         </div>
