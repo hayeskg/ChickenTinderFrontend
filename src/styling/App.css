@@ -206,7 +206,7 @@ h2 {
 */
 
 /*Swipeable Cards*/
-.Tinder-card {
+.MuiGrid-container .Tinder-card {
   border: #752a07 3px;
   position: absolute;
   border-style: outset;
