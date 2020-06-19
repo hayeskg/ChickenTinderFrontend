@@ -1,47 +1,48 @@
 import gql from "graphql-tag";
+import React from "react";
+import { useMutation } from "@apollo/react-hooks";
+import Loader from "../components/re-usable/Loader";
 import WinnerDisplayer from "../components/WinnerDisplayer";
-import React from 'react';
-import { Query } from 'react-apollo';
-import Loader from '../components/re-usable/Loader';
+import { useState, useEffect } from "react";
+import ErrorDisplayer from "../components/re-usable/ErrorDisplayer";
 
 export const getWinner = gql`
-query ($eventId: ID!) {
-  winner (
-    eventId: $eventId
-  )
-   {
-    id
-    eventId
-    name
-    description
-    photo
-    price
-    ranking
-    rating
-    phone
-    website
-    address
-    cuisine
-    dietRestrictions
+  mutation($eventId: ID!) {
+    getWinner(eventId: $eventId) {
+      id
+      eventId
+      name
+      description
+      photo
+      price
+      ranking
+      rating
+      phone
+      website
+      address
+      cuisine
+      dietRestrictions
+    }
   }
-  }
-  `;
+`;
 
-  const FetchWinner = ({ id }) => {
-  const eventId = id
-    console.log(eventId)
-    return (
-      <div>
-        <Query query={getWinner} variables={{ eventId }}>
-          {({ loading, error, data }) => {
-            if (loading) return <Loader />;
-            if (error) console.log(error);
-            console.log(data)
-            return <WinnerDisplayer data={data} />
-          }}
-        </Query>
-      </div>
-    );
-  };
-  
-  export default FetchWinner;
+const FetchWinner = ({ id }) => {
+  const [data, setData] = useState(null);
+
+  const [setWinner, { loading, error }] = useMutation(getWinner, {
+    onCompleted(response) {
+      setData(response.getWinner);
+    },
+  });
+
+  useEffect(() => {
+    setWinner({ variables: { eventId: id } });
+  }, []);
+
+  if (loading || !data) return <Loader />;
+  if (error) return <ErrorDisplayer msg={error} />;
+
+  return <WinnerDisplayer data={data} />;
+};
+
+export default FetchWinner;

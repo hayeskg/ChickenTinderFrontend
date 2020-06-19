@@ -24,3 +24,4 @@ yarn-error.log*
 
 # Firebase
 /src/fireAuth.js
+fireAuth.js

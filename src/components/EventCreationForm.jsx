@@ -1,8 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
+import { eventCreationMutation } from '../queries/EventCreation';
+import { useMutation } from '@apollo/react-hooks';
+import { Link } from '@reach/router';
+import Axios from 'axios';
+import ErrorDisplayer from './re-usable/ErrorDisplayer';
+import Loader from './re-usable/Loader';
 import {
   Grid,
   Button,
@@ -16,14 +22,9 @@ import {
   MenuItem,
   ListItemText,
 } from '@material-ui/core';
-import { eventCreationMutation } from '../queries/EventCreation';
-import { useMutation, useQuery, useLazyQuery } from '@apollo/react-hooks';
-import { Link } from '@reach/router';
-import Axios from 'axios';
-//import { getUsers } from "../queries/GetUsers"
 
-const EventCreationForm = ({ query: { users } }) => {
-  console.log(users, 'QUERY');
+const EventCreationForm = ({ query: { users }, organiser }) => {
+  const [error, setError] = React.useState('');
   const [eventName, setEventName] = React.useState('');
   const [eDate, setEventDate] = React.useState('');
   const [eClosingDate, setEventClosingDate] = React.useState('');
@@ -37,14 +38,13 @@ const EventCreationForm = ({ query: { users } }) => {
     lng: null,
   });
   const [radius, setRadius] = React.useState('1');
+
   const [setEvent, { loading: eventLoading, error: eventError }] = useMutation(
     eventCreationMutation
   );
   const [eData, setReturnedEventData] = React.useState(null);
   const [myLocationReadable, setMyLocationReadable] = React.useState('');
   let guestList = [];
-
-  //  const { loading, error, data } = useQuery(getUsers);
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
@@ -73,7 +73,7 @@ const EventCreationForm = ({ query: { users } }) => {
         setMyLocationReadable(response.data.results[0].formatted_address);
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
       });
   };
 
@@ -82,7 +82,6 @@ const EventCreationForm = ({ query: { users } }) => {
     checked
       ? guestList.push(value)
       : guestList.splice(guestList.indexOf(value), 1);
-    console.log(guestList);
     return guestList;
   };
 
@@ -94,8 +93,9 @@ const EventCreationForm = ({ query: { users } }) => {
     const distance = radius;
     const endDate = new Date(eDate).toISOString();
     const voteDate = new Date(eClosingDate).toISOString();
-    // const organiser = user
+
     const guests = guestList;
+
     setEvent({
       variables: {
         name,
@@ -104,12 +104,16 @@ const EventCreationForm = ({ query: { users } }) => {
         distance,
         endDate,
         voteDate,
-        //organiser,
+        organiser,
         guests,
       },
-    }).then(({ data }) => {
-      setReturnedEventData(data);
-    });
+    })
+      .then(({ data }) => {
+        setReturnedEventData(data);
+      })
+      .catch((err) => {
+        setError(err);
+      });
     clearForm();
   };
 
@@ -124,22 +128,22 @@ const EventCreationForm = ({ query: { users } }) => {
   };
 
   // Friends list
-  const [personEmail, setPersonEmail] = React.useState([]);
+  // const [personEmail, setPersonEmail] = React.useState([]);
 
-  const handleChange = (event) => {
-    setPersonEmail(event.target.value);
-  };
-
-  // const handleChangeMultiple = (event) => {
-  //   const { options } = event.target;
-  //   const value = [];
-  //   for (let i = 0, l = options.length; i < l; i += 1) {
-  //     if (options[i].selected) {
-  //       value.push(options[i].value);
-  //     }
-  //   }
-  //   setPersonName(value);
+  // const handleChange = (event) => {
+  //   setPersonEmail(event.target.value);
   // };
+
+  // // const handleChangeMultiple = (event) => {
+  // //   const { options } = event.target;
+  // //   const value = [];
+  // //   for (let i = 0, l = options.length; i < l; i += 1) {
+  // //     if (options[i].selected) {
+  // //       value.push(options[i].value);
+  // //     }
+  // //   }
+  // //   setPersonName(value);
+  // // };
 
   return (
     <Grid container justify="center">
@@ -157,17 +161,6 @@ const EventCreationForm = ({ query: { users } }) => {
             onChange={(event) => setEventName(event.target.value)}
             placeholder="e.g. Meal with friends..."
           />
-          {/* <label htmlFor="eventName">
-          Event:
-          <input
-            type="text"
-            name="eventName"
-            value={eventName}
-            onChange={(event) => setEventName(event.target.value)}
-            placeholder="Event name here..."
-            required="required"
-          />
-        </label> */}
           {!myLocation.lat && (
             <PlacesAutocomplete
               value={address}
@@ -181,14 +174,6 @@ const EventCreationForm = ({ query: { users } }) => {
                 loading,
               }) => (
                 <div>
-                  {/* <label htmlFor="location">
-                  Location:
-                  <input
-                    {...getInputProps({
-                      placeholder: 'Start typing your location...',
-                    })}
-                  />
-                </label> */}
                   <TextField
                     {...getInputProps({
                       placeholder: 'Start typing your location...',
@@ -199,7 +184,7 @@ const EventCreationForm = ({ query: { users } }) => {
                   />
 
                   <div>
-                    {loading && <p>Loading!</p>}
+                    {loading && <Loader />}
                     {suggestions.map((suggestion) => {
                       const style = {
                         backgroundColor: suggestion.active ? '#d1e7ed' : '#fff',
@@ -240,20 +225,6 @@ const EventCreationForm = ({ query: { users } }) => {
               />
             </div>
           )}
-          {/* <label htmlFor="radius">
-          Search Radius (miles):
-          <select
-            name="topic"
-            onChange={(event) => setRadius(event.target.value)}
-            value={radius}
-          >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </label> */}
           <Grid container justify="flex-start">
             <Grid item xs={12}>
               <FormControl variant="outlined">
@@ -279,16 +250,6 @@ const EventCreationForm = ({ query: { users } }) => {
             </Grid>
           </Grid>
           <Grid container direction="column" spacing={3}>
-            {/* <label htmlFor="eventDate">
-            Event Date:
-            <input
-              type="date"
-              name="eventDate"
-              value={eDate}
-              onChange={(event) => setEventDate(event.target.value)}
-              required="required"
-            />
-          </label> */}
             <Grid item xs={12}>
               <TextField
                 id="eventDate"
@@ -297,25 +258,13 @@ const EventCreationForm = ({ query: { users } }) => {
                 variant="outlined"
                 defaultValue="2020-07-20T17:30"
                 required
-                // value={eDate}
                 onChange={(event) => setEventDate(event.target.value)}
               ></TextField>
             </Grid>
             <Grid item xs={12}>
-              {/* <label htmlFor="eventClosingDate">
-                Voting Deadline:
-                <input
-                  type="date"
-                  name="eventClosingDate"
-                  value={eClosingDate}
-                  onChange={(event) => setEventClosingDate(event.target.value)}
-                  required="required"
-                />
-              </label> */}
               <TextField
                 id="eventClosingDate"
                 label="Closing date"
-                //value={eClosingDate}
                 type="datetime-local"
                 variant="outlined"
                 defaultValue="2020-07-19T17:30"
@@ -360,15 +309,7 @@ const EventCreationForm = ({ query: { users } }) => {
               <ul>
                 {users.map((friend) => {
                   return (
-                    <li key={friend.id} className="noBull">
-                      {/* <label htmlFor="guestList">
-                    {friend.email}
-                    <input
-                      type="checkbox"
-                      value={friend.id}
-                      onChange={handleCheckbox}
-                    />
-                  </label> */}
+                    <li key={friend.id}>
                       {friend.email}
                       <Checkbox
                         color="primary"
@@ -406,6 +347,9 @@ const EventCreationForm = ({ query: { users } }) => {
               <Link to={`/swipe/${eData.addEvent.id}`}>Take me to event</Link>
             </Button>
           )}
+          <Button variant="contained" size="large" color="primary">
+            <Link to="/">Home</Link>
+          </Button>
         </form>
       </Grid>
     </Grid>

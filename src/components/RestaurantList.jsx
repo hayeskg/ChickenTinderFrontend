@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import RestaurantCard from './RestaurantCard';
 import EndOfList from './EndOfList';
 import Loader from './re-usable/Loader';
+import ErrorDisplayer from './re-usable/ErrorDisplayer';
 import { Grid } from '@material-ui/core';
 
 class RestaurantList extends Component {
@@ -10,9 +11,10 @@ class RestaurantList extends Component {
     endOfList: false,
     loading: true,
     vote: '',
+    error: { message: '' },
   };
+
   componentDidMount() {
-    console.log(this.props.query);
     this.setState({
       restaurants: this.props.query.event.restaurants,
       loading: false,
@@ -24,14 +26,16 @@ class RestaurantList extends Component {
       this.state.restaurants.findIndex((restaurant) => restaurant.id === id) ===
       0
     ) {
-      this.setState({ endOfList: true });
+      this.setState({ endOfList: true, loading: false });
     }
   };
 
   render() {
-    const { loading } = this.state;
+    const { loading, error } = this.state;
+    const { message } = this.state.error;
     const { eventId } = this.props;
     if (loading) return <Loader />;
+    if (message) return <ErrorDisplayer msg={error} />;
     return (
       <Grid container justify="center">
         <section className="restaurant-list">

@@ -4,21 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { voteMutation } from '../queries/voteMutation';
 import { useMutation } from '@apollo/react-hooks';
 import { useEffect, useRef } from 'react';
+import ErrorDisplayer from './re-usable/ErrorDisplayer';
+import Loader from './re-usable/Loader';
 
 const RestaurantCard = ({
   checkForEndOfList,
-  restaurant: {
-    id,
-    eventId,
-    name,
-    rating,
-    price,
-    //location_string,
-    photo,
-    cuisine,
-    location_id,
-  },
+  restaurant: { id, eventId, name, rating, price, photo, cuisine, location_id },
 }) => {
+  const [error, setError] = React.useState('');
   const [direction, setDirection] = React.useState('');
   const [votes, setPosNegVotes] = React.useState({
     positiveVote: 0,
@@ -46,7 +39,7 @@ const RestaurantCard = ({
           console.log(response);
         })
         .catch((err) => {
-          console.log(err);
+          setError(err);
         });
     }
   }, [votes, id, eventId, setVotes]);
@@ -80,10 +73,6 @@ const RestaurantCard = ({
             <FontAwesomeIcon icon="star" className="icon" />
             {rating}
           </p>
-          {/*<p>
-            <FontAwesomeIcon icon="map-marker-alt" className="icon" />
-            {location_string}
-          </p>*/}
         </section>
         <img src={photo} alt={name} className="restaurant-image" />
         <section className="swipe-buttons">
@@ -98,6 +87,9 @@ const RestaurantCard = ({
             </span>
           </button>
         </section>
+        {voteLoading && <Loader />}
+        {error && <ErrorDisplayer msg={error} />}
+        {voteError && <ErrorDisplayer msg={voteError} />}
       </article>
     </TinderCard>
   );

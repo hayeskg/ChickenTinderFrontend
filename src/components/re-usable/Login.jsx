@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import fire from '../../fireAuth.js';
 import Grid from '@material-ui/core/Grid';
@@ -10,6 +11,46 @@ const Login = () => {
   const [password, setPassword] = React.useState('');
 
   const [setSignedUpUser, { loading, error }] = useMutation(addUser);
+=======
+import React from "react";
+import fire from "../../fireAuth.js";
+import styled from "styled-components";
+import { useMutation } from "react-apollo";
+import { addUser } from "../../queries/AddUser.jsx";
+import ErrorDisplayer from "./ErrorDisplayer.jsx";
+import Loader from "./Loader.jsx";
+
+const StyledLogin = styled.form`
+  background-color: white;
+  border-style: groove;
+  border-color: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 10px;
+  margin: 10px;
+`;
+const StyledInput = styled.input`
+  padding: 10px;
+  margin: 10px;
+`;
+const StyledButton = styled.button`
+  padding: 10px;
+  margin: 10px;
+`;
+
+const Login = () => {
+  const [error, setError] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const [
+    setSignedUpUser,
+    { loading: signUpLoad, error: signUpError },
+  ] = useMutation(addUser);
+>>>>>>> e45ed961abbe1e3ff161e3971753473d61c90506
 
   const login = (event) => {
     event.preventDefault();
@@ -19,8 +60,8 @@ const Login = () => {
       .then((cred) => {
         console.log(cred);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        setError(error);
       });
   };
 
@@ -37,12 +78,13 @@ const Login = () => {
           },
         });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        setError(error);
       });
   };
 
   return (
+<<<<<<< HEAD
     <Grid container justify="center">
       <Grid item xs={8}>
         <h1>Swipe. Match. Eat</h1>
@@ -88,6 +130,29 @@ const Login = () => {
         </Button>
       </form>
     </Grid>
+=======
+    <StyledLogin>
+      <label htmlFor="email">Email: </label>
+      <StyledInput
+        type="email"
+        name="email"
+        placeholder="email"
+        onChange={(event) => setEmail(event.target.value)}
+      />
+      <label htmlFor="password">Password: </label>
+      <StyledInput
+        type="password"
+        name="password"
+        placeholder="password"
+        onChange={(event) => setPassword(event.target.value)}
+      />
+      <StyledButton onClick={login}>Login</StyledButton>
+      <StyledButton onClick={signup}>Signup</StyledButton>
+      {signUpLoad && <Loader />}
+      {error && <ErrorDisplayer msg={error} />}
+      {signUpError && <ErrorDisplayer msg={signUpError} />}
+    </StyledLogin>
+>>>>>>> e45ed961abbe1e3ff161e3971753473d61c90506
   );
 };
 
