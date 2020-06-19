@@ -12,20 +12,25 @@ const getUsers = gql`
       email
     }
   }
-`;
 
-const GetUsers = ({ id }) => {
-  return (
-    <div>
-      <Query query={getUsers}>
-        {({ loading, error, data }) => {
-          if (loading) return <Loader />;
-          if (error) return <ErrorDisplayer msg={error} />;
-          return <EventCreationForm query={data} eventId={id} />;
-        }}
-      </Query>
-    </div>
-  );
-};
+  }
+  `;
+
+  const GetUsers = ({ userid }) => {
+
+    return (
+      <div>
+        <Query query={getUsers}>
+          {({ loading, error, data }) => {
+            if (loading) return <Loader />;
+           if (error) return <ErrorDisplayer msg={error} />;
+        
+            return <EventCreationForm query={data} organiser={userid}/>;
+          }}
+        </Query>
+      </div>
+    );
+  };
+
 
 export default GetUsers;

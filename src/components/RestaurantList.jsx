@@ -12,6 +12,7 @@ class RestaurantList extends Component {
     vote: "",
     error: { message: "" },
   };
+  
   componentDidMount() {
     this.setState({
       restaurants: this.props.query.event.restaurants,

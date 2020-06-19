@@ -40,15 +40,12 @@ const StyledWinnerButton = styled.button`
   }
 `;
 
-const EndOfList = ({id}) => {
+const EndOfList = ({ id }) => {
   return (
     <StyledSection>
       THE END
       <Link to="/">
         <StyledReturnButton>Back home</StyledReturnButton>
-      </Link>
-      <Link to={`/winner/${id}`}>
-        <StyledWinnerButton>Get winner</StyledWinnerButton>
       </Link>
     </StyledSection>
   );

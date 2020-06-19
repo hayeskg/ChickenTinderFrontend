@@ -15,7 +15,6 @@ const RestaurantCard = ({
     name,
     rating,
     price,
-    //location_string,
     photo,
     cuisine,
     location_id,
@@ -83,10 +82,6 @@ const RestaurantCard = ({
             <FontAwesomeIcon icon="star" className="icon" />
             {rating}
           </p>
-          {/*<p>
-            <FontAwesomeIcon icon="map-marker-alt" className="icon" />
-            {location_string}
-          </p>*/}
         </section>
         <img src={photo} alt={name} className="restaurant-image" />
         <section className="swipe-buttons">

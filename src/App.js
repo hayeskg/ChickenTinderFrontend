@@ -15,13 +15,16 @@ import {
   faMoneyBillAlt,
   faDollarSign,
 } from "@fortawesome/free-solid-svg-icons";
-import Home from "./components/re-usable/Home";
 import { Router } from "@reach/router";
 
 import GetRestaurantsByEventId from "./queries/GetRestaurantsById";
 import FetchWinner from "./queries/GetWinner";
-import GetUsers from "./queries/GetUsers";
+import GetUsers from "./queries/GetUsers"
+import GetUserByUID from "./queries/GetUserByUID";
+import GetUserEvents from "./queries/GetUserEvents"
+
 import ErrorDisplayer from "./components/re-usable/ErrorDisplayer";
+
 
 const client = new ApolloClient({
   uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
@@ -29,10 +32,9 @@ const client = new ApolloClient({
 
 class App extends Component {
   state = {
-    user: {
-      email: "",
-      uid: "",
-    },
+
+     user: null,
+
   };
   componentDidMount() {
     this.authListener();
@@ -41,9 +43,11 @@ class App extends Component {
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
+
         this.setState({
           user: { username: user.email, email: user.email, uid: user.uid },
         });
+
       } else {
         this.setState({ user: null });
       }
@@ -56,9 +60,10 @@ class App extends Component {
         <div className="App">
           <Header />
           <Router>
-            {this.state.user ? <Home path="/" /> : <Login path="/" />}
-            <GetRestaurantsByEventId path="/swipe/:id" />
-            <GetUsers path="/event-creation" />
+            {this.state.user ? <GetUserByUID path="/" uid={this.state.user.uid}/> : <Login path="/" />}
+            <GetUserEvents path="/events/:userid"/>
+            <GetRestaurantsByEventId path="/event/:id" />
+            <GetUsers path="/event-creation/:userid" />
             <FetchWinner path="/winner/:id" />
             <ErrorDisplayer default />
           </Router>
