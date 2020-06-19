@@ -265,10 +265,10 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
           </Grid>
 
           <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={12} >
               <h3>Invite friends</h3>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{maxHeight: 150, overflow: "auto"}}>
               <ul>
                 {users.map((friend) => {
                   return (
