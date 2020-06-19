@@ -159,7 +159,7 @@ h2 {
   opacity: 1;
   right: 0;
 }
-/*wraps indication buttons
+wraps indication buttons
 .swipe-buttons {
   padding: 10px;
   margin: 10px;
@@ -183,7 +183,7 @@ h2 {
   transition: all 500ms ease;
 }
 
-/*images
+/*images*/
 
 .user-avatar {
   border-radius: 5px;
@@ -200,8 +200,9 @@ h2 {
   max-height: 200px;
   max-width: 200px;
 }
+*/
 
-/*Swipeable Cards
+/*Swipeable Cards*/
 .Tinder-card {
   border: #752a07 3px;
   position: absolute;
@@ -254,7 +255,7 @@ h2 {
   top: 0;
 }
 
-/*swipe reaction
+/*swipe reaction*/
 .left {
   z-index: 10;
   display: block;
@@ -304,7 +305,7 @@ h2 {
   padding: 5px;
   margin: 5px;
 }
-/*loader
+loader
 .chicken-loader {
   margin: 50px;
   border-style: outset;

@@ -295,7 +295,7 @@ const EventCreationForm = ({ query: { users } }) => {
                 label="Event date"
                 type="datetime-local"
                 variant="outlined"
-                defaultValue="2020-06-24T17:30"
+                defaultValue="2020-07-20T17:30"
                 required
                 // value={eDate}
                 onChange={(event) => setEventDate(event.target.value)}
@@ -315,10 +315,10 @@ const EventCreationForm = ({ query: { users } }) => {
               <TextField
                 id="eventClosingDate"
                 label="Closing date"
-                value={eClosingDate}
+                //value={eClosingDate}
                 type="datetime-local"
                 variant="outlined"
-                defaultValue="2020-06-23T17:30"
+                defaultValue="2020-07-19T17:30"
                 required
                 onChange={(event) => setEventClosingDate(event.target.value)}
               ></TextField>
