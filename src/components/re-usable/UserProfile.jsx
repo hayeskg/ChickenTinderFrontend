@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@reach/router";
 
 const UserProfile = ({ user: { username, photo, email } }) => {
   return (

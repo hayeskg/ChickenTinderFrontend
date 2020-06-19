@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "@reach/router";
 
 const StyledHeader = styled.header`
   background-color: #752a07;
@@ -20,7 +21,13 @@ const Header = () => {
         alt=""
         className="header-icon"
       />
-      <h1>Chicken Tinder</h1>
+      <Link to="/">
+        <h1>Chicken Tinder</h1>
+      </Link>
+
+      <Link to="/user-profile">
+        <button>Profile</button>
+      </Link>
     </StyledHeader>
   );
 };

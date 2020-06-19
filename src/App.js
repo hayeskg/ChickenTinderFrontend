@@ -25,6 +25,7 @@ import GetUserEvents from "./queries/GetUserEvents";
 
 import ErrorDisplayer from "./components/re-usable/ErrorDisplayer";
 import UserProfile from "./components/re-usable/UserProfile";
+import UpdateUserInfo from "./components/re-usable/UpdateUserInfo";
 
 const client = new ApolloClient({
   uri: "https://chicken-tinder-backend.herokuapp.com/graphql",
@@ -32,7 +33,7 @@ const client = new ApolloClient({
 
 class App extends Component {
   state = {
-    user: null,
+    user: { username: "", email: "", photo: "", uid: "" },
   };
   componentDidMount() {
     this.authListener();
@@ -40,7 +41,8 @@ class App extends Component {
 
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
-      if (user) {
+      if (user.email) {
+        console.log(user, "HERE");
         this.setState({
           user: {
             username: user.displayName,
@@ -61,7 +63,7 @@ class App extends Component {
         <div className="App">
           <Header />
           <Router>
-            {this.state.user ? (
+            {this.state.user.email ? (
               <GetUserByUID path="/" uid={this.state.user.uid} />
             ) : (
               <Login path="/" />
@@ -71,6 +73,10 @@ class App extends Component {
             <GetUsers path="/event-creation/:userid" />
             <FetchWinner path="/winner/:id" />
             <UserProfile path="/user-profile" user={this.state.user} />
+            <UpdateUserInfo
+              path="/user-profile/update-info"
+              user={this.state.user}
+            />
             <ErrorDisplayer default />
           </Router>
         </div>
