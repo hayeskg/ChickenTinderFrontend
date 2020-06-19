@@ -3,34 +3,33 @@ import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import RestaurantList from "../components/RestaurantList";
 import Loader from "../components/re-usable/Loader";
-import ErrorDisplayer from "../../re-usable/ErrorDisplayer"
+import ErrorDisplayer from "../components/re-usable/ErrorDisplayer";
 
 export const getEventByID = gql`
-query($id: ID!) { 
-  event(id: $id)
-      { id
-      	name
-        endDate
-        voteDate
-      	lat
-      	long
-        distance	
-      	restaurants {
-          id
-          eventId
-          name
-          description
-          photo
-          price
-          ranking
-          rating
-          phone
-          website
-          address
-          cuisine
-          dietRestrictions
-        }
-
+  query($id: ID!) {
+    event(id: $id) {
+      id
+      name
+      endDate
+      voteDate
+      lat
+      long
+      distance
+      restaurants {
+        id
+        eventId
+        name
+        description
+        photo
+        price
+        ranking
+        rating
+        phone
+        website
+        address
+        cuisine
+        dietRestrictions
+      }
     }
   }
 `;
