@@ -9,6 +9,8 @@ const getUserByUID = gql`
   query($uid: String!) {
     userByUID(uid: $uid) {
       id
+      username
+      photo
       email
       uid
       eventIds
