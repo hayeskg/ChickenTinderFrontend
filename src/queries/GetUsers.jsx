@@ -8,6 +8,8 @@ import ErrorDisplayer from "../components/re-usable/ErrorDisplayer";
 const getUsers = gql`
   query {
     users {
+      username
+      photo
       id
       uid
       email

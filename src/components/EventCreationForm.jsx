@@ -266,7 +266,15 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
                 {users.map((friend) => {
                   return (
                     <li key={friend.id}>
-                      {friend.email}
+                      <img
+                        src={
+                          friend.photo ||
+                          "https://d29fhpw069ctt2.cloudfront.net/icon/image/120759/preview.svg"
+                        }
+                        alt=""
+                        className="friend-photo"
+                      />
+                      {friend.username || "Friend"}
                       <Checkbox
                         color="primary"
                         inputProps={{ "aria-label": "guestList" }}
