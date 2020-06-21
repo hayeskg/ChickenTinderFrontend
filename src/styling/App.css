@@ -15,7 +15,7 @@
 
 body {
   margin: 0;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
 }
 
 ul {
@@ -132,7 +132,7 @@ h2 {
 }
 
 .button-red span:after {
-  content: '\00ab';
+  content: "\00ab";
   position: absolute;
   opacity: 0;
   top: 0;
@@ -140,7 +140,7 @@ h2 {
   transition: 0.5s;
 }
 .button-green span:after {
-  content: '\00bb';
+  content: "\00bb";
   position: absolute;
   opacity: 0;
   top: 0;
@@ -357,16 +357,12 @@ loader .chicken-loader {
 .noBull {
   list-style: none;
 }
-<<<<<<< HEAD:src/App.css
 
 ul {
   list-style: none;
 }
-
+*/
 .user-avatar {
   max-width: 100px;
   max-height: 100px;
 }
-=======
-*/
->>>>>>> 009cd8a47187572a979b86be2b67b0e5cc51bfff:src/styling/App.css
