@@ -1,12 +1,11 @@
 import gql from "graphql-tag";
 
-export const updateUser = gql`
-  mutation($uid: String!, $username: String, $email: String!, $photo: String) {
-    addUser(uid: $uid, username: $username, email: $email, photo: $photo) {
+export const updateUsername = gql`
+  mutation($uid: String!, $username: String, $photoURL: String) {
+    updateUsername(uid: $uid, username: $username, photoURL: $photoURL) {
       uid
       username
-      email
-      photo
+      photoURL
     }
   }
 `;

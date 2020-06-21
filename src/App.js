@@ -16,13 +16,11 @@ import {
   faDollarSign,
 } from "@fortawesome/free-solid-svg-icons";
 import { Router } from "@reach/router";
-
 import GetRestaurantsByEventId from "./queries/GetRestaurantsById";
 import FetchWinner from "./queries/GetWinner";
 import GetUsers from "./queries/GetUsers";
 import GetUserByUID from "./queries/GetUserByUID";
 import GetUserEvents from "./queries/GetUserEvents";
-
 import ErrorDisplayer from "./components/re-usable/ErrorDisplayer";
 import UserProfile from "./components/re-usable/UserProfile";
 import UpdateUserInfo from "./components/re-usable/UpdateUserInfo";
@@ -42,7 +40,6 @@ class App extends Component {
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
       if (user.email) {
-        console.log(user, "HERE");
         this.setState({
           user: {
             username: user.displayName,
@@ -59,7 +56,7 @@ class App extends Component {
 
   render() {
     return (
-      <ApolloProvider client={client}>
+      <ApolloProvider client={client} className="App">
         <div className="App">
           <Header />
           <Router>
