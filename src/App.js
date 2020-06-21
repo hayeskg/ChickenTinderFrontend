@@ -31,7 +31,12 @@ const client = new ApolloClient({
 
 class App extends Component {
   state = {
-    user: { username: "", email: "", photo: "", uid: "" },
+    user: {
+      username: "",
+      email: "",
+      photo: "",
+      uid: "",
+    },
   };
   componentDidMount() {
     this.authListener();
