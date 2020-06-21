@@ -1,4 +1,4 @@
-import "./App.css";
+import "./styling/App.css";
 import React, { Component } from "react";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";

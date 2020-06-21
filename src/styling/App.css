@@ -1,23 +1,74 @@
 /*App*/
 .App {
   text-align: center;
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   overflow: scroll;
-  flex-wrap: wrap;
-  background-color: #fbcb7b;
-  background-image: radial-gradient(#fbcb7b, #fd974f);
+  flex-wrap: wrap; */
+  background-color: white;
+  /* background-image: radial-gradient(#fbcb7b, #fd974f); */
 
-  min-height: 100%;
+  /* min-height: 100%;
   position: fixed;
-  width: 100%;
+  width: 100%; */
 }
 
 body {
   margin: 0;
-  font-family: "Raleway", sans-serif;
+  font-family: 'Quicksand', sans-serif;
 }
-/*headings*/
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+header {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+button {
+  width: 100%;
+}
+
+#login {
+  padding: 0 20px 0 20px;
+}
+
+#login button {
+  margin-top: 20px;
+}
+
+.eventForm button {
+  margin: 20px 0 0 0;
+}
+
+.eventForm .use-location {
+  margin-bottom: 20px;
+}
+
+.eventForm ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.eventFrom li {
+  margin: 0;
+}
+
+.location-text {
+  margin: -20px 0 40px 0;
+}
+
+/* headings
 h1 {
   font-family: "Frijole", cursive;
   font-size: xxx-large;
@@ -81,7 +132,7 @@ h2 {
 }
 
 .button-red span:after {
-  content: "\00ab";
+  content: '\00ab';
   position: absolute;
   opacity: 0;
   top: 0;
@@ -89,7 +140,7 @@ h2 {
   transition: 0.5s;
 }
 .button-green span:after {
-  content: "\00bb";
+  content: '\00bb';
   position: absolute;
   opacity: 0;
   top: 0;
@@ -152,9 +203,10 @@ h2 {
   max-height: 200px;
   max-width: 200px;
 }
+*/
 
 /*Swipeable Cards*/
-.Tinder-card {
+.MuiGrid-container .Tinder-card {
   border: #752a07 3px;
   position: absolute;
   border-style: outset;
@@ -256,8 +308,7 @@ h2 {
   padding: 5px;
   margin: 5px;
 }
-/*loader*/
-.chicken-loader {
+loader .chicken-loader {
   margin: 50px;
   border-style: outset;
   border-radius: 10px;
@@ -274,7 +325,7 @@ h2 {
 .loader {
   padding: 50px;
 }
-
+/*
 .eventForm {
   display: flex;
   flex-direction: column;
@@ -306,6 +357,7 @@ h2 {
 .noBull {
   list-style: none;
 }
+<<<<<<< HEAD:src/App.css
 
 ul {
   list-style: none;
@@ -315,3 +367,6 @@ ul {
   max-width: 100px;
   max-height: 100px;
 }
+=======
+*/
+>>>>>>> 009cd8a47187572a979b86be2b67b0e5cc51bfff:src/styling/App.css

@@ -1,18 +1,19 @@
-import React, { Component } from "react";
-import RestaurantCard from "./RestaurantCard";
-import EndOfList from "./EndOfList";
-import Loader from "./re-usable/Loader";
-import ErrorDisplayer from "./re-usable/ErrorDisplayer";
+import React, { Component } from 'react';
+import RestaurantCard from './RestaurantCard';
+import EndOfList from './EndOfList';
+import Loader from './re-usable/Loader';
+import ErrorDisplayer from './re-usable/ErrorDisplayer';
+import { Grid } from '@material-ui/core';
 
 class RestaurantList extends Component {
   state = {
     restaurants: [],
     endOfList: false,
     loading: true,
-    vote: "",
-    error: { message: "" },
+    vote: '',
+    error: { message: '' },
   };
-  
+
   componentDidMount() {
     this.setState({
       restaurants: this.props.query.event.restaurants,
@@ -36,21 +37,23 @@ class RestaurantList extends Component {
     if (loading) return <Loader />;
     if (message) return <ErrorDisplayer msg={error} />;
     return (
-      <section className="restaurant-list">
-        {this.state.restaurants.map((restaurant) => {
-          return (
-            <RestaurantCard
-              key={restaurant.id}
-              restaurant={restaurant}
-              handleUpvote={this.handleUpvote}
-              handleDownvote={this.handleDownvote}
-              eventRef={this.props.query.event.id}
-              checkForEndOfList={this.checkForEndOfList}
-            />
-          );
-        })}
-        {this.state.endOfList && <EndOfList id={eventId} />}
-      </section>
+      <Grid container justify="center">
+        <section className="restaurant-list">
+          {this.state.restaurants.map((restaurant) => {
+            return (
+              <RestaurantCard
+                key={restaurant.id}
+                restaurant={restaurant}
+                handleUpvote={this.handleUpvote}
+                handleDownvote={this.handleDownvote}
+                eventRef={this.props.query.event.id}
+                checkForEndOfList={this.checkForEndOfList}
+              />
+            );
+          })}
+          {this.state.endOfList && <EndOfList id={eventId} />}
+        </section>
+      </Grid>
     );
   }
 }
