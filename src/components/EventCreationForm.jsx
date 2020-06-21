@@ -39,12 +39,14 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
     lat: null,
     lng: null,
   });
+
   const [radius, setRadius] = React.useState("1");
   const [setEvent, { loading: eventLoading, error: eventError }] = useMutation(
     eventCreationMutation
   );
   const [eData, setReturnedEventData] = React.useState(null);
   const [myLocationReadable, setMyLocationReadable] = React.useState("");
+  const [missLocation, setMissLocation] = React.useState(false);
 
   let guestList = [];
 
@@ -97,26 +99,30 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
     const voteDate = new Date(eClosingDate).toISOString();
 
     const guests = guestList;
-    
-    setEvent({
-      variables: {
-        name,
-        lat,
-        long,
-        distance,
-        endDate,
-        voteDate,
-        organiser,
-        guests,
-      },
-    })
-      .then(({ data }) => {
-        setReturnedEventData(data);
+    if (lat === "null" || long === "null") {
+      setMissLocation(true)
+    } else {
+      setMissLocation(false)
+      setEvent({
+        variables: {
+          name,
+          lat,
+          long,
+          distance,
+          endDate,
+          voteDate,
+          organiser,
+          guests,
+        },
       })
-      .catch((err) => {
-        setError(err);
-      });
-    clearForm();
+        .then(({ data }) => {
+          setReturnedEventData(data);
+        })
+        .catch((err) => {
+          setError(err);
+        });
+      clearForm();
+    }
   };
 
   const clearForm = () => {
@@ -290,6 +296,9 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
           >
             Create Event
           </Button>
+          {missLocation &&
+            <p>Please provide a location</p>
+          }
           <Button
             variant="contained"
             size="large"
@@ -307,7 +316,6 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
               <Link to={`/swipe/${eData.addEvent.id}`}>Take me to event</Link>
             </Button>
           )}
-
           <Button variant="contained" size="large" color="primary">
             <Link to="/">Home</Link>
           </Button>
