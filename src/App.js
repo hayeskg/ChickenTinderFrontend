@@ -58,7 +58,7 @@ class App extends Component {
     return (
       <ApolloProvider client={client} className="App">
         <div className="App">
-          <Header />
+          <Header user={this.state.user} />
           <Router>
             {this.state.user.email ? (
               <GetUserByUID path="/" uid={this.state.user.uid} />
