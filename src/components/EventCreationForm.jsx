@@ -39,15 +39,11 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
     lat: null,
     lng: null,
   });
-
   const [radius, setRadius] = React.useState("1");
-
-
   const [setEvent, { loading: eventLoading, error: eventError }] = useMutation(
     eventCreationMutation
   );
   const [eData, setReturnedEventData] = React.useState(null);
-
   const [myLocationReadable, setMyLocationReadable] = React.useState("");
 
   let guestList = [];
@@ -101,7 +97,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
     const voteDate = new Date(eClosingDate).toISOString();
 
     const guests = guestList;
-
+    
     setEvent({
       variables: {
         name,
@@ -242,22 +238,22 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
           <Grid container direction="column" spacing={3}>
             <Grid item xs={12}>
               <TextField
+                InputLabelProps={{ shrink: true}}
                 id="eventDate"
                 label="Event date"
                 type="datetime-local"
-                variant="outlined"
-                defaultValue="2020-07-20T17:30"
+                variant="outlined" 
                 required
                 onChange={(event) => setEventDate(event.target.value)}
               ></TextField>
             </Grid>
             <Grid item xs={12}>
               <TextField
+                InputLabelProps={{ shrink: true}}
                 id="eventClosingDate"
                 label="Closing date"
                 type="datetime-local"
                 variant="outlined"
-                defaultValue="2020-07-19T17:30"
                 required
                 onChange={(event) => setEventClosingDate(event.target.value)}
               ></TextField>
@@ -268,7 +264,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
             <Grid item xs={12} >
               <h3>Invite friends</h3>
             </Grid>
-            <Grid item xs={12} style={{maxHeight: 150, overflow: "auto"}}>
+            <Grid item xs={12} style={{maxHeight: 150, overflow: "auto"}} >
               <ul>
                 {users.map((friend) => {
                   return (
