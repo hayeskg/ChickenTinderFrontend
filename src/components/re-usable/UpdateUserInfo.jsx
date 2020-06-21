@@ -5,7 +5,7 @@ import Loader from "./Loader.jsx";
 import ErrorDisplayer from "./ErrorDisplayer.jsx";
 import fire from "../../fireAuth.js";
 
-const UpdateUserInfo = ({ email, uid }) => {
+const UpdateUserInfo = ({ user: { uid } }) => {
   const [username, setUsername] = React.useState("");
   const [photo, setPhoto] = React.useState("");
   const [
@@ -15,7 +15,6 @@ const UpdateUserInfo = ({ email, uid }) => {
 
   async function handleSubmit() {
     setUpdatedUser({
-      email: email,
       username: username,
       uid: uid,
       photo: photo,

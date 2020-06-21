@@ -310,4 +310,8 @@ h2 {
 ul {
   list-style: none;
 }
-  
+
+.user-avatar {
+  max-width: 100px;
+  max-height: 100px;
+}
