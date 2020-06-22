@@ -20,11 +20,29 @@ body {
 
 ul {
   list-style: none;
+  padding: 0;
 }
 
 a {
   text-decoration: none;
   color: white;
+}
+
+.event-label p {
+  font-size: 1.3rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.event-label button {
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  max-width: 120px;
+  min-width: 120px;
+}
+
+p.event-date {
+  font-size: 1rem;
 }
 
 /* header {
@@ -174,6 +192,14 @@ button {
 
   .winning-restaurant-img {
     max-height: 200px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .event-label {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 

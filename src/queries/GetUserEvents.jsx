@@ -3,6 +3,7 @@ import React from "react";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import CheckForVoteEnd from "./CheckForVoteEnd";
+import Grid from '@material-ui/core/Grid';
 
 const getUserEventsById = gql`
 query ($id: ID!){
@@ -18,9 +19,8 @@ query ($id: ID!){
     `;
 
 const GetUserEvents = ({ events }) => {
-  console.log("in user events", events)
   return (
-    <div>
+    <Grid>
       <ul>
         {events.map((id) => {
           return <li key={id}>
@@ -35,7 +35,7 @@ const GetUserEvents = ({ events }) => {
           </li>
         })}
       </ul>
-    </div>
+    </Grid>
   );
 };
 

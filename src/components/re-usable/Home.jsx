@@ -14,12 +14,14 @@ const Home = ({ updateUserState, query }) => {
   return (
     <Grid container justify="center">
       <Grid item xs={7}>
+
         <Button
           size="large"
           color="primary"
           variant="contained"
           id="create-event-button"
         >
+
           <Link to={`/event-creation/${query.userByUID.id}`}>Create Event</Link>
         </Button>
       </Grid>
