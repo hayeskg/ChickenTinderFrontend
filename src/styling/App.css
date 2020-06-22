@@ -15,7 +15,7 @@
 
 body {
   margin: 0;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
 }
 
 ul {
@@ -46,6 +46,13 @@ button {
   margin-top: 20px;
 }
 
+#userUpdate {
+  width: 50%;
+}
+
+#userUpdateButton {
+  margin-top: 20px;
+}
 .eventForm button {
   margin: 20px 0 0 0;
 }
@@ -358,4 +365,16 @@ ul {
   max-width: 50px;
   max-height: 50px;
   border-radius: 50px;
+}
+
+.profile-button {
+  border: none;
+  background-color: white;
+  border-radius: 50px;
+
+  max-width: 50px;
+}
+
+.profile-button:hover {
+  background-color: tomato;
 }
