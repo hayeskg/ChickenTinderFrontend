@@ -42,8 +42,8 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
     eventCreationMutation
   );
   const [eData, setReturnedEventData] = React.useState(null);
-
   const [myLocationReadable, setMyLocationReadable] = React.useState("");
+  const [missLocation, setMissLocation] = React.useState(false);
 
   let guestList = [];
 
@@ -96,26 +96,30 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
     const voteDate = new Date(eClosingDate).toISOString();
 
     const guests = guestList;
-
-    setEvent({
-      variables: {
-        name,
-        lat,
-        long,
-        distance,
-        endDate,
-        voteDate,
-        organiser,
-        guests,
-      },
-    })
-      .then(({ data }) => {
-        setReturnedEventData(data);
+    if (lat === "null" || long === "null") {
+      setMissLocation(true)
+    } else {
+      setMissLocation(false)
+      setEvent({
+        variables: {
+          name,
+          lat,
+          long,
+          distance,
+          endDate,
+          voteDate,
+          organiser,
+          guests,
+        },
       })
-      .catch((err) => {
-        setError(err);
-      });
-    clearForm();
+        .then(({ data }) => {
+          setReturnedEventData(data);
+        })
+        .catch((err) => {
+          setError(err);
+        });
+      clearForm();
+    }
   };
 
   const clearForm = () => {
@@ -235,22 +239,22 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
           <Grid container direction="column" spacing={3}>
             <Grid item xs={12}>
               <TextField
+                InputLabelProps={{ shrink: true}}
                 id="eventDate"
                 label="Event date"
                 type="datetime-local"
-                variant="outlined"
-                defaultValue="2020-07-20T17:30"
+                variant="outlined" 
                 required
                 onChange={(event) => setEventDate(event.target.value)}
               ></TextField>
             </Grid>
             <Grid item xs={12}>
               <TextField
+                InputLabelProps={{ shrink: true}}
                 id="eventClosingDate"
                 label="Closing date"
                 type="datetime-local"
                 variant="outlined"
-                defaultValue="2020-07-19T17:30"
                 required
                 onChange={(event) => setEventClosingDate(event.target.value)}
               ></TextField>
@@ -258,10 +262,10 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
           </Grid>
 
           <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={12} >
               <h3>Invite friends</h3>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{maxHeight: 150, overflow: "auto"}} >
               <ul>
                 {users.map((friend) => {
                   return (
@@ -295,6 +299,9 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
           >
             Create Event
           </Button>
+          {missLocation &&
+            <p>Please provide a location</p>
+          }
           <Button
             variant="contained"
             size="large"
@@ -312,7 +319,6 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
               <Link to={`/event/${eData.addEvent.id}`}>Take me to event</Link>
             </Button>
           )}
-
           <Button variant="contained" size="large" color="primary">
             <Link to="/">Home</Link>
           </Button>
