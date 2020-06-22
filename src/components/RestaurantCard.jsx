@@ -5,7 +5,6 @@ import { voteMutation } from '../queries/voteMutation';
 import { useMutation } from '@apollo/react-hooks';
 import { useEffect, useRef } from 'react';
 import ErrorDisplayer from './re-usable/ErrorDisplayer';
-import Loader from './re-usable/Loader';
 
 const RestaurantCard = ({
   checkForEndOfList,
@@ -18,7 +17,7 @@ const RestaurantCard = ({
     negativeVote: 0,
   });
   const initialRender = useRef(true);
-  const [setVotes, { loading: voteLoading, error: voteError }] = useMutation(
+  const [setVotes, { error: voteError }] = useMutation(
     voteMutation
   );
 
@@ -87,7 +86,6 @@ const RestaurantCard = ({
             </span>
           </button>
         </section>
-        {voteLoading && <Loader />}
         {error && <ErrorDisplayer msg={error} />}
         {voteError && <ErrorDisplayer msg={voteError} />}
       </article>
