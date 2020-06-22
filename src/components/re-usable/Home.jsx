@@ -13,7 +13,7 @@ const Home = ({ query }) => {
   return (
     <Grid container justify="center">
       <Grid item xs={7}>
-        <Button size="large" color="primary" variant="contained">
+        <Button size="large" color="primary" variant="contained" >
           <Link to={`/event-creation/${query.userByUID.id}`}>Create Event</Link>
         </Button>
       </Grid>

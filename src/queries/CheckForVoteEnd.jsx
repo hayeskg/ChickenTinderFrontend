@@ -3,6 +3,8 @@ import React, { useEffect, useRef } from "react";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import { Link } from "@reach/router";
+import Grid from '@material-ui/core/Grid';
+import { Button } from '@material-ui/core';
 
 const isVotingDone = gql`
 query ($eventId: ID!){
@@ -25,8 +27,10 @@ const CheckForVoteEnd = ({ id, name, eventDate }) => {
   const initialRender = useRef(true);
   const eventId = id
   return (
-    <div>
-      <label htmlFor="event-name">{new Date(eventDate).toDateString()}: {name}
+    <Grid>
+      <label htmlFor="event-name" className="event-label">
+        <p className="event-date">{new Date(eventDate).toDateString()}:</p>
+        <p>{name}</p>
         <Query query={isVotingDone} variables={{ eventId }}>
           {({ loading, error, data, refetch }) => {
             if (loading) return <Loader />;
@@ -38,19 +42,19 @@ const CheckForVoteEnd = ({ id, name, eventDate }) => {
 
             return data.isVotingDone ?
               <Link to={`/winner/${id}`}>
-                <button className="event-button">
+                <Button size="small" color="primary" variant="contained" >
                   <span className="event-button-span">SEE WINNER</span>
-                </button>
+                </Button>
               </Link>
               : <Link to={`/event/${id}`}>
-                <button className="event-button">
+                <Button size="small" color="primary" variant="outlined">
                   <span className="event-button-span">VOTE</span>
-                </button>
+                </Button>
               </Link>;
           }}
         </Query>
       </label>
-    </div>
+    </Grid>
   );
 };
 
