@@ -271,8 +271,12 @@ h2 {
 /*responsiveness*/
 @media only screen and (max-width: 500px) {
   .card {
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 280px;
+    max-height: 460px;
+  }
+
+  .restaurant-image-box {
+    max-height: 200px;
   }
 }
 
