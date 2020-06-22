@@ -22,7 +22,7 @@ const WinnerDisplayer = ({ data }) => {
   } = data;
 
   const firstCuisine =
-    cuisine && cuisine.length > 0 ? cuisine[0] : 'Not available';
+    cuisine && cuisine.length > 0 ? cuisine[0] : 'Cuisine not available';
 
   return (
     <article>
