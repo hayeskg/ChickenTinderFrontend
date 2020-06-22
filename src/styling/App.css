@@ -46,12 +46,23 @@ button {
   margin-top: 20px;
 }
 
-#userUpdate {
+#user-update {
   width: 50%;
 }
 
-#userUpdateButton {
+#update-info-button {
+  width: 25%;
+}
+
+#user-update-button {
   margin-top: 20px;
+}
+#create-event-button {
+  margin-top: 20px;
+}
+
+#create-event-list {
+  width: 50%;
 }
 .eventForm button {
   margin: 20px 0 0 0;
@@ -359,6 +370,9 @@ ul {
 .user-avatar {
   max-width: 100px;
   max-height: 100px;
+  border-style: groove;
+  border-color: black;
+  padding: 10px;
 }
 
 .friend-photo {
@@ -367,14 +381,47 @@ ul {
   border-radius: 50px;
 }
 
-.profile-button {
-  border: none;
-  background-color: white;
+.header-photo {
+  margin-top: 5px;
+  max-width: 50%;
+  max-height: 60%;
   border-radius: 50px;
+  margin-bottom: 2px;
+}
 
-  max-width: 50px;
+.profile-button {
+  border-style: outset;
+  border-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 5px;
 }
 
 .profile-button:hover {
   background-color: tomato;
+}
+
+.user-profile {
+  padding: 10px;
+  margin: 10px;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.app-header {
+  display: grid;
+  grid-template-columns: 6fr 0.5fr 0.3fr;
+  align-items: center;
+}
+
+.username-header {
+  font-size: 80%;
+  margin-bottom: 5px;
 }
