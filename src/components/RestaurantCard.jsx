@@ -5,7 +5,6 @@ import { voteMutation } from '../queries/voteMutation';
 import { useMutation } from '@apollo/react-hooks';
 import { useEffect, useRef } from 'react';
 import ErrorDisplayer from './re-usable/ErrorDisplayer';
-import Loader from './re-usable/Loader';
 import { Paper, Grid, Box, SvgIcon, Button } from '@material-ui/core';
 import {
   CheckCircleRounded,
@@ -110,7 +109,6 @@ const RestaurantCard = ({
                 </Button>
               </Grid>
             </Grid>
-            {/* {voteLoading && <Loader />} */}
             {error && <ErrorDisplayer msg={error} />}
             {voteError && <ErrorDisplayer msg={voteError} />}
           </article>
