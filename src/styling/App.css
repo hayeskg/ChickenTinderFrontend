@@ -1,9 +1,7 @@
-
 .App {
   text-align: center;
- 
+
   background-color: white;
- 
 }
 
 body {
@@ -93,6 +91,11 @@ button {
   margin: 0;
 }
 
+#eventDate,
+#eventClosingDate {
+  min-width: 200px;
+}
+
 .location-text {
   margin: -20px 0 40px 0;
 }
@@ -104,9 +107,7 @@ button {
 
 .winning-card .home-btn {
   margin-top: 20px;
-
   margin-bottom: 20px;
-
 }
 
 .winning-card .restaurant-website-btn {

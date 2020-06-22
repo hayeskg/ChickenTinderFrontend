@@ -20,6 +20,7 @@ import {
   FormControl,
   Select,
   Checkbox,
+  Box,
 } from '@material-ui/core';
 
 const EventCreationForm = ({ query: { users }, organiser }) => {
@@ -238,6 +239,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
               </FormControl>
             </Grid>
           </Grid>
+          <Box height={20}></Box>
           <Grid container direction="column" spacing={3}>
             <Grid item xs={12}>
               <TextField
