@@ -1,12 +1,12 @@
-import React from "react";
-import { Link } from "@reach/router";
-import { ReactComponent as Logo } from "../../styling/assets/logo.svg";
+import React from 'react';
+import { Link } from '@reach/router';
+import { ReactComponent as Logo } from '../../styling/assets/logo.svg';
 
 const Header = ({ user: { email, photo, username } }) => {
   return (
     <header>
       <Link to="/">
-        <Logo width={"60%"} height={"60%"} alt={"Chicken Tinder Logo"} />
+        <Logo width={'40%'} height={'40%'} alt={'Chicken Tinder Logo'} />
       </Link>
       {email ? (
         <Link to="/user-profile">

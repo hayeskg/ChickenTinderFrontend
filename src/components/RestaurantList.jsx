@@ -37,8 +37,8 @@ class RestaurantList extends Component {
     if (loading) return <Loader />;
     if (message) return <ErrorDisplayer msg={error} />;
     return (
-      <Grid container justify="center">
-        <section className="restaurant-list">
+      <section className="restaurant-list">
+        <Grid container justify="center">
           {this.state.restaurants.map((restaurant) => {
             return (
               <RestaurantCard
@@ -52,8 +52,8 @@ class RestaurantList extends Component {
             );
           })}
           {this.state.endOfList && <EndOfList id={eventId} />}
-        </section>
-      </Grid>
+        </Grid>
+      </section>
     );
   }
 }

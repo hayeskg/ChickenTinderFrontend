@@ -15,7 +15,7 @@
 
 body {
   margin: 0;
-  font-family: "Quicksand", sans-serif;
+  font-family: 'Quicksand', sans-serif;
 }
 
 ul {
@@ -27,12 +27,12 @@ a {
   color: white;
 }
 
-header {
+/* header {
   display: block;
   width: 100%;
   height: 100%;
   margin: 0 auto;
-}
+} */
 
 button {
   width: 100%;
@@ -82,7 +82,7 @@ h2 {
 /*re-usable components*/
 
 /*Buttons*/
-.btn-green {
+/* .btn-green {
   padding: 100px;
   background-color: green;
 }
@@ -162,16 +162,14 @@ h2 {
 .button-green:hover span:after {
   opacity: 1;
   right: 0;
-}
+} */
 /*wraps indication buttons*/
-.swipe-buttons {
-  padding: 10px;
-  margin: 10px;
-  display: flex;
-  justify-content: space-between;
+
+.cancel-arrows {
+  margin-left: 5px;
 }
 
-.event-button {
+/* .event-button {
   padding: 1rem;
   margin: 2px;
   border-style: outset;
@@ -184,7 +182,7 @@ h2 {
 .event-button:hover {
   background-image: radial-gradient(#5c8f22, #426a0f);
   transition: all 500ms ease;
-}
+} */
 
 /*images*/
 
@@ -192,33 +190,31 @@ h2 {
   border-radius: 5px;
 }
 .restaurant-image {
-  margin: 5px;
-  border-color: #752a07;
-  border-style: ridge;
-  border-radius: 5px;
-  max-width: 500px;
-  max-height: 400px;
+  width: 100%;
+  height: 100%;
 }
 .chicken-image {
   max-height: 200px;
   max-width: 200px;
 }
+.restaurant-list {
+  position: relative;
+}
 
+.back-arrow {
+  transform: rotate(180deg);
+}
 
 /*Swipeable Cards*/
-.MuiGrid-container .Tinder-card {
-  border: #752a07 3px;
+.Tinder-card {
+  /* border: #752a07 3px; */
   position: absolute;
-  border-style: outset;
-  background-color: #fef2e4;
-  display: flex;
-  padding: 10px;
+
+  /* display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 600px;
-  height: 700px;
-  box-shadow: 0 4px 8px rgba(61, 61, 61, 0.1), 0 6px 20px rgba(0, 0, 0, 0.05);
+  justify-content: flex-start;
+  align-items: center; */
+  /* box-shadow: 0 4px 8px rgba(61, 61, 61, 0.1), 0 6px 20px rgba(0, 0, 0, 0.05); */
 }
 
 .winner-card {
@@ -240,26 +236,17 @@ h2 {
   max-height: 280px;
 }
 
-.price-rating {
+/* .price-rating {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-left: 2rem;
   margin-right: 2rem;
 }
-
-.restaurant-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 30px;
-  padding: 20px;
-  position: sticky;
-  top: 0;
-}
+*/
 
 /*swipe reaction*/
-.left {
+/* .left {
   z-index: 10;
   display: block;
   position: absolute;
@@ -279,21 +266,21 @@ h2 {
   left: 0;
   right: 0;
   background: rgba(84, 196, 32, 0.5);
-}
+} */
 
 /*responsiveness*/
 @media only screen and (max-width: 500px) {
-  .restaurant-image {
-    max-width: 200px;
-    max-height: 200px;
+  .card {
+    max-width: 280px;
+    max-height: 460px;
   }
-  .Tinder-card {
-    max-width: 270px;
-    max-height: 500px;
+
+  .restaurant-image-box {
+    max-height: 200px;
   }
 }
 
-.home-wrapper {
+/* .home-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -307,8 +294,8 @@ h2 {
   max-height: 50px;
   padding: 5px;
   margin: 5px;
-}
-loader .chicken-loader {
+} */
+.loader .chicken-loader {
   margin: 50px;
   border-style: outset;
   border-radius: 10px;

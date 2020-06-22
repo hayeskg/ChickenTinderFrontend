@@ -5,6 +5,13 @@ import { voteMutation } from '../queries/voteMutation';
 import { useMutation } from '@apollo/react-hooks';
 import { useEffect, useRef } from 'react';
 import ErrorDisplayer from './re-usable/ErrorDisplayer';
+import Loader from './re-usable/Loader';
+import { Paper, Grid, Box, SvgIcon, Button } from '@material-ui/core';
+import {
+  CheckCircleRounded,
+  CancelRounded,
+  DoubleArrowRounded,
+} from '@material-ui/icons';
 
 const RestaurantCard = ({
   checkForEndOfList,
@@ -17,9 +24,7 @@ const RestaurantCard = ({
     negativeVote: 0,
   });
   const initialRender = useRef(true);
-  const [setVotes, { error: voteError }] = useMutation(
-    voteMutation
-  );
+  const [setVotes, { error: voteError }] = useMutation(voteMutation);
 
   useEffect(() => {
     if (initialRender.current) {
@@ -61,34 +66,56 @@ const RestaurantCard = ({
       preventSwipe={['up', 'down']}
       className="Tinder-card"
     >
-      <article className="restaurant-card">
-        <section className={direction}>
-          <h2>{name}</h2>
-          {/* <p>{cuisine} </p> */}
-          <p>
-            <FontAwesomeIcon icon="dollar-sign" className="icon" /> {price}
-          </p>
-          <p>
-            <FontAwesomeIcon icon="star" className="icon" />
-            {rating}
-          </p>
-        </section>
-        <img src={photo} alt={name} className="restaurant-image" />
-        <section className="swipe-buttons">
-          <button className="button-red">
-            <span>
-              <FontAwesomeIcon icon="times" className="icon" />
-            </span>
-          </button>
-          <button className="button-green">
-            <span>
-              <FontAwesomeIcon icon="check" className="icon" />
-            </span>
-          </button>
-        </section>
-        {error && <ErrorDisplayer msg={error} />}
-        {voteError && <ErrorDisplayer msg={voteError} />}
-      </article>
+      <Paper elevation={3}>
+        <Box className="card" width={400} height={520}>
+          <article className="restaurant-card">
+            <section className={direction}>
+              <h2>{name}</h2>
+              {/* <p>{cuisine} </p> */}
+              <p>
+                <FontAwesomeIcon icon="dollar-sign" className="icon" /> {price}
+              </p>
+              <p>
+                <FontAwesomeIcon icon="star" className="icon" />
+                {rating}
+              </p>
+            </section>
+            <Box className="restaurant-image-box" height={280} width="100%">
+              <img src={photo} alt={name} className="restaurant-image" />
+            </Box>
+            <Grid container>
+              <Grid item xs={6}>
+                <Button className="cancel-arrows">
+                  <SvgIcon
+                    className="back-arrow"
+                    component={DoubleArrowRounded}
+                    style={{ fontSize: 60, color: '#F21D2F' }}
+                  />
+                  <SvgIcon
+                    component={CancelRounded}
+                    style={{ fontSize: 80, color: '#F21D2F' }}
+                  />
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button>
+                  <SvgIcon
+                    component={CheckCircleRounded}
+                    style={{ fontSize: 80, color: '#41BF49' }}
+                  />
+                  <SvgIcon
+                    component={DoubleArrowRounded}
+                    style={{ fontSize: 60, color: '#41BF49' }}
+                  />
+                </Button>
+              </Grid>
+            </Grid>
+            {/* {voteLoading && <Loader />} */}
+            {error && <ErrorDisplayer msg={error} />}
+            {voteError && <ErrorDisplayer msg={voteError} />}
+          </article>
+        </Box>
+      </Paper>
     </TinderCard>
   );
 };
