@@ -25,8 +25,8 @@ const Header = ({ user: { email, photo, username } }) => {
           </Link>
         </section>
       ) : (
-        <p>Please log in to see your profile or sign up to start swiping!</p>
-      )}
+          <></>
+        )}
     </header>
   );
 };

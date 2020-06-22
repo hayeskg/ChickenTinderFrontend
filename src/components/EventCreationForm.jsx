@@ -246,6 +246,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
                 label="Event date"
                 type="datetime-local"
                 variant="outlined"
+                size="medium"
                 required
                 onChange={(event) => setEventDate(event.target.value)}
               ></TextField>
@@ -257,6 +258,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
                 label="Closing date"
                 type="datetime-local"
                 variant="outlined"
+                size="medium"
                 required
                 onChange={(event) => setEventClosingDate(event.target.value)}
               ></TextField>
@@ -269,27 +271,29 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
             </Grid>
             <Grid item xs={12} style={{ maxHeight: 150, overflow: 'auto' }}>
               <ul>
-                {users.map((friend) => {
-                  return (
-                    <li key={friend.id}>
-                      <img
-                        src={
-                          friend.photo ||
-                          'https://d29fhpw069ctt2.cloudfront.net/icon/image/120759/preview.svg'
-                        }
-                        alt=""
-                        className="friend-photo"
-                      />
-                      {friend.username || 'Friend'}
-                      <Checkbox
-                        color="primary"
-                        inputProps={{ 'aria-label': 'guestList' }}
-                        value={friend.id}
-                        onChange={handleCheckbox}
-                      />
-                    </li>
-                  );
-                })}
+                {users
+                  .filter((user) => user.id !== organiser)
+                  .map((friend) => {
+                    return (
+                      <li key={friend.id}>
+                        <img
+                          src={
+                            friend.photo ||
+                            'https://d29fhpw069ctt2.cloudfront.net/icon/image/120759/preview.svg'
+                          }
+                          alt=""
+                          className="friend-photo"
+                        />
+                        {friend.username || 'Friend'}
+                        <Checkbox
+                          color="primary"
+                          inputProps={{ 'aria-label': 'guestList' }}
+                          value={friend.id}
+                          onChange={handleCheckbox}
+                        />
+                      </li>
+                    );
+                  })}
               </ul>
             </Grid>
           </Grid>

@@ -72,7 +72,7 @@ const RestaurantCard = ({
               <h2>{name}</h2>
               {/* <p>{cuisine} </p> */}
               <p>
-                <FontAwesomeIcon icon="dollar-sign" className="icon" /> {price}
+                {price}
               </p>
               <p>
                 <FontAwesomeIcon icon="star" className="icon" />

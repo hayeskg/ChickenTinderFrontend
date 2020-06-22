@@ -1,8 +1,8 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from '@reach/router';
-import { Paper, Grid, Box, SvgIcon, Button } from '@material-ui/core';
-import { PhoneIphoneRounded } from '@material-ui/icons';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "@reach/router";
+import { Paper, Grid, Box, SvgIcon, Button } from "@material-ui/core";
+import { PhoneIphoneRounded } from "@material-ui/icons";
 
 const WinnerDisplayer = ({ data }) => {
   const {
@@ -22,10 +22,12 @@ const WinnerDisplayer = ({ data }) => {
   } = data;
 
   const firstCuisine =
-    cuisine && cuisine.length > 0 ? cuisine[0] : 'Not available';
+
+    cuisine && cuisine.length > 0 ? cuisine[0] : 'Cuisine not available';
+
 
   return (
-    <article>
+    <article className="container">
       <h2>YOUR MATCH</h2>
       <Grid container justify="center">
         <Paper elevation={3}>
@@ -38,10 +40,9 @@ const WinnerDisplayer = ({ data }) => {
             >
               <h2>{name}</h2>
               <p>{firstCuisine}</p>
-              <p>{dietRestrictions.join(', ')}</p>
+              <p>{dietRestrictions.join(", ")}</p>
               <div className="price-rating">
                 <p>
-                  <FontAwesomeIcon icon="dollar-sign" className="icon" />
                   {price}
                 </p>
                 <p>
@@ -76,14 +77,16 @@ const WinnerDisplayer = ({ data }) => {
             </p>
           </Box>
           <Grid item xs={12}>
-            <Button
-              className="home-btn"
-              variant="contained"
-              color="primary"
-              size="large"
-            >
-              <Link to="/">Home</Link>
-            </Button>
+            <Box className="winning-card" width={600} height="50%">
+              <Button
+                className="home-btn"
+                variant="contained"
+                color="primary"
+                size="large"
+              >
+                <Link to="/">Home</Link>
+              </Button>
+            </Box>
           </Grid>
         </Paper>
       </Grid>
