@@ -1,21 +1,14 @@
-/*App*/
+
 .App {
   text-align: center;
-  /* display: flex;
-  flex-direction: column;
-  overflow: scroll;
-  flex-wrap: wrap; */
+ 
   background-color: white;
-  /* background-image: radial-gradient(#fbcb7b, #fd974f); */
-
-  /* min-height: 100%;
-  position: fixed;
-  width: 100%; */
+ 
 }
 
 body {
   margin: 0;
-  font-family: "Quicksand", sans-serif;
+  font-family: 'Quicksand', sans-serif;
 }
 
 ul {
@@ -111,7 +104,9 @@ button {
 
 .winning-card .home-btn {
   margin-top: 20px;
-  margin-bottom: 50px;
+
+  margin-bottom: 20px;
+
 }
 
 .winning-card .restaurant-website-btn {
@@ -120,6 +115,11 @@ button {
 
 .winning-card p {
   padding: 0 10px 0 10px;
+}
+
+.winning-card .description {
+  text-align: justify;
+  padding: 0 15px 0 15px;
 }
 
 /*Restaurant card*/

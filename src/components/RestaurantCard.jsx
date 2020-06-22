@@ -109,7 +109,6 @@ const RestaurantCard = ({
                 </Button>
               </Grid>
             </Grid>
-            {/* {voteLoading && <Loader />} */}
             {error && <ErrorDisplayer msg={error} />}
             {voteError && <ErrorDisplayer msg={voteError} />}
           </article>

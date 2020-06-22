@@ -50,7 +50,7 @@ const WinnerDisplayer = ({ data }) => {
                   {rating}
                 </p>
               </div>
-              <p>{description}</p>
+              <p className="description">{description}</p>
             </section>
             <Box className="winning-restaurant-img" height={300} width="100%">
               <img src={photo} alt={name} className="restaurant-image" />
