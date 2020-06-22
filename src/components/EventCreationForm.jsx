@@ -1,36 +1,32 @@
-
 import React from "react";
 
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
-} from 'react-places-autocomplete';
-import { eventCreationMutation } from '../queries/EventCreation';
-import { useMutation } from '@apollo/react-hooks';
-import { Link } from '@reach/router';
-import Axios from 'axios';
-import ErrorDisplayer from './re-usable/ErrorDisplayer';
-import Loader from './re-usable/Loader';
+} from "react-places-autocomplete";
+import { eventCreationMutation } from "../queries/EventCreation";
+import { useMutation } from "@apollo/react-hooks";
+import { Link } from "@reach/router";
+import Axios from "axios";
+import ErrorDisplayer from "./re-usable/ErrorDisplayer";
+import Loader from "./re-usable/Loader";
 import {
   Grid,
   Button,
   TextField,
-  Input,
   InputLabel,
   FormHelperText,
   FormControl,
   Select,
   Checkbox,
-  MenuItem,
-  ListItemText,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const EventCreationForm = ({ query: { users }, organiser }) => {
-  const [error, setError] = React.useState('');
-  const [eventName, setEventName] = React.useState('');
-  const [eDate, setEventDate] = React.useState('');
-  const [eClosingDate, setEventClosingDate] = React.useState('');
-  const [address, setAddress] = React.useState('');
+  const [error, setError] = React.useState("");
+  const [eventName, setEventName] = React.useState("");
+  const [eDate, setEventDate] = React.useState("");
+  const [eClosingDate, setEventClosingDate] = React.useState("");
+  const [address, setAddress] = React.useState("");
   const [coordinates, setCoordinates] = React.useState({
     lat: null,
     lng: null,
@@ -41,6 +37,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
   });
 
   const [radius, setRadius] = React.useState("1");
+
   const [setEvent, { loading: eventLoading, error: eventError }] = useMutation(
     eventCreationMutation
   );
@@ -126,18 +123,16 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
   };
 
   const clearForm = () => {
-    setEventName('');
-    setEventDate('');
-    setEventClosingDate('');
-    setAddress('');
+    setEventName("");
+    setEventDate("");
+    setEventClosingDate("");
+    setAddress("");
     setCoordinates({ lat: null, lng: null });
     setMyLocation({ lat: null, lng: null });
-    setRadius('1');
+    setRadius("1");
   };
 
-
   return (
-
     <Grid container justify="center">
       <Grid item xs={8}>
         <form onSubmit={handleSubmit} className="eventForm">
@@ -168,7 +163,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
                 <div>
                   <TextField
                     {...getInputProps({
-                      placeholder: 'Start typing your location...',
+                      placeholder: "Start typing your location...",
                     })}
                     fullWidth
                     variant="outlined"
@@ -179,7 +174,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
                     {loading && <Loader />}
                     {suggestions.map((suggestion) => {
                       const style = {
-                        backgroundColor: suggestion.active ? '#d1e7ed' : '#fff',
+                        backgroundColor: suggestion.active ? "#d1e7ed" : "#fff",
                       };
                       return (
                         <div {...getSuggestionItemProps(suggestion, { style })}>
@@ -227,8 +222,8 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
                   label="Radius"
                   onChange={(event) => setRadius(event.target.value)}
                   inputProps={{
-                    name: 'radius',
-                    id: 'radius',
+                    name: "radius",
+                    id: "radius",
                   }}
                 >
                   <option value={1}>1</option>
@@ -275,10 +270,18 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
                 {users.map((friend) => {
                   return (
                     <li key={friend.id}>
-                      {friend.email}
+                      <img
+                        src={
+                          friend.photo ||
+                          "https://d29fhpw069ctt2.cloudfront.net/icon/image/120759/preview.svg"
+                        }
+                        alt=""
+                        className="friend-photo"
+                      />
+                      {friend.username || "Friend"}
                       <Checkbox
                         color="primary"
-                        inputProps={{ 'aria-label': 'guestList' }}
+                        inputProps={{ "aria-label": "guestList" }}
                         value={friend.id}
                         onChange={handleCheckbox}
                       />
@@ -313,7 +316,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
           {error && <ErrorDisplayer msg={error} />}
           {eData && (
             <Button variant="contained" size="large" color="primary">
-              <Link to={`/swipe/${eData.addEvent.id}`}>Take me to event</Link>
+              <Link to={`/event/${eData.addEvent.id}`}>Take me to event</Link>
             </Button>
           )}
           <Button variant="contained" size="large" color="primary">
@@ -322,8 +325,6 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
         </form>
       </Grid>
     </Grid>
-
-        
   );
 };
 
