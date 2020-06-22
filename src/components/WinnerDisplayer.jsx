@@ -1,6 +1,8 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "@reach/router";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from '@reach/router';
+import { Paper, Grid, Box, SvgIcon, Button } from '@material-ui/core';
+import { PhoneIphoneRounded } from '@material-ui/icons';
 
 const WinnerDisplayer = ({ data }) => {
   const {
@@ -20,46 +22,71 @@ const WinnerDisplayer = ({ data }) => {
   } = data;
 
   const firstCuisine =
-    cuisine && cuisine.length > 0 ? cuisine[0] : "Not available";
+    cuisine && cuisine.length > 0 ? cuisine[0] : 'Not available';
 
   return (
     <article>
       <h2>YOUR MATCH</h2>
-      <div className="winner-card">
-        <section
-          className="restaurant-card"
-          event={eventId}
-          mongoId={id}
-          ranking={ranking}
-        >
-          <h2>{name}</h2>
-          <p>{firstCuisine}</p>
-          <p>{dietRestrictions.join(", ")}</p>
-          <div className="price-rating">
+      <Grid container justify="center">
+        <Paper elevation={3}>
+          <Box className="winning-card" width={600} height="100%">
+            <section
+              className="restaurant-card"
+              event={eventId}
+              mongoId={id}
+              ranking={ranking}
+            >
+              <h2>{name}</h2>
+              <p>{firstCuisine}</p>
+              <p>{dietRestrictions.join(', ')}</p>
+              <div className="price-rating">
+                <p>
+                  <FontAwesomeIcon icon="dollar-sign" className="icon" />
+                  {price}
+                </p>
+                <p>
+                  <FontAwesomeIcon icon="star" className="icon" />
+                  {rating}
+                </p>
+              </div>
+              <p>{description}</p>
+            </section>
+            <Box className="winning-restaurant-img" height={300} width="100%">
+              <img src={photo} alt={name} className="restaurant-image" />
+            </Box>
             <p>
-              <FontAwesomeIcon icon="dollar-sign" className="icon" />
-              {price}
+              <FontAwesomeIcon icon="map-marker-alt" className="icon" />
+              {address}
             </p>
+            <Button
+              className="restaurant-website-btn"
+              variant="contained"
+              color="primary"
+            >
+              <a href={website}>{name} website</a>
+            </Button>
             <p>
-              <FontAwesomeIcon icon="star" className="icon" />
-              {rating}
+              <SvgIcon
+                component={PhoneIphoneRounded}
+                style={{
+                  fontSize: 14,
+                }}
+              />
+              Phone Number: {phone}
             </p>
-          </div>
-          <p>{description}</p>
-        </section>
-        <img src={photo} alt={name} className="restaurant-image" />
-        <p>
-          <FontAwesomeIcon icon="map-marker-alt" className="icon" />
-          {address}
-        </p>
-        <a href={website}>
-          <button>{name} website</button>
-        </a>
-        <p>Phone Number: {phone}</p>
-      </div>
-      <Link to="/">
-        <button>Home</button>
-      </Link>
+          </Box>
+          <Grid item xs={12}>
+            <Button
+              className="home-btn"
+              variant="contained"
+              color="primary"
+              size="large"
+            >
+              <Link to="/">Home</Link>
+            </Button>
+          </Grid>
+        </Paper>
+      </Grid>
     </article>
   );
 };
