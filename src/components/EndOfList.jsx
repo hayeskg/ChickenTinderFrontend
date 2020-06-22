@@ -7,9 +7,11 @@ const EndOfList = ({ id }) => {
     <Grid container justify="center">
       <Grid item xs={6}>
         <h2>Thanks for your votes!</h2>
-        <Button variant="contained" color="primary" size="large">
-          <Link to="/">Home</Link>
-        </Button>
+        <Link to="/">
+          <Button variant="contained" color="primary" size="large">
+            Home
+          </Button>
+        </Link>
       </Grid>
     </Grid>
   );
