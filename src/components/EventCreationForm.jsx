@@ -10,6 +10,7 @@ import { Link } from "@reach/router";
 import Axios from "axios";
 import ErrorDisplayer from "./re-usable/ErrorDisplayer";
 import Loader from "./re-usable/Loader";
+import GoogleImage from  "../styling/assets/powered_by_google_on_white.png"
 import {
   Grid,
   Button,
@@ -185,8 +186,9 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
                   </div>
                   <Grid container justify="flex-end">
                     <img
-                      src="powered_by_google_on_white.png"
+                      src={GoogleImage}
                       alt="powered by Google"
+                      className="google-logo"
                     />
                   </Grid>
                 </div>

@@ -68,6 +68,11 @@ button {
   margin: -20px 0 40px 0;
 }
 
+.google-logo {
+  margin-top: 0.2rem;
+  max-height: 15px;
+}
+
 /* headings
 h1 {
   font-family: "Frijole", cursive;
