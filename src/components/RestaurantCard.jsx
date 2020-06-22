@@ -5,7 +5,6 @@ import { voteMutation } from '../queries/voteMutation';
 import { useMutation } from '@apollo/react-hooks';
 import { useEffect, useRef } from 'react';
 import ErrorDisplayer from './re-usable/ErrorDisplayer';
-import Loader from './re-usable/Loader';
 import { Paper, Grid, Box, SvgIcon, Button } from '@material-ui/core';
 import {
   CheckCircleRounded,
@@ -73,7 +72,7 @@ const RestaurantCard = ({
               <h2>{name}</h2>
               {/* <p>{cuisine} </p> */}
               <p>
-                <FontAwesomeIcon icon="dollar-sign" className="icon" /> {price}
+                {price}
               </p>
               <p>
                 <FontAwesomeIcon icon="star" className="icon" />
