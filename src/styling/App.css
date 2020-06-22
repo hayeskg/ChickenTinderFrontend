@@ -104,7 +104,6 @@ button {
   margin: -20px 0 40px 0;
 }
 
-
 .google-logo {
   margin-top: 0.2rem;
   max-height: 15px;
@@ -112,7 +111,7 @@ button {
 
 .winning-card .home-btn {
   margin-top: 20px;
-
+  margin-bottom: 50px;
 }
 
 .winning-card .restaurant-website-btn {
@@ -329,4 +328,14 @@ ul {
 .username-header {
   font-size: 80%;
   margin-bottom: 5px;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
 }
