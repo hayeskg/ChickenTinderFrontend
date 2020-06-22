@@ -38,19 +38,21 @@ class RestaurantList extends Component {
     if (message) return <ErrorDisplayer msg={error} />;
     return (
       <section className="restaurant-list">
-        {this.state.restaurants.map((restaurant) => {
-          return (
-            <RestaurantCard
-              key={restaurant.id}
-              restaurant={restaurant}
-              handleUpvote={this.handleUpvote}
-              handleDownvote={this.handleDownvote}
-              eventRef={this.props.query.event.id}
-              checkForEndOfList={this.checkForEndOfList}
-            />
-          );
-        })}
-        {this.state.endOfList && <EndOfList id={eventId} />}
+        <Grid container justify="center">
+          {this.state.restaurants.map((restaurant) => {
+            return (
+              <RestaurantCard
+                key={restaurant.id}
+                restaurant={restaurant}
+                handleUpvote={this.handleUpvote}
+                handleDownvote={this.handleDownvote}
+                eventRef={this.props.query.event.id}
+                checkForEndOfList={this.checkForEndOfList}
+              />
+            );
+          })}
+          {this.state.endOfList && <EndOfList id={eventId} />}
+        </Grid>
       </section>
     );
   }

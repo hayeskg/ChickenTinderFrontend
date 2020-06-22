@@ -164,11 +164,9 @@ h2 {
   right: 0;
 } */
 /*wraps indication buttons*/
-.swipe-buttons {
-  padding: 10px;
-  margin: 10px;
-  display: flex;
-  justify-content: space-between;
+
+.cancel-arrows {
+  margin-left: 5px;
 }
 
 /* .event-button {
@@ -192,28 +190,26 @@ h2 {
   border-radius: 5px;
 }
 .restaurant-image {
-  margin: 5px;
-  border-color: #752a07;
-  border-style: ridge;
-  border-radius: 5px;
-  max-width: 500px;
-  max-height: 400px;
+  width: 100%;
+  height: 100%;
 }
 .chicken-image {
   max-height: 200px;
   max-width: 200px;
 }
 .restaurant-list {
-  /* position: sticky; */
-  /* display: flex;
-  justify-content: center; */
-  /* margin-top: 50px; */
+  position: relative;
+}
+
+.back-arrow {
+  transform: rotate(180deg);
 }
 
 /*Swipeable Cards*/
 .Tinder-card {
   /* border: #752a07 3px; */
-  /* position: absolute; */
+  position: absolute;
+
   /* display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -221,7 +217,7 @@ h2 {
   /* box-shadow: 0 4px 8px rgba(61, 61, 61, 0.1), 0 6px 20px rgba(0, 0, 0, 0.05); */
 }
 
-/* .winner-card {
+.winner-card {
   border: #752a07 3px;
   border-style: outset;
   background-color: #fef2e4;
@@ -238,7 +234,7 @@ h2 {
 
 .winner-card img {
   max-height: 280px;
-} */
+}
 
 /* .price-rating {
   display: flex;
@@ -259,9 +255,9 @@ h2 {
   left: 0;
   right: 0;
   background: rgba(153, 25, 25, 0.5);
-} */
+}
 
-/* .right {
+.right {
   z-index: 10;
   display: block;
   position: absolute;
@@ -272,17 +268,13 @@ h2 {
   background: rgba(84, 196, 32, 0.5);
 } */
 
-/* responsiveness
+/*responsiveness*/
 @media only screen and (max-width: 500px) {
-  .restaurant-image {
-    max-width: 200px;
-    max-height: 200px;
+  .card {
+    max-width: 300px;
+    max-height: 300px;
   }
-  .Tinder-card {
-    max-width: 270px;
-    max-height: 500px;
-  }
-} */
+}
 
 /* .home-wrapper {
   display: flex;
