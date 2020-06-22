@@ -54,10 +54,16 @@ class App extends Component {
           },
         });
       } else {
-        this.setState({ user: null });
+        this.setState({
+          user: { username: "", email: "", photo: "", uid: "" },
+        });
       }
     });
   }
+
+  updateUserState = ({ user }) => {
+    this.setState({ user: user });
+  };
 
   render() {
     return (
@@ -66,7 +72,11 @@ class App extends Component {
           <Header user={this.state.user} />
           <Router>
             {this.state.user.email ? (
-              <GetUserByUID path="/" uid={this.state.user.uid} />
+              <GetUserByUID
+                path="/"
+                uid={this.state.user.uid}
+                updateUserState={this.updateUserState}
+              />
             ) : (
               <Login path="/" />
             )}
