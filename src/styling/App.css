@@ -15,7 +15,7 @@
 
 body {
   margin: 0;
-  font-family: "Quicksand", sans-serif;
+  font-family: 'Quicksand', sans-serif;
 }
 
 ul {
@@ -104,7 +104,6 @@ button {
   margin: -20px 0 40px 0;
 }
 
-
 .google-logo {
   margin-top: 0.2rem;
   max-height: 15px;
@@ -112,7 +111,7 @@ button {
 
 .winning-card .home-btn {
   margin-top: 20px;
-
+  margin-bottom: 20px;
 }
 
 .winning-card .restaurant-website-btn {
@@ -121,6 +120,11 @@ button {
 
 .winning-card p {
   padding: 0 10px 0 10px;
+}
+
+.winning-card .description {
+  text-align: justify;
+  padding: 0 15px 0 15px;
 }
 
 /*Restaurant card*/
