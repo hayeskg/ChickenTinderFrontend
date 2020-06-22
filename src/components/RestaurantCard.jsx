@@ -24,9 +24,7 @@ const RestaurantCard = ({
     negativeVote: 0,
   });
   const initialRender = useRef(true);
-  const [setVotes, { loading: voteLoading, error: voteError }] = useMutation(
-    voteMutation
-  );
+  const [setVotes, { error: voteError }] = useMutation(voteMutation);
 
   useEffect(() => {
     if (initialRender.current) {
@@ -86,17 +84,6 @@ const RestaurantCard = ({
               <img src={photo} alt={name} className="restaurant-image" />
             </Box>
             <Grid container>
-              {/* <section className="swipe-buttons"> */}
-              {/* <button className="button-red">
-                <span>
-                  <FontAwesomeIcon icon="times" className="icon" />
-                </span>
-              </button>
-              <button className="button-green">
-                <span>
-                  <FontAwesomeIcon icon="check" className="icon" />
-                </span>
-              </button> */}
               <Grid item xs={6}>
                 <Button className="cancel-arrows">
                   <SvgIcon
@@ -122,7 +109,6 @@ const RestaurantCard = ({
                   />
                 </Button>
               </Grid>
-              {/* </section> */}
             </Grid>
             {voteLoading && <Loader />}
             {error && <ErrorDisplayer msg={error} />}

@@ -132,7 +132,7 @@ h2 {
 }
 
 .button-red span:after {
-  content: '\00ab';
+  content: "\00ab";
   position: absolute;
   opacity: 0;
   top: 0;
@@ -140,7 +140,7 @@ h2 {
   transition: 0.5s;
 }
 .button-green span:after {
-  content: '\00bb';
+  content: "\00bb";
   position: absolute;
   opacity: 0;
   top: 0;
@@ -340,4 +340,18 @@ h2 {
 .noBull {
   list-style: none;
 }
+
+ul {
+  list-style: none;
+}
 */
+.user-avatar {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.friend-photo {
+  max-width: 50px;
+  max-height: 50px;
+  border-radius: 50px;
+}

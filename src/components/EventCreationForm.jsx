@@ -1,34 +1,32 @@
-import React from 'react';
+import React from "react";
+
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
-} from 'react-places-autocomplete';
-import { eventCreationMutation } from '../queries/EventCreation';
-import { useMutation } from '@apollo/react-hooks';
-import { Link } from '@reach/router';
-import Axios from 'axios';
-import ErrorDisplayer from './re-usable/ErrorDisplayer';
-import Loader from './re-usable/Loader';
+} from "react-places-autocomplete";
+import { eventCreationMutation } from "../queries/EventCreation";
+import { useMutation } from "@apollo/react-hooks";
+import { Link } from "@reach/router";
+import Axios from "axios";
+import ErrorDisplayer from "./re-usable/ErrorDisplayer";
+import Loader from "./re-usable/Loader";
 import {
   Grid,
   Button,
   TextField,
-  Input,
   InputLabel,
   FormHelperText,
   FormControl,
   Select,
   Checkbox,
-  MenuItem,
-  ListItemText,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const EventCreationForm = ({ query: { users }, organiser }) => {
-  const [error, setError] = React.useState('');
-  const [eventName, setEventName] = React.useState('');
-  const [eDate, setEventDate] = React.useState('');
-  const [eClosingDate, setEventClosingDate] = React.useState('');
-  const [address, setAddress] = React.useState('');
+  const [error, setError] = React.useState("");
+  const [eventName, setEventName] = React.useState("");
+  const [eDate, setEventDate] = React.useState("");
+  const [eClosingDate, setEventClosingDate] = React.useState("");
+  const [address, setAddress] = React.useState("");
   const [coordinates, setCoordinates] = React.useState({
     lat: null,
     lng: null,
@@ -37,13 +35,16 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
     lat: null,
     lng: null,
   });
-  const [radius, setRadius] = React.useState('1');
+
+  const [radius, setRadius] = React.useState("1");
 
   const [setEvent, { loading: eventLoading, error: eventError }] = useMutation(
     eventCreationMutation
   );
   const [eData, setReturnedEventData] = React.useState(null);
-  const [myLocationReadable, setMyLocationReadable] = React.useState('');
+  const [myLocationReadable, setMyLocationReadable] = React.useState("");
+  const [missLocation, setMissLocation] = React.useState(false);
+
   let guestList = [];
 
   const handleSelect = async (value) => {
@@ -95,55 +96,41 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
     const voteDate = new Date(eClosingDate).toISOString();
 
     const guests = guestList;
-
-    setEvent({
-      variables: {
-        name,
-        lat,
-        long,
-        distance,
-        endDate,
-        voteDate,
-        organiser,
-        guests,
-      },
-    })
-      .then(({ data }) => {
-        setReturnedEventData(data);
+    if (lat === "null" || long === "null") {
+      setMissLocation(true)
+    } else {
+      setMissLocation(false)
+      setEvent({
+        variables: {
+          name,
+          lat,
+          long,
+          distance,
+          endDate,
+          voteDate,
+          organiser,
+          guests,
+        },
       })
-      .catch((err) => {
-        setError(err);
-      });
-    clearForm();
+        .then(({ data }) => {
+          setReturnedEventData(data);
+        })
+        .catch((err) => {
+          setError(err);
+        });
+      clearForm();
+    }
   };
 
   const clearForm = () => {
-    setEventName('');
-    setEventDate('');
-    setEventClosingDate('');
-    setAddress('');
+    setEventName("");
+    setEventDate("");
+    setEventClosingDate("");
+    setAddress("");
     setCoordinates({ lat: null, lng: null });
     setMyLocation({ lat: null, lng: null });
-    setRadius('1');
+    setRadius("1");
   };
-
-  // Friends list
-  // const [personEmail, setPersonEmail] = React.useState([]);
-
-  // const handleChange = (event) => {
-  //   setPersonEmail(event.target.value);
-  // };
-
-  // // const handleChangeMultiple = (event) => {
-  // //   const { options } = event.target;
-  // //   const value = [];
-  // //   for (let i = 0, l = options.length; i < l; i += 1) {
-  // //     if (options[i].selected) {
-  // //       value.push(options[i].value);
-  // //     }
-  // //   }
-  // //   setPersonName(value);
-  // // };
 
   return (
     <Grid container justify="center">
@@ -176,7 +163,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
                 <div>
                   <TextField
                     {...getInputProps({
-                      placeholder: 'Start typing your location...',
+                      placeholder: "Start typing your location...",
                     })}
                     fullWidth
                     variant="outlined"
@@ -187,7 +174,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
                     {loading && <Loader />}
                     {suggestions.map((suggestion) => {
                       const style = {
-                        backgroundColor: suggestion.active ? '#d1e7ed' : '#fff',
+                        backgroundColor: suggestion.active ? "#d1e7ed" : "#fff",
                       };
                       return (
                         <div {...getSuggestionItemProps(suggestion, { style })}>
@@ -235,8 +222,8 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
                   label="Radius"
                   onChange={(event) => setRadius(event.target.value)}
                   inputProps={{
-                    name: 'radius',
-                    id: 'radius',
+                    name: "radius",
+                    id: "radius",
                   }}
                 >
                   <option value={1}>1</option>
@@ -252,22 +239,22 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
           <Grid container direction="column" spacing={3}>
             <Grid item xs={12}>
               <TextField
+                InputLabelProps={{ shrink: true}}
                 id="eventDate"
                 label="Event date"
                 type="datetime-local"
-                variant="outlined"
-                defaultValue="2020-07-20T17:30"
+                variant="outlined" 
                 required
                 onChange={(event) => setEventDate(event.target.value)}
               ></TextField>
             </Grid>
             <Grid item xs={12}>
               <TextField
+                InputLabelProps={{ shrink: true}}
                 id="eventClosingDate"
                 label="Closing date"
                 type="datetime-local"
                 variant="outlined"
-                defaultValue="2020-07-19T17:30"
                 required
                 onChange={(event) => setEventClosingDate(event.target.value)}
               ></TextField>
@@ -275,45 +262,26 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
           </Grid>
 
           <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={12} >
               <h3>Invite friends</h3>
             </Grid>
-            <Grid item xs={12}>
-              {/* <FormControl>
-                <InputLabel id="friends-checkbox">Friends</InputLabel>
-                <Select
-                  labelId="friend-list"
-                  id="friend-list"
-                  multiple
-                  // value={personEmail}
-                  // onChange={handleChange}
-                  variant="outlined"
-                  label="Friends list"
-                  //input={<input />}
-                  renderValue={(selected) => selected.join(', ')}
-                >
-                  {users.map((friend) => {
-                    return (
-                      <MenuItem key={friend.id} value={friend.email}>
-                        <Checkbox
-                          // checked={personEmail.indexOf(friend) > -1}
-                          value={friend.id}
-                          onChange={handleCheckbox}
-                        />
-                        <ListItemText primary={friend.email} />
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl> */}
+            <Grid item xs={12} style={{maxHeight: 150, overflow: "auto"}} >
               <ul>
                 {users.map((friend) => {
                   return (
                     <li key={friend.id}>
-                      {friend.email}
+                      <img
+                        src={
+                          friend.photo ||
+                          "https://d29fhpw069ctt2.cloudfront.net/icon/image/120759/preview.svg"
+                        }
+                        alt=""
+                        className="friend-photo"
+                      />
+                      {friend.username || "Friend"}
                       <Checkbox
                         color="primary"
-                        inputProps={{ 'aria-label': 'guestList' }}
+                        inputProps={{ "aria-label": "guestList" }}
                         value={friend.id}
                         onChange={handleCheckbox}
                       />
@@ -331,6 +299,9 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
           >
             Create Event
           </Button>
+          {missLocation &&
+            <p>Please provide a location</p>
+          }
           <Button
             variant="contained"
             size="large"
