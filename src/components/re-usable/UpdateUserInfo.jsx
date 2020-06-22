@@ -32,7 +32,7 @@ const UpdateUserInfo = ({ user: { uid } }) => {
   return (
     <Grid container justify="center">
       <form>
-        <label id="updateUser">
+        <label id="user-update">
           <h4>Username</h4>
           <TextField
             fullWidth
@@ -60,7 +60,7 @@ const UpdateUserInfo = ({ user: { uid } }) => {
         </label>
 
         <Button
-          id="userUpdateButton"
+          id="user-update-button"
           size="large"
           color="primary"
           variant="contained"
