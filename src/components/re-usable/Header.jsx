@@ -1,17 +1,29 @@
-import React from 'react';
-import { Link } from '@reach/router';
-import { ReactComponent as Logo } from '../../styling/assets/logo.svg';
+import React from "react";
+import { Link } from "@reach/router";
+import { ReactComponent as Logo } from "../../styling/assets/logo.svg";
 
 const Header = ({ user: { email, photo, username } }) => {
   return (
-    <header>
+    <header className="app-header">
       <Link to="/">
-        <Logo width={'40%'} height={'40%'} alt={'Chicken Tinder Logo'} />
+        <Logo width={"90%"} height={"90%"} alt={"Chicken Tinder Logo"} />
       </Link>
       {email ? (
-        <Link to="/user-profile">
-          <button>Logged in as: {username}</button>
-        </Link>
+        <section className="profile-header">
+          <Link to="/user-profile">
+            <button className="profile-button">
+              <img
+                className="header-photo"
+                src={
+                  photo ||
+                  "https://d29fhpw069ctt2.cloudfront.net/icon/image/120759/preview.svg"
+                }
+                alt="avatar"
+              />
+              <span className="username-header">{username || "user"}</span>
+            </button>
+          </Link>
+        </section>
       ) : (
         <p>Please log in to see your profile or sign up to start swiping!</p>
       )}
