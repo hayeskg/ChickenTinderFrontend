@@ -68,9 +68,15 @@ button {
   margin: -20px 0 40px 0;
 }
 
-/*winning card*/
+
+.google-logo {
+  margin-top: 0.2rem;
+  max-height: 15px;
+}
+
 .winning-card .home-btn {
   margin-top: 20px;
+
 }
 
 .winning-card .restaurant-website-btn {
