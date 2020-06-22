@@ -133,6 +133,8 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
     setRadius("1");
   };
 
+  
+
   return (
     <Grid container justify="center">
       <Grid item xs={8}>
@@ -269,7 +271,7 @@ const EventCreationForm = ({ query: { users }, organiser }) => {
             </Grid>
             <Grid item xs={12} style={{maxHeight: 150, overflow: "auto"}} >
               <ul>
-                {users.map((friend) => {
+                {users.filter((user) => user.id !== organiser).map((friend) => {
                   return (
                     <li key={friend.id}>
                       <img

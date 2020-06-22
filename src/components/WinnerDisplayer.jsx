@@ -22,7 +22,9 @@ const WinnerDisplayer = ({ data }) => {
   } = data;
 
   const firstCuisine =
-    cuisine && cuisine.length > 0 ? cuisine[0] : "Not available";
+
+    cuisine && cuisine.length > 0 ? cuisine[0] : 'Cuisine not available';
+
 
   return (
     <article className="container">
@@ -41,7 +43,6 @@ const WinnerDisplayer = ({ data }) => {
               <p>{dietRestrictions.join(", ")}</p>
               <div className="price-rating">
                 <p>
-                  <FontAwesomeIcon icon="dollar-sign" className="icon" />
                   {price}
                 </p>
                 <p>
