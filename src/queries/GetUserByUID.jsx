@@ -36,10 +36,9 @@ const GetUserByUID = (user) => {
           if (error) return <ErrorDisplayer msg={error} />;
 
           if (data && initialRender.current) {
-            console.log("refetching");
             refetch();
           }
-          return <Home query={data} />;
+          return <Home query={data} updateUserState={user.updateUserState} />;
         }}
       </Query>
     </div>
