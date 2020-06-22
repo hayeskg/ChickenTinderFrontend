@@ -41,7 +41,6 @@ const WinnerDisplayer = ({ data }) => {
               <p>{dietRestrictions.join(', ')}</p>
               <div className="price-rating">
                 <p>
-                  <FontAwesomeIcon icon="dollar-sign" className="icon" />
                   {price}
                 </p>
                 <p>
