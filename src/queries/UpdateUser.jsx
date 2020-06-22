@@ -5,7 +5,7 @@ export const updateUsername = gql`
     updateUsername(uid: $uid, username: $username, photoUrl: $photoURL) {
       uid
       username
-      photoUrl
+      photo
     }
   }
 `;
